@@ -1,9 +1,3 @@
-<style>
-table {
-	width: 100%;
-}
-</style>
-
 # BPDCore v1.0 说明文档
 
 BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染， 不提供相应页面
