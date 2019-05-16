@@ -4,6 +4,10 @@ BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染，
 
 演示: [demo](https://ctank.github.io/bpd-core/dist/index.html)
 
+<div align="left">
+	<img title="preview" src="./docs/images/preview.gif"  >
+</div>
+
 ## 项目目录
 
 - `[build]`webpack
