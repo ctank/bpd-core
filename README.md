@@ -27,17 +27,15 @@ BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染，
     - `[xml]`
   - `[utils]`工具
 - `[static]`静态文件
-- `.babelrc` 
-- `.editorconfig` 
-- `.eslintignore` 
-- `.eslintrc.js` 
-- `.gitignore` 
-- `.postcssrc.js` 
-- `_config.yml` 
-- `package.json` 
-- `readme.md` 
-
-
+- `.babelrc`
+- `.editorconfig`
+- `.eslintignore`
+- `.eslintrc.js`
+- `.gitignore`
+- `.postcssrc.js`
+- `_config.yml`
+- `package.json`
+- `readme.md`
 
 ## 初始化
 
@@ -52,8 +50,6 @@ new BPDCore({
   ...
 })
 ```
-
-
 
 ## 配置
 
@@ -98,47 +94,46 @@ new BPDCore({
 | color      | 选中颜色 | string              | #ec5343 |
 | onSelected | 选中方法 | function(shapeData) | -       |
 
-
-
 ## API
 
-| 名称                    | 说明                           | 参数              | 备注                           |
-| ----------------------- | ------------------------------ | ----------------- | ------------------------------ |
-| init                    | 初始化设计器                   | callback          | 回调函数                       |
-| destroy                 | 销毁设计器                     |                   |                                |
-| createShape             | 创建图形                       | event,callback    | {shapeName: 节点名称},回调函数 |
-| getAllElement           | 获取全部元素                   | -                 | return [shapeData]             |
-| getRootElement          | 获取根元素                     | -                 | return processData             |
-| getFrontElement         | 获取选中元素之前的元素         | element           | return shapeData               |
-| getFrontElements        | 获取选中元素之前的全部元素     | element           | return [shapeData]             |
-| getFrontElementsByBpmn  | 根据类型获取选中元素之前的元素 | element,shapeName | return [shapeData]             |
-| updateProperties        | 更新元素属性                   | shapeId,data      | 目前仅支持标题和扩展属性       |
-| updateProcessProperties | 更新流程属性                   | data              | 目前仅支持标题和扩展属性       |
-| updataLineStyle         | 更新图形边框颜色               | id, style         |                                |
-| destroy                 | 销毁设计器                     | -                 | -                              |
-| importBpmn              | 导入解析 xml 文件              | xml,callback      | 回调函数                       |
-| exportBpmn              | 导出 xml                       | callback          | 回调函数                       |
-
-
+| 名称                    | 说明                           | 参数             | 备注                          |
+| ----------------------- | ------------------------------ | ---------------- | ----------------------------- |
+| init                    | 初始化设计器                   | callback         | 回调函数                      |
+| destroy                 | 销毁设计器                     |                  |                               |
+| createShape             | 创建图形                       | event,callback   | {bpmnName: 节点名称},回调函数 |
+| getAllElement           | 获取全部元素                   | -                | return [shapeData]            |
+| getRootElement          | 获取根元素                     | -                | return processData            |
+| getFrontElement         | 获取选中元素之前的元素         | element          | return shapeData              |
+| getFrontElements        | 获取选中元素之前的全部元素     | element          | return [shapeData]            |
+| getFrontElementsByBpmn  | 根据类型获取选中元素之前的元素 | element,bpmnName | return [shapeData]            |
+| updateProperties        | 更新元素属性                   | shapeId,data     | 目前仅支持标题和扩展属性      |
+| updateProcessProperties | 更新流程属性                   | data             | 目前仅支持标题和扩展属性      |
+| updataLineStyle         | 更新图形边框颜色               | id, style        |                               |
+| destroy                 | 销毁设计器                     | -                | -                             |
+| importBpmn              | 导入解析 xml 文件              | xml,callback     | 回调函数                      |
+| exportBpmn              | 导出 xml                       | callback         | 回调函数                      |
 
 ## 数据结构(shapeData)
 
-```
+```json
 {
-	bpmnName: "StartEvent",
-	extensions: [
-        {
-            name: "t:test1",
-			value: "测试1"
-        }
-	],
-	groupName: "StartEvent",
-	id: "obj_1n567qa",
-	name: "test"
+  // 节点类型
+  bpmnName: "StartEvent",
+  // 扩展属性
+  extensions: [
+    {
+      name: "t:test1",
+      value: "测试1"
+    }
+  ],
+  // 分组类型
+  groupName: "StartEvent",
+  // id
+  id: "obj_1n567qa",
+  //
+  name: "test"
 }
 ```
-
-
 
 ## 支持节点
 
@@ -159,3 +154,9 @@ new BPDCore({
 ## 其他
 
 详细 demo 代码参考 static/index.html
+
+## 未来
+
+- 画布拖拽
+- 操作记录
+- 其他快捷键
