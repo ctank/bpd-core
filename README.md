@@ -115,7 +115,7 @@ new BPDCore({
 
 ## 数据结构(shapeData)
 
-```json
+```js
 {
   // 节点类型
   "bpmnName": "StartEvent",
