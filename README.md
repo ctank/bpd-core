@@ -118,20 +118,20 @@ new BPDCore({
 ```json
 {
   // 节点类型
-  bpmnName: "StartEvent",
+  "bpmnName": "StartEvent",
   // 扩展属性
-  extensions: [
+  "extensions": [
     {
-      name: "t:test1",
-      value: "测试1"
+      "name": "t:test1",
+      "value": "测试1"
     }
   ],
   // 分组类型
-  groupName: "StartEvent",
+  "groupName": "StartEvent",
   // id
-  id: "obj_1n567qa",
+  "id": "obj_1n567qa",
   //
-  name: "test"
+  "name": "test"
 }
 ```
 
