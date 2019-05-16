@@ -1,0 +1,13 @@
+.bpd-container {
+  .shape-tooltip {
+    position: absolute;
+    border: 1px solid #d1d1d1;
+    background: #f2f2f2;
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: none;
+    color: #444;
+    text-align: center;
+    white-space: nowrap;
+  }
+}

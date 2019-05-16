@@ -1,0 +1,18 @@
+.shape-contour {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 0px;
+  height: 0px;
+  // 锚点样式
+  .shape-anchor {
+    position: absolute;
+    border-style: solid;
+    border-width: 1px;
+    background: white;
+  }
+}
+
+.anchor-point {
+  position: absolute;
+}

@@ -1,0 +1,17 @@
+//图形选择
+.shape-select {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  .shape-bound {
+    position: absolute;
+    left: -10px;
+    top: -10px;
+  }
+}
+//图形选择框
+.multiselect-box {
+  position: absolute;
+  border: 1px solid #6eb1eb;
+  background: rgba(22, 145, 232, 0.1);
+}

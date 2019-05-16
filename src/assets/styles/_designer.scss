@@ -1,0 +1,64 @@
+.bpd-container {
+  user-select: none;
+  overflow: scroll;
+  z-index: 0;
+
+  * {
+    box-sizing: initial;
+  }
+  input,
+  textarea {
+    resize: none;
+    outline: none;
+    font-size: 13px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
+
+  ul {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+  }
+
+  a {
+    font-size: 13px;
+    text-decoration: none;
+    color: #4183c4;
+    cursor: pointer;
+  }
+
+  a:hover,
+  a:active {
+    text-decoration: none;
+  }
+
+  .bpd-layout {
+    position: relative;
+  }
+
+  .bpd-designer {
+    position: relative;
+  }
+
+  .shape-box {
+    position: absolute;
+  }
+
+  .shape-box-creating {
+    position: absolute;
+  }
+
+  .text-box {
+    position: absolute;
+    padding: 0px;
+    border: none;
+    background: transparent;
+    cursor: inherit;
+    overflow: hidden;
+    user-select: none;
+    &.connection-text {
+      background: white;
+      white-space: nowrap;
+    }
+  }
+}

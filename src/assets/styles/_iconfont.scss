@@ -1,0 +1,377 @@
+@font-face {
+  font-family: 'bpmn';
+  src: url('../fonts/bpmn.eot?70672887');
+  src: url('../fonts/bpmn.eot?70672887#iefix') format('embedded-opentype'),
+    url('../fonts/bpmn.woff?70672887') format('woff'),
+    url('../fonts/bpmn.ttf?70672887') format('truetype'),
+    url('../fonts/bpmn.svg?70672887#bpmn') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'bpmn';
+    src: url('../font/bpmn.svg?70672887#bpmn') format('svg');
+  }
+}
+*/
+
+[class^='bpd_icon_']:before,
+[class*=' bpd_icon_']:before {
+  font-family: 'bpmn';
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  /* margin-right: .2em; */
+  text-align: center;
+  /* opacity: .8; */
+
+  /* For safety - reset parent styles, that can break glyph codes*/
+  font-variant: normal;
+  text-transform: none;
+
+  /* fix buttons height, for twitter bootstrap */
+  line-height: 1em;
+
+  /* Animation center compensation - margins should be symmetric */
+  /* remove if not needed */
+  /* margin-left: .2em; */
+
+  /* you can be more comfortable with increased icons size */
+  /* font-size: 120%; */
+
+  /* Font smoothing. That was taken from TWBS */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Uncomment for 3D effect */
+  /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.bpd_icon_screw_wrench:before {
+  content: '\e800';
+} /* '' */
+.bpd_icon_trash:before {
+  content: '\e801';
+} /* '' */
+.bpd_icon_conditional_flow:before {
+  content: '\e802';
+} /* '' */
+.bpd_icon_default_flow:before {
+  content: '\e803';
+} /* '' */
+.bpd_icon_gateway_parallel:before {
+  content: '\e804';
+} /* '' */
+.bpd_icon_intermediate_event_catch_cancel:before {
+  content: '\e805';
+} /* '' */
+.bpd_icon_intermediate_event_catch_non_interrupting_message:before {
+  content: '\e806';
+} /* '' */
+.bpd_icon_start_event_compensation:before {
+  content: '\e807';
+} /* '' */
+.bpd_icon_start_event_non_interrupting_parallel_multiple:before {
+  content: '\e808';
+} /* '' */
+.bpd_icon_loop_marker:before {
+  content: '\e809';
+} /* '' */
+.bpd_icon_parallel_mi_marker:before {
+  content: '\e80a';
+} /* '' */
+.bpd_icon_start_event_non_interrupting_signal:before {
+  content: '\e80b';
+} /* '' */
+.bpd_icon_intermediate_event_catch_non_interrupting_timer:before {
+  content: '\e80c';
+} /* '' */
+.bpd_icon_intermediate_event_catch_parallel_multiple:before {
+  content: '\e80d';
+} /* '' */
+.bpd_icon_intermediate_event_catch_compensation:before {
+  content: '\e80e';
+} /* '' */
+.bpd_icon_gateway_xor:before {
+  content: '\e80f';
+} /* '' */
+.bpd_icon_connection:before {
+  content: '\e810';
+} /* '' */
+.bpd_icon_end_event_cancel:before {
+  content: '\e811';
+} /* '' */
+.bpd_icon_intermediate_event_catch_condition:before {
+  content: '\e812';
+} /* '' */
+.bpd_icon_intermediate_event_catch_non_interrupting_parallel_multiple:before {
+  content: '\e813';
+} /* '' */
+.bpd_icon_start_event_condition:before {
+  content: '\e814';
+} /* '' */
+.bpd_icon_start_event_non_interrupting_timer:before {
+  content: '\e815';
+} /* '' */
+.bpd_icon_sequential_mi_marker:before {
+  content: '\e816';
+} /* '' */
+.bpd_icon_user_task:before {
+  content: '\e817';
+} /* '' */
+.bpd_icon_business_rule:before {
+  content: '\e818';
+} /* '' */
+.bpd_icon_sub_process_marker:before {
+  content: '\e819';
+} /* '' */
+.bpd_icon_start_event_parallel_multiple:before {
+  content: '\e81a';
+} /* '' */
+.bpd_icon_start_event_error:before {
+  content: '\e81b';
+} /* '' */
+.bpd_icon_intermediate_event_catch_signal:before {
+  content: '\e81c';
+} /* '' */
+.bpd_icon_intermediate_event_catch_error:before {
+  content: '\e81d';
+} /* '' */
+.bpd_icon_end_event_compensation:before {
+  content: '\e81e';
+} /* '' */
+.bpd_icon_subprocess_collapsed:before {
+  content: '\e81f';
+} /* '' */
+.bpd_icon_subprocess_expanded:before {
+  content: '\e820';
+} /* '' */
+.bpd_icon_task:before {
+  content: '\e821';
+} /* '' */
+.bpd_icon_end_event_error:before {
+  content: '\e822';
+} /* '' */
+.bpd_icon_intermediate_event_catch_escalation:before {
+  content: '\e823';
+} /* '' */
+.bpd_icon_intermediate_event_catch_timer:before {
+  content: '\e824';
+} /* '' */
+.bpd_icon_start_event_escalation:before {
+  content: '\e825';
+} /* '' */
+.bpd_icon_start_event_signal:before {
+  content: '\e826';
+} /* '' */
+.bpd_icon_business_rule_task:before {
+  content: '\e827';
+} /* '' */
+.bpd_icon_manual:before {
+  content: '\e828';
+} /* '' */
+.bpd_icon_receive:before {
+  content: '\e829';
+} /* '' */
+.bpd_icon_call_activity:before {
+  content: '\e82a';
+} /* '' */
+.bpd_icon_start_event_timer:before {
+  content: '\e82b';
+} /* '' */
+.bpd_icon_start_event_message:before {
+  content: '\e82c';
+} /* '' */
+.bpd_icon_intermediate_event_none:before {
+  content: '\e82d';
+} /* '' */
+.bpd_icon_intermediate_event_catch_link:before {
+  content: '\e82e';
+} /* '' */
+.bpd_icon_end_event_escalation:before {
+  content: '\e82f';
+} /* '' */
+.bpd_icon_text_annotation:before {
+  content: '\e830';
+} /* '' */
+.bpd_icon_bpmn_io:before {
+  content: '\e831';
+} /* '' */
+.bpd_icon_gateway_complex:before {
+  content: '\e832';
+} /* '' */
+.bpd_icon_gateway_eventbased:before {
+  content: '\e833';
+} /* '' */
+.bpd_icon_gateway_none:before {
+  content: '\e834';
+} /* '' */
+.bpd_icon_gateway_or:before {
+  content: '\e835';
+} /* '' */
+.bpd_icon_end_event_terminate:before {
+  content: '\e836';
+} /* '' */
+.bpd_icon_end_event_signal:before {
+  content: '\e837';
+} /* '' */
+.bpd_icon_end_event_none:before {
+  content: '\e838';
+} /* '' */
+.bpd_icon_end_event_multiple:before {
+  content: '\e839';
+} /* '' */
+.bpd_icon_end_event_message:before {
+  content: '\e83a';
+} /* '' */
+.bpd_icon_end_event_link:before {
+  content: '\e83b';
+} /* '' */
+.bpd_icon_intermediate_event_catch_message:before {
+  content: '\e83c';
+} /* '' */
+.bpd_icon_intermediate_event_throw_compensation:before {
+  content: '\e83d';
+} /* '' */
+.bpd_icon_start_event_multiple:before {
+  content: '\e83e';
+} /* '' */
+.bpd_icon_script:before {
+  content: '\e83f';
+} /* '' */
+.bpd_icon_manual_task:before {
+  content: '\e840';
+} /* '' */
+.bpd_icon_send:before {
+  content: '\e841';
+} /* '' */
+.bpd_icon_service:before {
+  content: '\e842';
+} /* '' */
+.bpd_icon_receive_task:before {
+  content: '\e843';
+} /* '' */
+.bpd_icon_user:before {
+  content: '\e844';
+} /* '' */
+.bpd_icon_start_event_none:before {
+  content: '\e845';
+} /* '' */
+.bpd_icon_intermediate_event_throw_escalation:before {
+  content: '\e846';
+} /* '' */
+.bpd_icon_intermediate_event_catch_multiple:before {
+  content: '\e847';
+} /* '' */
+.bpd_icon_intermediate_event_catch_non_interrupting_escalation:before {
+  content: '\e848';
+} /* '' */
+.bpd_icon_intermediate_event_throw_link:before {
+  content: '\e849';
+} /* '' */
+.bpd_icon_start_event_non_interrupting_condition:before {
+  content: '\e84a';
+} /* '' */
+.bpd_icon_data_object:before {
+  content: '\e84b';
+} /* '' */
+.bpd_icon_script_task:before {
+  content: '\e84c';
+} /* '' */
+.bpd_icon_send_task:before {
+  content: '\e84d';
+} /* '' */
+.bpd_icon_data_store:before {
+  content: '\e84e';
+} /* '' */
+.bpd_icon_start_event_non_interrupting_escalation:before {
+  content: '\e84f';
+} /* '' */
+.bpd_icon_intermediate_event_throw_message:before {
+  content: '\e850';
+} /* '' */
+.bpd_icon_intermediate_event_catch_non_interrupting_multiple:before {
+  content: '\e851';
+} /* '' */
+.bpd_icon_intermediate_event_catch_non_interrupting_signal:before {
+  content: '\e852';
+} /* '' */
+.bpd_icon_intermediate_event_throw_multiple:before {
+  content: '\e853';
+} /* '' */
+.bpd_icon_start_event_non_interrupting_message:before {
+  content: '\e854';
+} /* '' */
+.bpd_icon_ad_hoc_marker:before {
+  content: '\e855';
+} /* '' */
+.bpd_icon_service_task:before {
+  content: '\e856';
+} /* '' */
+.bpd_icon_task_none:before {
+  content: '\e857';
+} /* '' */
+.bpd_icon_compensation_marker:before {
+  content: '\e858';
+} /* '' */
+.bpd_icon_start_event_non_interrupting_multiple:before {
+  content: '\e859';
+} /* '' */
+.bpd_icon_intermediate_event_throw_signal:before {
+  content: '\e85a';
+} /* '' */
+.bpd_icon_intermediate_event_catch_non_interrupting_condition:before {
+  content: '\e85b';
+} /* '' */
+.bpd_icon_participant:before {
+  content: '\e85c';
+} /* '' */
+.bpd_icon_event_subprocess_expanded:before {
+  content: '\e85d';
+} /* '' */
+.bpd_icon_lane_insert_below:before {
+  content: '\e85e';
+} /* '' */
+.bpd_icon_space_tool:before {
+  content: '\e85f';
+} /* '' */
+.bpd_icon_connection_multi:before {
+  content: '\e860';
+} /* '' */
+.bpd_icon_lane:before {
+  content: '\e861';
+} /* '' */
+.bpd_icon_lasso_tool:before {
+  content: '\e862';
+} /* '' */
+.bpd_icon_lane_insert_above:before {
+  content: '\e863';
+} /* '' */
+.bpd_icon_lane_divide_three:before {
+  content: '\e864';
+} /* '' */
+.bpd_icon_lane_divide_two:before {
+  content: '\e865';
+} /* '' */
+.bpd_icon_data_input:before {
+  content: '\e866';
+} /* '' */
+.bpd_icon_data_output:before {
+  content: '\e867';
+} /* '' */
+.bpd_icon_hand_tool:before {
+  content: '\e868';
+} /* '' */
+.bpd_icon_transaction:before {
+  content: '\e8c4';
+} /* '' */
+.bpd_icon_service:before {
+  content: '\e8c5';
+} /* '' */

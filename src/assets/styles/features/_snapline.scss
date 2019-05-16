@@ -1,0 +1,17 @@
+.bpd-container {
+  .snapline-attach-h {
+    background: #6eb1eb;
+    position: absolute;
+    height: 1px;
+    width: 100%;
+  }
+  .snapline-attach-v {
+    background: #6eb1eb;
+    position: absolute;
+    width: 1px;
+  }
+  .snapline-attach {
+    position: absolute;
+    border: 2px solid #6eb1eb;
+  }
+}
