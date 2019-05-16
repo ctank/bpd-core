@@ -1,6 +1,7 @@
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var CopyWebpackPlugin = require('copy-webpack-plugin')
 var env = process.env.NODE_ENV === 'production' ? 'production' : 'development'
 var entry =
   process.env.NODE_ENV === 'production'
@@ -107,6 +108,14 @@ if (env == 'production') {
       comments: false,
       sourceMap: false
     })
+  )
+  webpackConfig.plugins.push(
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../static'),
+        to: path.resolve(__dirname, '../dist')
+      }
+    ])
   )
 } else {
   process.env.BABEL_ENV = 'development'
