@@ -43,6 +43,25 @@ BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染，
 - `package.json`
 - `readme.md`
 
+## 安装
+
+使用 npm 安装
+
+```
+npm install bpd-core --save
+```
+
+
+
+## 引入
+
+```javascript
+import BPDCore from 'bpd-core'
+import 'bpd-core/dist/css/bpd-core.css';
+```
+
+
+
 ## 初始化
 
 ```js
