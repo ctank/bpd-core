@@ -2,8 +2,8 @@
   "name": "bpd-core",
   "version": "1.0.0",
   "author": "Ctank",
-  "main": "src/main.js",
-  "repository": "git://gitee.com/ctank/bpd-core",
+  "main": "index.js",
+  "repository": "https://github.com/ctank/bpd-core.git",
   "scripts": {
     "clean": "rimraf dist",
     "build:umd": "cross-env NODE_ENV=production type=UMD node build/build.js",
