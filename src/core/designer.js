@@ -637,11 +637,12 @@ class Designer {
     const extensions = []
     values.forEach(extension => {
       const descriptor = extension.$type || extension.name
-      delete extension.$type
-      delete extension.name
+      const attrs = cloneDeep(extension)
+      delete attrs.$type
+      delete attrs.name
       const extensionModel = this.createModel({
         descriptor,
-        attrs: extension
+        attrs
       })
       if (extensionModel) {
         extensions.push(extensionModel)
