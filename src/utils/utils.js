@@ -261,12 +261,11 @@ export const setExportData = element => {
  */
 const setExportExtensions = values => {
   const extensions = []
-
   for (let i = 0; i < values.length; i += 1) {
-    extensions.push({
-      name: values[i].$type,
-      value: values[i].value
-    })
+    const item = cloneDeep(values[i])
+    item.name = item.$type
+    delete item.$type
+    extensions.push(item)
   }
 
   return extensions
