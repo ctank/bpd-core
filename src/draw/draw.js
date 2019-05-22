@@ -11,7 +11,8 @@ import {
   cloneDeep,
   restoreScale,
   getBpmnNameByType,
-  convertFirstLetter
+  convertFirstLetter,
+  setExportExtensions
 } from '../utils/utils'
 import $ from '../utils/slimJQ'
 
@@ -103,6 +104,11 @@ class Draw extends Operation {
               planeElement.forEach((plane, planeIndex) => {
                 if (plane.id === element.id + '_di') {
                   const data = cloneDeep(element)
+                  if (element.extensionElements) {
+                    data.extensionElements.values = setExportExtensions(
+                      element.extensionElements.values || []
+                    )
+                  }
                   const type = getBpmnNameByType(element.$type)
                   if (type !== 'SequenceFlow') {
                     data.incoming = element.incoming ? element.incoming.id : ''

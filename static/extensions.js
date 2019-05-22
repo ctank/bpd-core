@@ -19,7 +19,7 @@ var Extension = {
       superClass: ['Element'],
       properties: [
         {
-          name: 'attr',
+          name: 'type',
           type: 'String',
           isAttr: true
         },

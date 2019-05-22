@@ -259,12 +259,14 @@ export const setExportData = element => {
  *
  * @param {*} values
  */
-const setExportExtensions = values => {
+export const setExportExtensions = values => {
   const extensions = []
   for (let i = 0; i < values.length; i += 1) {
-    const item = cloneDeep(values[i])
-    item.name = item.$type
-    delete item.$type
+    const item = Object.assign({}, cloneDeep(values[i]), values[i].$attrs)
+    if (item.$type) {
+      item.name = item.$type
+      delete item.$type
+    }
     extensions.push(item)
   }
 
