@@ -105,9 +105,8 @@ class Draw extends Operation {
                 if (plane.id === element.id + '_di') {
                   const data = cloneDeep(element)
                   if (element.extensionElements) {
-                    data.extensionElements.values = setExportExtensions(
+                    data.extensionElements.values =
                       element.extensionElements.values || []
-                    )
                   }
                   const type = getBpmnNameByType(element.$type)
                   if (type !== 'SequenceFlow') {
