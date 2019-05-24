@@ -3,7 +3,11 @@ import DrawUtils from './drawUtils'
 
 class Operation {
   constructor() {
-    this.state = null
+    this.state = {
+      state: null,
+      reset: this.resetState.bind(this),
+      change: this.changeState.bind(this)
+    }
 
     this.canvasDragTimeout = null
   }
@@ -41,16 +45,20 @@ class Operation {
     const { $container, designer } = this
     if ($container) {
       const $layout = $container.find('.bpd-layout')
+      const layoutPos = $layout.offset()
       const $designer = $container.find('.bpd-designer')
-      if (this.state != null) {
+      const data = {
+        state: this.state
+      }
+      if (this.state.state != null) {
         return
       }
 
       this.destroy()
 
       const mousePos = DrawUtils.getRelativePos(
-        $this.pageX,
-        $this.pageY,
+        $this.pageX + Math.abs(layoutPos.left),
+        $this.pageY + Math.abs(layoutPos.top),
         $container
       )
       const shapeData = DrawUtils.getShapeByPosition(
@@ -58,15 +66,10 @@ class Operation {
         mousePos.y,
         $container
       )
-      const data = {
-        state: {
-          state: this.state,
-          reset: this.resetState.bind(this),
-          change: this.changeState.bind(this)
-        }
-      }
 
       if (shapeData != null) {
+        eventBus.trigger('hand.destroy')
+
         data.element = shapeData.element
         data.anchor = shapeData.anchor
         data.point = shapeData.point
@@ -132,6 +135,8 @@ class Operation {
       } else {
         $designer.css('cursor', 'default')
         eventBus.trigger('canvas.hover', data)
+        eventBus.trigger('shape.multiSelect', data)
+        eventBus.trigger('hand.activate')
       }
     }
   }
@@ -140,13 +145,13 @@ class Operation {
    * @param {*} state
    */
   changeState(state) {
-    this.state = state
+    this.state.state = state
   }
   /**
    * 还愿状态
    */
   resetState() {
-    this.state = null
+    this.state.state = null
     const $designer = this.$container.find('.bpd-designer')
     $designer.css('cursor', 'default')
   }

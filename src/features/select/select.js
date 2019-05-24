@@ -31,7 +31,7 @@ class ShapeSelect {
     // 选中
     eventBus.on('shape.hover', this.selectable.bind(this))
     //
-    eventBus.on('canvas.hover', this.multiSelectable.bind(this))
+    eventBus.on('shape.multiSelect', this.multiSelectable.bind(this))
     // 获取选中图形id
     eventBus.on('shape.select.getIds', this.getSelectedIds.bind(this))
     // 获取选中图形集合
@@ -99,67 +99,72 @@ class ShapeSelect {
     $layout
       .off('mousedown.multiselect')
       .on('mousedown.multiselect', function(e) {
-        let $multiSelect = null
-        if (!e.ctrlKey) {
-          self.unselect()
-        }
-        const mouseDownPos = DrawUtils.getRelativePos(
-          e.pageX,
-          e.pageY,
-          $designer
-        )
-        state.change('multi_select')
-
         // 选中回调
         if (self.config.onSelected) {
           self.config.onSelected(null)
         }
 
-        $layout.on('mousemove.multiselect', function(e) {
-          if ($multiSelect == null) {
-            $multiSelect = $("<div class='multiselect-box'></div>").appendTo(
+        let $multiSelect = null
+        if (!e.ctrlKey) {
+          self.unselect()
+        }
+
+        if (state.state === 'multiSelect') {
+          const mouseDownPos = DrawUtils.getRelativePos(
+            e.pageX,
+            e.pageY,
+            $designer
+          )
+          $layout.on('mousemove.multiselect', function(e) {
+            if ($multiSelect == null) {
+              $multiSelect = $("<div class='multiselect-box'></div>").appendTo(
+                $designer
+              )
+            }
+            const mousePos = DrawUtils.getRelativePos(
+              e.pageX,
+              e.pageY,
               $designer
             )
-          }
-          const mousePos = DrawUtils.getRelativePos(e.pageX, e.pageY, $designer)
-          const style = {
-            'z-index': orders.length,
-            left: mousePos.x,
-            top: mousePos.y
-          }
-          if (mousePos.x > mouseDownPos.x) {
-            style.left = mouseDownPos.x
-          }
-          if (mousePos.y > mouseDownPos.y) {
-            style.top = mouseDownPos.y
-          }
-          style.width = Math.abs(mousePos.x - mouseDownPos.x)
-          style.height = Math.abs(mousePos.y - mouseDownPos.y)
-          $multiSelect.css(style)
-        })
-        $(document)
-          .off('mouseup.multiselect')
-          .on('mouseup.multiselect', function(e) {
-            if ($multiSelect != null) {
-              const range = {
-                x: restoreScale($multiSelect.position().left),
-                y: restoreScale($multiSelect.position().top),
-                width: restoreScale($multiSelect.width()),
-                height: restoreScale($multiSelect.height())
-              }
-              const ids = DrawUtils.getElementIdsByRange(range)
-              if (e.ctrlKey) {
-                const selectIds = self.getSelectedIds()
-                mergeArray(ids, selectIds)
-              }
-              self.unselect()
-              self.selectShape({ ids })
-              $multiSelect.remove()
+            const style = {
+              'z-index': orders.length,
+              left: mousePos.x,
+              top: mousePos.y
             }
-            state.reset()
-            $(document).off('mouseup.multiselect')
-            $layout.off('mousemove.multiselect')
+            if (mousePos.x > mouseDownPos.x) {
+              style.left = mouseDownPos.x
+            }
+            if (mousePos.y > mouseDownPos.y) {
+              style.top = mouseDownPos.y
+            }
+            style.width = Math.abs(mousePos.x - mouseDownPos.x)
+            style.height = Math.abs(mousePos.y - mouseDownPos.y)
+            $multiSelect.css(style)
           })
+          $(document)
+            .off('mouseup.multiselect')
+            .on('mouseup.multiselect', function(e) {
+              if ($multiSelect != null) {
+                const range = {
+                  x: restoreScale($multiSelect.position().left),
+                  y: restoreScale($multiSelect.position().top),
+                  width: restoreScale($multiSelect.width()),
+                  height: restoreScale($multiSelect.height())
+                }
+                const ids = DrawUtils.getElementIdsByRange(range)
+                if (e.ctrlKey) {
+                  const selectIds = self.getSelectedIds()
+                  mergeArray(ids, selectIds)
+                }
+                self.unselect()
+                self.selectShape({ ids })
+                $multiSelect.remove()
+              }
+              state.reset()
+              $(document).off('mouseup.multiselect')
+              $layout.off('mousemove.multiselect')
+            })
+        }
         $layout.off('mousedown.multiselect')
       })
   }

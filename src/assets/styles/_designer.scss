@@ -1,6 +1,7 @@
 .bpd-container {
   user-select: none;
-  overflow: scroll;
+  overflow: hidden;
+  position: relative;
   z-index: 0;
 
   * {
@@ -33,7 +34,7 @@
   }
 
   .bpd-layout {
-    position: relative;
+    position: absolute;
   }
 
   .bpd-designer {

@@ -19,6 +19,7 @@ import ShapeSelect from './features/select'
 import ShapeDrag from './features/drag'
 import Snapline from './features/snapline'
 import Tooltip from './features/tooltip'
+import Hand from './features/hand'
 import GroupPanel from './features/group-panel'
 import HotKey from './features/hotkey'
 import I18n from './features/i18n'
@@ -54,9 +55,9 @@ const DEFAULT_OPTIONS = {
     // 背景色
     backgroundColor: '255,255,255',
     // 高度
-    height: 3000,
+    height: 5000,
     // 宽度
-    width: 2500
+    width: 5000
   },
   //
   // local: 'zh_TW',
@@ -104,9 +105,14 @@ const createContainer = options => {
   )
   designerBox.css({
     width: options.width,
-    height: options.height,
-    position: options.position
+    height: options.height
   })
+
+  designerBox.find('.bpd-layout').css({
+    top: -options.pageStyle.height / 2,
+    left: -options.pageStyle.width / 2
+  })
+
   container.append(designerBox)
   return designerBox
 }
@@ -131,7 +137,9 @@ class BPDCore {
         this.$container,
         this.options,
         this.options.config.background
-      )
+      ),
+      // 手
+      Hand: new Hand(this.$container, this.options.pageStyle)
     }
 
     if (!this.options.readonly) {
@@ -421,6 +429,25 @@ class BPDCore {
     this.draw.cancel()
     eventBus.trigger('key.clear')
     eventBus.destroy()
+  }
+
+  /**
+   * 激活手模式
+   */
+  activateHand() {
+    eventBus.trigger('hand.activate')
+    this.draw.resetState()
+  }
+
+  /**
+   * 激活选择模式
+   */
+  activateSelect() {
+    eventBus.trigger('hand.destroy')
+    eventBus.trigger('shape.multiSelect', {
+      state: this.draw.state
+    })
+    this.draw.changeState('multiSelect')
   }
 
   /**
