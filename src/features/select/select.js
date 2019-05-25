@@ -299,7 +299,7 @@ class ShapeSelect {
         eventBus.trigger('group.show', this.getSelected())
       }
     } else {
-      data = this.getControlBox(selectIds)
+      data = DrawUtils.getElementsBox(selectIds)
     }
     const shapeBox = DrawUtils.getRotatedBox(data, angle)
 
@@ -352,45 +352,6 @@ class ShapeSelect {
     }
     bound2D.strokeRect(rect.x, rect.y, rect.width, rect.heigth)
     bound2D.restore()
-  }
-
-  /**
-   *
-   * @param {*} e
-   */
-  getControlBox(selectIds) {
-    const size = { x1: null, y1: null, x2: null, y2: null }
-    for (let i = 0; i < selectIds.length; i += 1) {
-      const id = selectIds[i]
-      const element = eventBus.trigger('element.get', id)
-      const { data, plane, shape } = element
-
-      let shapeBoxSize
-
-      if (shape.bpmnName === 'SequenceFlow') {
-        shapeBoxSize = DrawUtils.getConnectionBox(element)
-      } else {
-        shapeBoxSize = DrawUtils.getShapeBox(element)
-      }
-      if (size.x1 == null || shapeBoxSize.x < size.x1) {
-        size.x1 = shapeBoxSize.x
-      }
-      if (size.y1 == null || shapeBoxSize.y < size.y1) {
-        size.y1 = shapeBoxSize.y
-      }
-      if (size.x2 == null || shapeBoxSize.x + shapeBoxSize.width > size.x2) {
-        size.x2 = shapeBoxSize.x + shapeBoxSize.width
-      }
-      if (size.y2 == null || shapeBoxSize.y + shapeBoxSize.height > size.y2) {
-        size.y2 = shapeBoxSize.y + shapeBoxSize.height
-      }
-    }
-    return {
-      x: size.x1,
-      y: size.y1,
-      width: size.x2 - size.x1,
-      height: size.y2 - size.y1
-    }
   }
 
   moveSelect({ elements, pos }) {

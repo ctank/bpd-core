@@ -161,6 +161,37 @@ class Draw extends Operation {
     if (shapeCount === 0) {
       this.designer.build()
     }
+
+    const { $container, options } = this
+    const { width, height } = options.pageStyle
+
+    const $layout = $container.find('.bpd-layout')
+    const layoutPos = $layout.offset()
+
+    const range = {
+      x: restoreScale(0),
+      y: restoreScale(0),
+      width: restoreScale(width),
+      height: restoreScale(height)
+    }
+    const ids = DrawUtils.getElementIdsByRange(range)
+    const box = DrawUtils.getElementsBox(ids)
+
+    let top = layoutPos.top
+    if (box.y < -height / 2) {
+      top = box.y
+    } else if (box.y > 0) {
+      top = 0
+    }
+
+    let left = layoutPos.left
+    if (box.x < -width / 2) {
+      left = box.x
+    } else if (box.x > 0) {
+      left = 0
+    }
+
+    $layout.offset({ top, left })
   }
   /**
    * 渲染页面
