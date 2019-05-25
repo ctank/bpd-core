@@ -1537,15 +1537,16 @@ const getPointAngle = ($container, id, x, y, padding) => {
  * @param {*} y
  * @param {*} elm
  */
-const getRelativePos = (x, y, $elm) => {
+const getRelativePos = (x, y, $elm, $layout) => {
   const offset = $elm.offset()
+  const position = $elm.children().position()
   if (offset == null) {
     offset.left = 0
     offset.top = 0
   }
   return {
-    x: x - offset.left + $elm.scrollLeft(),
-    y: y - offset.top + $elm.scrollTop()
+    x: x - offset.left + Math.abs(position.left),
+    y: y - offset.top + Math.abs(position.top)
   }
 }
 

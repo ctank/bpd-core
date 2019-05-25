@@ -1,6 +1,6 @@
 {
   "name": "bpd-core",
-  "version": "1.0.0",
+  "version": "1.1.0-beta.1",
   "author": "Ctank",
   "main": "index.js",
   "repository": "https://github.com/ctank/bpd-core.git",
@@ -55,7 +55,7 @@
     "webpack-dev-server": "^3.3.1",
     "webpack-hot-middleware": "^2.21.0"
   },
-  "license": "ISC",
+  "license": "MIT",
   "engines": {
     "node": ">= 6.0.0",
     "npm": ">= 3.0.0"

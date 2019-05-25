@@ -1,4 +1,4 @@
-# BPDCore v1.0 说明文档
+# BPDCore v1.1.0-beta 说明文档
 
 BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染， 不提供相应页面
 
@@ -78,16 +78,17 @@ new BPDCore({
 
 ## 配置
 
-| 参数       | 说明                         | 类型                      | 默认值 |
-| ---------- | ---------------------------- | ------------------------- | ------ |
-| container  | 容器                         | string                    | -      |
-| readonly   | 只读                         | boolean                   | false  |
-| extensions | 扩展属性(参考 extensions.js) | { key: json }             | -      |
-| filter     | 需要过滤的节点类型           | [bpmnName]                | []     |
-| local      | 国际化                       | "zh_CN"\|"zh_TW"\|"en_US" | zh_CN  |
-| bpmnStyle  | 节点样式                     | {bpmnName: {}}            | -      |
-| shapeStyle | 特定节点样式                 | [{nodeId, fillStyle}]     | -      |
-| config     | 功能配置                     | {}                        | -      |
+| 参数       | 说明                         | 类型                      | 默认值  |
+| ---------- | ---------------------------- | ------------------------- | ------- |
+| container  | 容器                         | string                    | -       |
+| definition | 流程定义(xml)                | string                    | default |
+| readonly   | 只读                         | boolean                   | false   |
+| extensions | 扩展属性(参考 extensions.js) | { key: json }             | -       |
+| filter     | 需要过滤的节点类型           | [bpmnName]                | []      |
+| local      | 国际化                       | "zh_CN"\|"zh_TW"\|"en_US" | zh_CN   |
+| bpmnStyle  | 节点样式                     | {bpmnName: {}}            | -       |
+| shapeStyle | 特定节点样式                 | [{nodeId, fillStyle}]     | -       |
+| config     | 功能配置                     | {}                        | -       |
 
 ## 功能配置
 
@@ -134,6 +135,7 @@ new BPDCore({
 | updateProperties        | 更新元素属性                   | shapeId,data     | 目前仅支持标题和扩展属性      |
 | updateProcessProperties | 更新流程属性                   | data             | 目前仅支持标题和扩展属性      |
 | updataLineStyle         | 更新图形边框颜色               | id, style        |                               |
+| activateSelect          | 激活选择模式                   | -                |                               |
 | destroy                 | 销毁设计器                     | -                | -                             |
 | importBpmn              | 导入解析 xml 文件              | xml,callback     | 回调函数                      |
 | exportBpmn              | 导出 xml                       | callback         | 回调函数                      |
@@ -182,6 +184,5 @@ new BPDCore({
 
 ## 未来
 
-- 画布拖拽
 - 操作记录
 - 其他快捷键

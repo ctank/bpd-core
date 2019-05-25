@@ -39,13 +39,11 @@ class Operation {
 
   /**
    * 画布鼠标移动事件
-   * @param {*} $this
+   * @param {*} e
    */
-  move($this) {
-    const { $container, designer } = this
+  move(e) {
+    const { $container } = this
     if ($container) {
-      const $layout = $container.find('.bpd-layout')
-      const layoutPos = $layout.offset()
       const $designer = $container.find('.bpd-designer')
       const data = {
         state: this.state
@@ -56,11 +54,7 @@ class Operation {
 
       this.destroy()
 
-      const mousePos = DrawUtils.getRelativePos(
-        $this.pageX + Math.abs(layoutPos.left),
-        $this.pageY + Math.abs(layoutPos.top),
-        $container
-      )
+      const mousePos = DrawUtils.getRelativePos(e.pageX, e.pageY, $container)
       const shapeData = DrawUtils.getShapeByPosition(
         mousePos.x,
         mousePos.y,
