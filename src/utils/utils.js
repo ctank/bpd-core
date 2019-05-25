@@ -272,3 +272,5 @@ export const setExportExtensions = values => {
 
   return extensions
 }
+
+export const setPosition = () => {}

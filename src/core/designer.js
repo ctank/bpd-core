@@ -108,6 +108,11 @@ class Designer {
         bounds.y = restoreScale(canvasPos.y) - bounds.height / 2
       }
 
+      const snapLine = eventBus.trigger('shape.snapline.show', {
+        size: bounds,
+        ids: []
+      })
+
       $shape.css({
         left: setScale(bounds.x - 10) + 'px',
         top: setScale(bounds.y - 10) + 'px',
@@ -122,6 +127,7 @@ class Designer {
     $(document).on('mouseup.create', () => {
       $(document).off('mouseup.create')
       $designer.off('mousemove.creating')
+      eventBus.trigger('shape.snapline.hide')
       $layout.off('mouseup.create').off('mousemove.create')
       if (element != null) {
         if (isCreated === false) {

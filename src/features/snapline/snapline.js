@@ -34,6 +34,7 @@ class Snapline {
     const orders = eventBus.trigger('orders.get')
     const $layout = $container.find('.bpd-layout')
     const $designer = $container.find('.bpd-designer')
+    const layoutPos = $layout.offset()
 
     const top = size.y
     const bottom = size.y + size.height
@@ -42,7 +43,7 @@ class Snapline {
     const centerX = size.x + size.width / 2
     const centerY = size.y + size.height / 2
 
-    var f = 2
+    let xx = 2
     const snapData = { v: null, h: null, attach: null }
     if (!render) {
       element = eventBus.trigger('element.get', ids[0])
@@ -72,23 +73,23 @@ class Snapline {
           const shapeTop = bounds.y
           const shapeCenterY = bounds.y + bounds.height / 2
           const shapeBottom = bounds.y + bounds.height
-          if (shapeCenterY >= centerY - f && shapeCenterY <= centerY + f) {
+          if (shapeCenterY >= centerY - xx && shapeCenterY <= centerY + xx) {
             snapData.h = { type: 'middle', y: shapeCenterY }
             size.y = shapeCenterY - size.height / 2
           } else {
-            if (shapeTop >= top - f && shapeTop <= top + f) {
+            if (shapeTop >= top - xx && shapeTop <= top + xx) {
               snapData.h = { type: 'top', y: shapeTop }
               size.y = shapeTop
             } else {
-              if (shapeBottom >= bottom - f && shapeBottom <= bottom + f) {
+              if (shapeBottom >= bottom - xx && shapeBottom <= bottom + xx) {
                 snapData.h = { type: 'bottom', y: shapeBottom }
                 size.y = shapeBottom - size.height
               } else {
-                if (shapeBottom >= top - f && shapeBottom <= top + f) {
+                if (shapeBottom >= top - xx && shapeBottom <= top + xx) {
                   snapData.h = { type: 'top', y: shapeBottom }
                   size.y = shapeBottom
                 } else {
-                  if (shapeTop >= bottom - f && shapeTop <= bottom + f) {
+                  if (shapeTop >= bottom - xx && shapeTop <= bottom + xx) {
                     snapData.h = { type: 'bottom', y: shapeTop }
                     size.y = shapeTop - size.height
                   }
@@ -101,23 +102,23 @@ class Snapline {
           const shapeLeft = bounds.x
           const shapeCenterX = bounds.x + bounds.width / 2
           const shapeRight = bounds.x + bounds.width
-          if (shapeCenterX >= centerX - f && shapeCenterX <= centerX + f) {
+          if (shapeCenterX >= centerX - xx && shapeCenterX <= centerX + xx) {
             snapData.v = { type: 'center', x: shapeCenterX }
             size.x = shapeCenterX - size.width / 2
           } else {
-            if (shapeLeft >= left - f && shapeLeft <= left + f) {
+            if (shapeLeft >= left - xx && shapeLeft <= left + xx) {
               snapData.v = { type: 'left', x: shapeLeft }
               size.x = shapeLeft
             } else {
-              if (shapeRight >= right - f && shapeRight <= right + f) {
+              if (shapeRight >= right - xx && shapeRight <= right + xx) {
                 snapData.v = { type: 'right', x: shapeRight }
                 size.x = shapeRight - size.width
               } else {
-                if (shapeRight >= left - f && shapeRight <= left + f) {
+                if (shapeRight >= left - xx && shapeRight <= left + xx) {
                   snapData.v = { type: 'left', x: shapeRight }
                   size.x = shapeRight
                 } else {
-                  if (shapeLeft >= right - f && shapeLeft <= right + f) {
+                  if (shapeLeft >= right - xx && shapeLeft <= right + xx) {
                     snapData.v = { type: 'right', x: shapeLeft }
                     size.x = shapeLeft - size.width
                   }

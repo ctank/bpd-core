@@ -40,7 +40,7 @@ class ServiceTask extends Shape {
             fontWeight: 'normal',
             fontSize: '18px',
             fontFamily: 'bpmn',
-            content: '\uE844',
+            content: '\uE842',
             x: 4,
             y: 16
           }
