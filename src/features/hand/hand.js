@@ -26,7 +26,7 @@ class Hand {
       .off('touchstart.hand mousedown.hand')
       .on('touchstart.hand mousedown.hand', e => {
         const $layout = this.$container.find('.bpd-layout')
-        const layoutPos = $layout.offset()
+        const layoutPos = $layout.position()
         const mousePos = {
           x: 0,
           y: 0
@@ -75,7 +75,7 @@ class Hand {
           left = -pageStyle.width + window.innerWidth
         }
 
-        $layout.offset({ top, left })
+        $layout.css({ top, left })
       }
     })
   }

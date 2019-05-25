@@ -67,7 +67,7 @@ class Operation {
         $container
       )
 
-      if (shapeData != null) {
+      if (shapeData != null && !this.options.readonly) {
         eventBus.trigger('hand.destroy')
 
         data.element = shapeData.element

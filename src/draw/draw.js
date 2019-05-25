@@ -35,11 +35,10 @@ class Draw extends Operation {
     this.init()
   }
   init() {
-    if (!this.options.readonly) {
-      this.$container
-        .off('mousemove.operate')
-        .on('mousemove.operate', this.move.bind(this))
-    }
+    this.$container
+      .off('mousemove.operate')
+      .on('mousemove.operate', this.move.bind(this))
+
     // 创建图形
     eventBus.on('shape.create', this.createShapeData.bind(this))
     // 渲染图形
@@ -191,7 +190,7 @@ class Draw extends Operation {
       left = 0
     }
 
-    $layout.offset({ top, left })
+    $layout.css({ top, left })
   }
   /**
    * 渲染页面

@@ -443,11 +443,13 @@ class BPDCore {
    * 激活选择模式
    */
   activateSelect() {
-    eventBus.trigger('hand.destroy')
-    eventBus.trigger('shape.multiSelect', {
-      state: this.draw.state
-    })
-    this.draw.changeState('multiSelect')
+    if (!this.options.readonly) {
+      eventBus.trigger('hand.destroy')
+      eventBus.trigger('shape.multiSelect', {
+        state: this.draw.state
+      })
+      this.draw.changeState('multiSelect')
+    }
   }
 
   /**
