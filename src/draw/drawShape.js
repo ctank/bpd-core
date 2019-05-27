@@ -141,7 +141,7 @@ class DrawShape {
 
       for (let j = 0; j < path.actions.length; j += 1) {
         const item = path.actions[j]
-        canvasActions[item.action](shape2D, item)
+        canvasActions[item.action](shape2D, item, shapeStyle)
       }
 
       this.fillShape(shape2D, shape, fillStyle)

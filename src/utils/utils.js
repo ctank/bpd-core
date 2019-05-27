@@ -138,7 +138,7 @@ export const getBpmnNameByType = type => {
  * canvas操作
  */
 export const canvasActions = {
-  font: function(canvas, data) {
+  font: function(canvas, data, shapeStyle) {
     const {
       fontStyle,
       fontVariant,
@@ -161,8 +161,10 @@ export const canvasActions = {
       canvas.textBaseline = textBaseline
     }
     // 颜色
-    if (fontColor) {
-      canvas.fillStyle = fontColor
+    if (shapeStyle.lineStyle && shapeStyle.lineStyle.lineColor) {
+      canvas.fillStyle = rgba2hex(shapeStyle.lineStyle.lineColor)
+    } else if (fontColor) {
+      canvas.fillStyle = rgba2hex(fontColor)
     }
     canvas.font =
       fontStyle +
@@ -273,4 +275,20 @@ export const setExportExtensions = values => {
   return extensions
 }
 
-export const setPosition = () => {}
+const rgba2hex = color => {
+  const values = color
+    .replace(/rgba?\(/, '')
+    .replace(/\)/, '')
+    .replace(/[\s+]/g, '')
+    .split(',')
+  let a = parseFloat(values[3] || 1),
+    r = Math.floor(a * parseInt(values[0]) + (1 - a) * 255),
+    g = Math.floor(a * parseInt(values[1]) + (1 - a) * 255),
+    b = Math.floor(a * parseInt(values[2]) + (1 - a) * 255)
+  return (
+    '#' +
+    ('0' + r.toString(16)).slice(-2) +
+    ('0' + g.toString(16)).slice(-2) +
+    ('0' + b.toString(16)).slice(-2)
+  )
+}
