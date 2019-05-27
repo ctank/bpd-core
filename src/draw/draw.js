@@ -166,7 +166,6 @@ class Draw extends Operation {
 
     const $layout = $container.find('.bpd-layout')
     const layoutPos = $layout.offset()
-
     const range = {
       x: restoreScale(0),
       y: restoreScale(0),
@@ -174,23 +173,25 @@ class Draw extends Operation {
       height: restoreScale(height)
     }
     const ids = DrawUtils.getElementIdsByRange(range)
-    const box = DrawUtils.getElementsBox(ids)
-
-    let top = layoutPos.top
-    if (box.y < -height / 2) {
-      top = box.y
-    } else if (box.y > 0) {
-      top = 0
+    const shapeBox = DrawUtils.getElementsBox(ids)
+    const screenBox = {
+      x: layoutPos.left,
+      y: layoutPos.top,
+      width: $container.width(),
+      height: $container.height()
     }
 
-    let left = layoutPos.left
-    if (box.x < -width / 2) {
-      left = box.x
-    } else if (box.x > 0) {
-      left = 0
+    if (shapeBox && !DrawUtils.checkRang(screenBox, shapeBox)) {
+      let top = -shapeBox.y + screenBox.height / 2
+      if (top > 0) {
+        top = 0
+      }
+      let left = -shapeBox.x + screenBox.width / 2
+      if (left > 0) {
+        left = 0
+      }
+      $layout.css({ top, left })
     }
-
-    $layout.css({ top, left })
   }
   /**
    * 渲染页面

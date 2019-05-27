@@ -1612,12 +1612,15 @@ const getElementsBox = ids => {
       size.y2 = shapeBoxSize.y + shapeBoxSize.height
     }
   }
-  return {
+
+  const box = {
     x: size.x1,
     y: size.y1,
     width: size.x2 - size.x1,
     height: size.y2 - size.y1
   }
+
+  return box.x ? box : null
 }
 
 /**
@@ -2008,24 +2011,43 @@ const pointInSequence = (pos, element, padding) => {
  */
 const checkCross = (pos1, pos2, point1, point2) => {
   let inCross = false
-  // TODO:
-  var xx =
+  let xx =
     (pos2.x - pos1.x) * (point2.y - point1.y) -
     (pos2.y - pos1.y) * (point2.x - point1.x)
   if (xx !== 0) {
-    var c =
+    let a =
       ((pos1.y - point1.y) * (point2.x - point1.x) -
         (pos1.x - point1.x) * (point2.y - point1.y)) /
       xx
-    var b =
+    let b =
       ((pos1.y - point1.y) * (pos2.x - pos1.x) -
         (pos1.x - point1.x) * (pos2.y - pos1.y)) /
       xx
-    if (c >= 0 && c <= 1 && b >= 0 && b <= 1) {
+    if (a >= 0 && a <= 1 && b >= 0 && b <= 1) {
       inCross = true
     }
   }
   return inCross
+}
+
+/**
+ *
+ * @param {*} rang
+ * @param {*} point
+ */
+const checkRang = (rang, point) => {
+  let inRang = false
+  if (point.x > rang.x && point.x < rang.x + rang.width) {
+    inRang = true
+  } else {
+    inRang = false
+  }
+  if (point.y > rang.y && point.y < rang.y + rang.height) {
+    inRang = true
+  } else {
+    inRang = false
+  }
+  return inRang
 }
 
 export default {
@@ -2050,6 +2072,7 @@ export default {
   getSelectedConnectionIds,
   getShapeByPosition,
   getShapeBox,
+  checkRang,
   measureDistance,
   setLineDash
 }
