@@ -36,8 +36,8 @@ class Draw extends Operation {
   }
   init() {
     this.$container
-      .off('mousemove.operate')
-      .on('mousemove.operate', this.move.bind(this))
+      .off('mousemove.operate touchstart.operate')
+      .on('mousemove.operate touchstart.operate', this.move.bind(this))
 
     // 创建图形
     eventBus.on('shape.create', this.createShapeData.bind(this))
@@ -181,12 +181,18 @@ class Draw extends Operation {
       height: $container.height()
     }
 
-    if (shapeBox && !DrawUtils.checkRang(screenBox, shapeBox)) {
-      let top = -shapeBox.y + screenBox.height / 2
+    if (
+      shapeBox &&
+      !DrawUtils.checkRang(screenBox, {
+        x: -shapeBox.x + shapeBox.width / 2,
+        y: -shapeBox.y + shapeBox.height / 2
+      })
+    ) {
+      let top = -shapeBox.y + screenBox.height / 2 - shapeBox.height / 2
       if (top > 0) {
         top = 0
       }
-      let left = -shapeBox.x + screenBox.width / 2
+      let left = -shapeBox.x + screenBox.width / 2 - shapeBox.width / 2
       if (left > 0) {
         left = 0
       }

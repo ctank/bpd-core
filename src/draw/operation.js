@@ -130,7 +130,7 @@ class Operation {
         $designer.css('cursor', 'default')
         eventBus.trigger('canvas.hover', data)
         eventBus.trigger('shape.multiSelect', data)
-        eventBus.trigger('hand.activate')
+        eventBus.trigger('hand.activate', e)
       }
     }
   }

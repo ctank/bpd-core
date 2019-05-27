@@ -21,32 +21,40 @@ class Hand {
     eventBus.on('hand.destroy', this.destroyHand.bind(this))
   }
 
-  activateHand() {
-    this.$container
-      .off('touchstart.hand mousedown.hand')
-      .on('touchstart.hand mousedown.hand', e => {
-        const $layout = this.$container.find('.bpd-layout')
-        const layoutPos = $layout.position()
-        const mousePos = {
-          x: 0,
-          y: 0
-        }
-
-        this.flag = true
-        mousePos.x = e.clientX
-        mousePos.y = e.clientY
-
-        if (e.type.indexOf('touch') >= 0) {
-          mousePos.x = e.originalEvent.targetTouches[0].clientX
-          mousePos.y = e.originalEvent.targetTouches[0].clientY
-        }
-
-        this.moveHand(layoutPos, mousePos)
-      })
+  activateHand(e) {
+    if (e && e.type === 'touchstart') {
+      this.startHand(e)
+    } else {
+      this.$container
+        .off('touchstart.hand mousedown.hand')
+        .on('touchstart.hand mousedown.hand', e => {
+          this.startHand(e)
+        })
+    }
 
     $(document).on('touchend.hand mouseup.hand', () => {
       this.flag = false
     })
+  }
+
+  startHand(e) {
+    const $layout = this.$container.find('.bpd-layout')
+    const layoutPos = $layout.position()
+    const mousePos = {
+      x: 0,
+      y: 0
+    }
+
+    this.flag = true
+    mousePos.x = e.clientX
+    mousePos.y = e.clientY
+
+    if (e.type.indexOf('touch') >= 0) {
+      mousePos.x = e.originalEvent.targetTouches[0].clientX
+      mousePos.y = e.originalEvent.targetTouches[0].clientY
+    }
+
+    this.moveHand(layoutPos, mousePos)
   }
 
   moveHand(layoutPos, mousePos) {
