@@ -643,7 +643,7 @@ class Designer {
     const extensions = []
     values.forEach(extension => {
       const descriptor = extension.$type || extension.name
-      const attrs = cloneDeep(extension)
+      const attrs = Object.assign({}, cloneDeep(extension), extension.$attrs)
       delete attrs.$type
       delete attrs.name
       const extensionModel = this.createModel({
