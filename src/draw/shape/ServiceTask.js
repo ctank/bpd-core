@@ -8,8 +8,8 @@ class ServiceTask extends Shape {
     this.style = style
     //
     if (element.plane && element.plane.bounds) {
-      element.plane.bounds.width = element.plane.bounds.width || 40
-      element.plane.bounds.height = element.plane.bounds.height || 40
+      element.plane.bounds.width = element.plane.bounds.width || 110
+      element.plane.bounds.height = element.plane.bounds.height || 50
     }
     if (!element.data.name) {
       element.data.name =
