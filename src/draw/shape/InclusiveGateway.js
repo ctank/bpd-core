@@ -2,7 +2,7 @@ import Shape from './Shape'
 
 class InclusiveGateway extends Shape {
   constructor(element, style = {}) {
-    super()
+    super(style)
     //
     this.style = style
     //
@@ -12,7 +12,7 @@ class InclusiveGateway extends Shape {
     }
     //
     if (!element.data.name) {
-      element.data.name = ''
+      element.data.name = style.name || ''
     }
     // bpmn数据
     this.data = element.data

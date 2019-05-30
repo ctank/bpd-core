@@ -3,16 +3,17 @@ import eventBus from '../../core/eventBus'
 
 class ServiceTask extends Shape {
   constructor(element, style = {}) {
-    super()
+    super(style)
     //
     this.style = style
     //
     if (element.plane && element.plane.bounds) {
-      element.plane.bounds.width = element.plane.bounds.width || 110
-      element.plane.bounds.height = element.plane.bounds.height || 55
+      element.plane.bounds.width = element.plane.bounds.width || 40
+      element.plane.bounds.height = element.plane.bounds.height || 40
     }
     if (!element.data.name) {
-      element.data.name = eventBus.trigger('i18n', 'bpmn.ServiceTask')
+      element.data.name =
+        style.name || eventBus.trigger('i18n', 'bpmn.ServiceTask')
     }
     // bpmn数据
     this.data = element.data

@@ -1,7 +1,7 @@
 import Base from './Base'
 
 class Shape extends Base {
-  constructor() {
+  constructor(style) {
     super()
     // TODO: 子元素
     this.children = []
@@ -19,9 +19,17 @@ class Shape extends Base {
       markerOffset: 5
     }
     // 描边样式
-    this.lineStyle = { lineWidth: 2, lineColor: '50,50,50', lineStyle: 'solid' }
+    this.lineStyle = Object.assign(
+      {},
+      { lineWidth: 2, lineColor: '50,50,50', lineStyle: 'solid' },
+      style.lineStyle
+    )
     // 填充样式
-    this.fillStyle = { type: 'solid', color: '255,255,255' }
+    this.fillStyle = Object.assign(
+      {},
+      { type: 'solid', color: '255,255,255' },
+      style.fillStyle
+    )
     // 高亮样式
     this.lightStyle = {}
     // 绘制方式

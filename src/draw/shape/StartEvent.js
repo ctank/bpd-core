@@ -3,7 +3,7 @@ import eventBus from '../../core/eventBus'
 
 class StartEvent extends Shape {
   constructor(element, style = {}) {
-    super()
+    super(style)
     //
     this.style = style
     //
@@ -12,7 +12,8 @@ class StartEvent extends Shape {
       element.plane.bounds.height = element.plane.bounds.height || 40
     }
     if (!element.data.name) {
-      element.data.name = eventBus.trigger('i18n', 'bpmn.StartEvent')
+      element.data.name =
+        style.name || eventBus.trigger('i18n', 'bpmn.StartEvent')
     }
     // bpmn数据
     this.data = element.data
