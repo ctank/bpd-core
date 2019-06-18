@@ -27,6 +27,8 @@ class groupPanel {
 
     this.bpmns = options.bpmns
 
+    this.bpmnStyle = options.bpmnStyle
+
     this.filter = options.filter
 
     this.config = Object.assign({}, DEFAULT_CONFIG, options.config.grouppanel)
@@ -136,10 +138,7 @@ class groupPanel {
           continue
         }
 
-        element.data.text = eventBus.trigger(
-          'i18n',
-          'bpmn.' + element.shape.bpmnName
-        )
+        element.data.text = this.getShapeName(element.shape.bpmnName)
 
         const $groupItem = $(
           '<div class="group-item" data-type="' +
@@ -192,7 +191,7 @@ class groupPanel {
    * @param {*} connection
    */
   showConnectionGroup(connection) {
-    const { $container, config, bpmns, filter } = this
+    const { $container, config, bpmns, bpmnStyle, filter } = this
     const { data, plane, shape } = connection
 
     const self = this
@@ -224,10 +223,9 @@ class groupPanel {
             type,
             element: cloneDeep(ELEMENT_TEMP)
           })
-          element.data.text = eventBus.trigger(
-            'i18n',
-            'bpmn.' + element.shape.bpmnName
-          )
+
+          element.data.text = this.getShapeName(element.shape.bpmnName)
+
           this.renderConnectionItem(element, group, $groupPanel)
         }
       }
@@ -306,7 +304,7 @@ class groupPanel {
     const angle = DrawUtils.getEndpointAngle(connection.shape, 'targetRef')
     const quadrant = DrawUtils.getAngleDir(angle)
 
-    const name = eventBus.trigger('i18n', 'bpmn.' + type)
+    const name = this.getShapeName(type)
     const element = eventBus.trigger('element.create', {
       name,
       type,
@@ -397,8 +395,8 @@ class groupPanel {
    * @param {*} $groupPanel
    */
   renderConnectionItem(element, group, $groupPanel) {
-    const { config } = this
-    const title = eventBus.trigger('i18n', 'bpmn.' + element.shape.bpmnName)
+    const { config, bpmnStyle } = this
+    const title = this.getShapeName(element.shape.bpmnName)
     const $item = $(
       "<div class='group-item' data-group='" +
         element.shape.groupName +
@@ -507,6 +505,13 @@ class groupPanel {
     })
 
     canvas2D.restore()
+  }
+
+  getShapeName(type) {
+    const { bpmnStyle } = this
+    return bpmnStyle[type] && bpmnStyle[type].name
+      ? bpmnStyle[type].name
+      : eventBus.trigger('i18n', 'bpmn.' + type)
   }
 }
 
