@@ -11,10 +11,8 @@ import {
   cloneDeep,
   restoreScale,
   getBpmnNameByType,
-  convertFirstLetter,
-  setExportExtensions
+  setExportData
 } from '../utils/utils'
-import $ from '../utils/slimJQ'
 
 class Draw extends Operation {
   constructor(options, $container) {
@@ -32,6 +30,7 @@ class Draw extends Operation {
     this.drawShape = new DrawShape(this.options, this.$container)
 
     this.drawConnection = new DrawConnection(this.options, this.$container)
+
     this.init()
   }
   init() {
@@ -291,6 +290,7 @@ class Draw extends Operation {
     const parentShapes = []
     const range = []
     const connections = []
+    let oldShape = null
 
     if (elements.length === 0) {
       return false
@@ -310,6 +310,8 @@ class Draw extends Operation {
       const { data, shape } = element
 
       this.$container.find('.shape-box[data-id="' + data.id + '"]').remove()
+
+      oldShape = cloneDeep(element)
 
       delete this.designer.elements[data.id]
 
@@ -358,6 +360,8 @@ class Draw extends Operation {
 
     eventBus.trigger('shape.select.remove')
 
+    this.removed(oldShape)
+
     return true
   }
 
@@ -391,7 +395,13 @@ class Draw extends Operation {
   /**
    * 删除后事件
    */
-  removed(event) {}
+  removed(element) {
+    const { config } = this.options
+    // 删除回调
+    if (config.remove && config.remove.onRemoved) {
+      config.remove.onRemoved(setExportData(element))
+    }
+  }
 }
 
 const instance = (options, $container) => {

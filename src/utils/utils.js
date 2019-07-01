@@ -231,6 +231,11 @@ export const checkBpmnShape = (bpmns, filter, type) => {
  */
 export const setExportData = element => {
   const exportData = {}
+
+  if (!element) {
+    return false
+  }
+
   if (element.$type === 'bpmn:Process') {
     exportData.id = element.id
     exportData.extensions = setExportExtensions(

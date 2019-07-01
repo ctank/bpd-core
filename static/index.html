@@ -110,6 +110,7 @@
     <script>
       var testBPD = null
       var selectElement = null
+      var removeElement = null
       window.onload = function() {
         testBPD = new BPDCore({
           container: '#canvas',
@@ -154,6 +155,12 @@
             select: {
               onSelected: function(element) {
                 selectElement = element
+              }
+            },
+            remove: {
+              onRemoved: function(element) {
+                console.log(element)
+                removeElement = element
               }
             }
           }
