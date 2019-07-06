@@ -108,12 +108,14 @@ const createContainer = options => {
     height: options.height
   })
 
+  container.append(designerBox)
+
+  // 初始化画布位置
   designerBox.find('.bpd-layout').css({
-    top: -options.pageStyle.height / 2,
-    left: -options.pageStyle.width / 2
+    top: (-options.pageStyle.height + container.height()) / 2,
+    left: (-options.pageStyle.width + container.width()) / 2
   })
 
-  container.append(designerBox)
   return designerBox
 }
 

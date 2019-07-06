@@ -160,6 +160,7 @@ class Draw extends Operation {
       this.designer.build()
     }
 
+    // 设置存在图形时的画布位置
     const { $container, options } = this
     const { width, height } = options.pageStyle
 
