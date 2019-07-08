@@ -252,13 +252,15 @@ export const setExportData = element => {
         case 'extensionElements':
           exportData.extensions = setExportExtensions(data[key].values || [])
           break
+        case 'eventDefinitions':
+          exportData.events = setExportExtensions(data[key] || [])
+          break
         default:
           exportData[key] = data[key]
           break
       }
     }
   }
-
   return exportData
 }
 

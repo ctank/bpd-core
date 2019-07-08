@@ -1,18 +1,23 @@
-import EndEvent from './EndEvent'
 import StartEvent from './StartEvent'
+import MessageStartEvent from './MessageStartEvent'
+
 import UserTask from './UserTask'
 import ServiceTask from './ServiceTask'
+
+import EndEvent from './EndEvent'
 import TerminateEndEvent from './TerminateEndEvent'
+
 import ExclusiveGateway from './ExclusiveGateway'
 import InclusiveGateway from './InclusiveGateway'
 import ParallelGateway from './ParallelGateway'
 import ComplexGateway from './ComplexGateway'
+
 import CallActivity from './CallActivity'
 
 import eventBus from '../../core/eventBus'
 
 const group = {
-  StartEvent: ['StartEvent'],
+  StartEvent: ['StartEvent', 'MessageStartEvent'],
   Task: ['UserTask', 'ServiceTask'],
   CallActivity: ['CallActivity'],
   Gateway: [
@@ -36,6 +41,7 @@ export const init = () => {
 export default {
   EndEvent,
   StartEvent,
+  MessageStartEvent,
   UserTask,
   ServiceTask,
   TerminateEndEvent,

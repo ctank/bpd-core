@@ -9,6 +9,20 @@ import {
   restoreScale
 } from '../utils/utils'
 
+const getShapeTarget = type => {
+  const target = {}
+  switch (type) {
+    case 'MessageStartEvent':
+      target.type = 'StartEvent'
+      target.eventDefinitionType = 'MessageEventDefinition'
+      break
+    default:
+      target.type = type
+      break
+  }
+  return target
+}
+
 class Designer {
   constructor(options, $container, definitions) {
     // 配置
@@ -76,12 +90,15 @@ class Designer {
       let bounds = null
 
       if (element == null) {
+        const shapeTarget = getShapeTarget(
+          convertFirstLetter(type, 'uppercase')
+        )
         // 创建数据
         element = eventBus.trigger('element.create', {
           name: null,
-          type: convertFirstLetter(type, 'uppercase'),
           prefix: 'obj',
-          pos: canvasPos
+          pos: canvasPos,
+          ...shapeTarget
         })
 
         bounds = element.plane.bounds
@@ -92,7 +109,7 @@ class Designer {
         keys = Object.keys(this.elements)
 
         // 渲染图形
-        eventBus.trigger('shape.render', { type, element })
+        eventBus.trigger('shape.render', { type: shapeTarget.type, element })
         $shape = this.$container.find(
           '.shape-box[data-id="' + element.data.id + '"]'
         )
@@ -348,6 +365,10 @@ class Designer {
           case 'incoming':
           case 'outgoing':
             break
+          // 事件定义
+          case 'eventDefinitions':
+            obj.data.eventDefinitions = this.createEventModel(data[key] || [])
+            break
           // 扩展属性
           case 'extensionElements':
             obj.data.extensionElements = this.createExtensionModel(
@@ -437,7 +458,10 @@ class Designer {
    * 创建数据
    * @param {*} callback
    */
-  createElement({ type, prefix, name, pos }, callback = () => {}) {
+  createElement(
+    { type, eventDefinitionType, prefix, name, pos },
+    callback = () => {}
+  ) {
     const id = prefix + '_' + this.options.ids.next()
     // 元素数据
     const data = cloneDeep(
@@ -446,6 +470,7 @@ class Designer {
         attrs: {
           name,
           id,
+          eventDefinitions: this.createEventModel(eventDefinitionType),
           extensionElements: this.createExtensionModel()
         }
       })
@@ -659,6 +684,39 @@ class Designer {
       descriptor: 'bpmn:ExtensionElements',
       attrs: { values: extensions }
     })
+  }
+
+  /**
+   * 创建事件集合
+   * @param {*} data
+   */
+  createEventModel(data) {
+    const eventDefinitions = []
+    if (data) {
+      if (typeof data === 'string') {
+        eventDefinitions.push(
+          this.createModel({
+            descriptor: 'bpmn:' + data,
+            attrs: {}
+          })
+        )
+      } else {
+        data.forEach(item => {
+          const descriptor = item.$type || item.name
+          const attrs = Object.assign({}, cloneDeep(item), item.$attrs)
+          delete attrs.$type
+          delete attrs.name
+          const definition = this.createModel({
+            descriptor,
+            attrs
+          })
+          if (definition) {
+            eventDefinitions.push(definition)
+          }
+        })
+      }
+    }
+    return eventDefinitions
   }
 }
 

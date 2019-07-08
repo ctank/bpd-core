@@ -82,10 +82,6 @@ class BpmnModel extends Model {
 
     return done(err, result)
   }
-
-  test(a) {
-    console.log('test', a, this.a)
-  }
 }
 
 export default BpmnModel
