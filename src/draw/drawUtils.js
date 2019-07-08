@@ -1727,8 +1727,8 @@ const getShapeByPosition = (mouseX, mouseY, $container, xx) => {
       } else {
         if (
           pointInRect(
-            setScale(targetPoint.x),
-            setScale(targetPoint.y),
+            setScale(sourcePoint.x),
+            setScale(sourcePoint.y),
             mouseSize
           )
         ) {
