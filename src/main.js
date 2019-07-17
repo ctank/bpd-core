@@ -118,7 +118,7 @@ const createContainer = options => {
 
 class BPDCore {
   constructor(options = {}) {
-    this.version = '0.1.4'
+    this.version = '1.1.0-beta.2'
     // 配置
     this.options = Object.assign({}, DEFAULT_OPTIONS, options)
     // 容器

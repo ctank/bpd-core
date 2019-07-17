@@ -165,7 +165,7 @@ class Draw extends Operation {
     const { width, height } = options.pageStyle
 
     const $layout = $container.find('.bpd-layout')
-    const layoutPos = $layout.offset()
+    const layoutPos = $layout.position()
     const range = {
       x: restoreScale(0),
       y: restoreScale(0),
@@ -175,8 +175,8 @@ class Draw extends Operation {
     const ids = DrawUtils.getElementIdsByRange(range)
     const shapeBox = DrawUtils.getElementsBox(ids)
     const screenBox = {
-      x: layoutPos.left,
-      y: layoutPos.top,
+      x: Math.abs(layoutPos.left),
+      y: Math.abs(layoutPos.top),
       width: $container.width(),
       height: $container.height()
     }
