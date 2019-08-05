@@ -361,6 +361,12 @@ class Draw extends Operation {
 
     eventBus.trigger('shape.select.remove')
 
+    // 添加记录
+    eventBus.trigger('record.add', {
+      action: 'remove',
+      content: newShapes
+    })
+
     this.removed(oldShape)
 
     return true

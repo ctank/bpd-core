@@ -181,6 +181,11 @@ class Designer {
       this.elements[element.data.id] = element
     }
     this.build()
+    // 添加记录
+    eventBus.trigger('record.add', {
+      action: 'create',
+      content: addShapes
+    })
   }
 
   /**
@@ -273,6 +278,17 @@ class Designer {
       }
     }
     this.build()
+
+    debugger
+
+    // 添加记录
+    eventBus.trigger('record.add', {
+      action: 'update',
+      content: {
+        shapes: oriElements,
+        updates: updateElements
+      }
+    })
   }
 
   /**

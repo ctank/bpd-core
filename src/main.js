@@ -14,6 +14,7 @@ import { loadFont, setExportData } from './utils/utils'
 import BpmnXML from './features/xml'
 import Background from './features/background'
 import Direction from './features/direction'
+import Record from './features/record'
 import ShapeAnchor from './features/anchor'
 import ShapeSelect from './features/select'
 import ShapeDrag from './features/drag'
@@ -116,66 +117,54 @@ const createContainer = options => {
   return designerBox
 }
 
+/**
+ * 初始化功能
+ * @param {*} $container
+ * @param {*} options
+ */
+const initFeatures = ($container, options) => {
+  // 快捷键
+  new HotKey()
+  // 国际化
+  new I18n(options.local)
+  // xml
+  new BpmnXML(options.extensions)
+  // 背景
+  new Background($container, options, options.config.background)
+  // 手
+  new Hand($container, options.pageStyle)
+  // 非只读状态时
+  if (!options.readonly) {
+    // 锚点
+    new ShapeAnchor($container, options.config.anchor)
+    // 对齐
+    new Snapline($container, options.config.snapline)
+    // 流向
+    new Direction($container, options.config.direction)
+    // 选择
+    new ShapeSelect($container, options.config.select)
+    // 记录
+    new Record()
+    // 提示
+    new Tooltip($container, options.config.tooltip)
+    // 拖动
+    new ShapeDrag(options, $container)
+    // 组面板
+    new GroupPanel($container, options)
+  }
+}
+
 class BPDCore {
   constructor(options = {}) {
-    this.version = '1.1.0-beta.2'
+    this.version = '1.1.0-beta.4'
     // 配置
     this.options = Object.assign({}, DEFAULT_OPTIONS, options)
     // 容器
     this.$container = createContainer(this.options)
-    // 功能
-    this.features = {
-      // 快捷键
-      HotKey: new HotKey(),
-      // 国际化
-      I18n: new I18n(this.options.local),
-      // xml
-      BpmnXML: new BpmnXML(this.options.extensions),
-      // 背景
-      Background: new Background(
-        this.$container,
-        this.options,
-        this.options.config.background
-      ),
-      // 手
-      Hand: new Hand(this.$container, this.options.pageStyle)
-    }
-
-    if (!this.options.readonly) {
-      // 锚点
-      this.features.Anchor = new ShapeAnchor(
-        this.$container,
-        this.options.config.anchor
-      )
-      // 对齐
-      this.features.Snapline = new Snapline(
-        this.$container,
-        this.options.config.snapline
-      )
-      // 流向
-      this.features.Direction = new Direction(
-        this.$container,
-        this.options.config.direction
-      )
-      // 选择
-      this.features.Select = new ShapeSelect(
-        this.$container,
-        this.options.config.select
-      )
-      // 提示
-      this.features.Tooltip = new Tooltip(
-        this.$container,
-        this.options.config.tooltip
-      )
-      // 拖动
-      this.features.Drag = new ShapeDrag(this.options, this.$container)
-      // 组面板
-      this.features.GroupPanel = new GroupPanel(this.$container, this.options)
-    }
-
+    // 初始化功能
+    initFeatures(this.$container, this.options)
     // 绘图
     this.draw = draw(this.options, this.$container)
-
     // 检查字体载入
     loadFont('bpmn', () => {
       IS_FONTLOAD = true
