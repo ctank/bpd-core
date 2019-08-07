@@ -42,6 +42,16 @@ export const isFunc = fn => {
   return typeof fn === 'function'
 }
 
+// 判断是否为对象
+export const isObject = obj => {
+  return Object.prototype.toString.call(obj) === '[object Object]'
+}
+
+// 判断是否为对象
+export const isArray = obj => {
+  return Object.prototype.toString.call(obj) === '[object Array]'
+}
+
 /**
  * 首字母大小写转换
  * @param {*} str
@@ -53,15 +63,6 @@ export const convertFirstLetter = (str, type) => {
   } else {
     return str.substring(0, 1).toLowerCase() + str.substring(1)
   }
-}
-
-/**
- * 深拷贝
- * @param  {Object|Array} obj 需要深拷贝的对象
- * @return {Object|Array}     深拷贝出来的对象
- */
-export const cloneDeep = obj => {
-  return JSON.parse(JSON.stringify(obj))
 }
 
 /**
@@ -82,6 +83,15 @@ export const mergeArray = (array1, array2) => {
     array.push(array3[i])
   }
   return array
+}
+
+/**
+ * 深拷贝
+ * @param  {Object|Array} obj 需要深拷贝的对象
+ * @return {Object|Array}     深拷贝出来的对象
+ */
+export const cloneDeep = obj => {
+  return JSON.parse(JSON.stringify(obj))
 }
 
 /**

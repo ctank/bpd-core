@@ -144,7 +144,7 @@ const initFeatures = ($container, options) => {
     // 选择
     new ShapeSelect($container, options.config.select)
     // 记录
-    new Record()
+    window.testRecord = new Record()
     // 提示
     new Tooltip($container, options.config.tooltip)
     // 拖动

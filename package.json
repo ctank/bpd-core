@@ -15,7 +15,7 @@
     "start": "cross-env NODE_ENV=hot node build/webpack.config.server.js"
   },
   "devDependencies": {
-    "autoprefixer": "^9.0.1",
+    "autoprefixer": "^9.6.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-plugin-import": "^1.8.0",
@@ -50,7 +50,7 @@
     "sass-loader": "^7.0.3",
     "semver": "^5.5.0",
     "webpack": "^3.12.0",
-    "webpack-bundle-analyzer": "^2.9.1",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-dev-middleware": "^1.12.2",
     "webpack-dev-server": "^3.3.1",
     "webpack-hot-middleware": "^2.21.0"

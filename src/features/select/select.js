@@ -193,10 +193,9 @@ class ShapeSelect {
 
   /**
    *
-   * @param {*} h
-   * @param {*} d
+   * @param {*} ids
    */
-  selectShape({ ids, d }) {
+  selectShape({ ids }) {
     if (typeof ids === 'string') {
       ids = [ids]
     }

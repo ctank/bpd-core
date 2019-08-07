@@ -6,8 +6,11 @@ import {
   cloneDeep,
   convertFirstLetter,
   setScale,
-  restoreScale
+  restoreScale,
+  isArray
 } from '../utils/utils'
+
+import { clone, cloneJSON, cloneLoop, cloneForce } from '../utils/clone'
 
 const getShapeTarget = type => {
   const target = {}
@@ -35,6 +38,8 @@ class Designer {
     this.maxZIndex = 0
     // 图形集合
     this.elements = {}
+    // 原始图形集合
+    this.oriElements = {}
     //
     this.groups = {}
     //
@@ -47,8 +52,6 @@ class Designer {
   init() {
     // 创建数据
     eventBus.on('data.create', this.createData.bind(this))
-    // 删除数据
-    eventBus.on('data.remove', this.removeData.bind(this))
     // 创建数据
     eventBus.on('element.create', this.createElement.bind(this))
     //
@@ -150,9 +153,13 @@ class Designer {
         if (isCreated === false) {
           $shape.remove()
         } else {
+          // 开始记录
+          eventBus.trigger('record.start')
           $shape.attr('class', 'shape-box')
           this.addData(element)
           callback(element)
+          // 结束记录
+          eventBus.trigger('record.end')
         }
       }
     })
@@ -163,7 +170,13 @@ class Designer {
    * @param {} shapes
    */
   addData(element, status) {
-    this.addDatas([element], status)
+    if (element) {
+      if (isArray(element)) {
+        this.addDatas(element, status)
+      } else {
+        this.addDatas([element], status)
+      }
+    }
   }
 
   /**
@@ -179,10 +192,11 @@ class Designer {
       const element = elements[i]
       addShapes.push(element)
       this.elements[element.data.id] = element
+      this.oriElements[element.data.id] = cloneForce(element)
     }
     this.build()
     // 添加记录
-    eventBus.trigger('record.add', {
+    eventBus.trigger('record.push', {
       action: 'create',
       content: addShapes
     })
@@ -191,17 +205,17 @@ class Designer {
   /**
    * 删除图形
    */
-  removeData(selected, callback = () => {}) {
-    if (!selected) {
-      // TODO:
-    }
+  // removeData(selected, callback = () => {}) {
+  //   if (!selected) {
+  //     // TODO:
+  //   }
 
-    if (selected.length > 0) {
-      let childrenShapes = []
-      selected = selected.concat(childrenShapes)
-      callback(selected)
-    }
-  }
+  //   if (selected.length > 0) {
+  //     let childrenShapes = []
+  //     selected = selected.concat(childrenShapes)
+  //     callback(selected)
+  //   }
+  // }
 
   getElement(id) {
     if (id) {
@@ -256,7 +270,13 @@ class Designer {
    * @param {} shape
    */
   update(element) {
-    this.updateMulti([element])
+    if (element) {
+      if (isArray(element)) {
+        this.updateMulti(element)
+      } else {
+        this.updateMulti([element])
+      }
+    }
   }
 
   /**
@@ -268,24 +288,25 @@ class Designer {
     const oriElements = []
     for (let i = 0; i < elements.length; i += 1) {
       const { data, plane, shape } = elements[i]
-      if (shape.bpmnName !== 'SequenceFlow') {
-        shape.textBlock = shape.getTextBlock()
-      }
-      if (this.elements[shape.id]) {
-        this.elements[data.id] = cloneDeep(elements[i])
-        oriElements.push(cloneDeep(this.getPersistenceById(data.id)))
-        updateElements.push(cloneDeep(elements[i]))
+      // if (shape.bpmnName !== 'SequenceFlow') {
+      //   shape.textBlock = shape.getTextBlock()
+      // }
+      if (this.elements[data.id]) {
+        this.elements[data.id] = cloneForce(elements[i])
+        // 添加更新前的数据
+        oriElements.push(cloneForce(this.oriElements[data.id]))
+        // 添加更新后的数据
+        updateElements.push(cloneForce(elements[i]))
+        // 更新原始数据
+        this.oriElements[data.id] = cloneForce(elements[i])
       }
     }
     this.build()
-
-    debugger
-
     // 添加记录
-    eventBus.trigger('record.add', {
+    eventBus.trigger('record.push', {
       action: 'update',
       content: {
-        shapes: oriElements,
+        elements: oriElements,
         updates: updateElements
       }
     })
@@ -324,7 +345,7 @@ class Designer {
     for (let key in this.elements) {
       elements.push(this.elements[key])
     }
-    eventBus.trigger('shape.remove', elements)
+    eventBus.trigger('shape.remove', { elements })
   }
 
   build() {

@@ -79,6 +79,70 @@ class Record {
    */
   undo() {
     console.log('Ctrl+Z')
+    const undoSize = this.undoStack.size()
+    if (undoSize > 0) {
+      // 获取最新记录
+      const record = this.undoStack.top()
+      // 清除最新记录
+      this.undoStack.pop()
+      // 移入重做栈中
+      this.redoStack.push(record)
+      // 锁定撤销栈
+      this.undoStack.setStatus(false)
+
+      this.start()
+
+      record.forEach(item => {
+        switch (item.action) {
+          case 'create':
+            // 清除选择
+            eventBus.trigger('shape.select.remove')
+            // 移除图形
+            eventBus.trigger('shape.remove', {
+              elements: item.content,
+              isRemove: false
+            })
+            break
+          case 'update':
+            const elements = item.content.elements
+            // 更新数据
+            eventBus.trigger('element.update', elements)
+            for (let i = 0; i < elements.length; i += 1) {
+              const element = elements[i]
+              const type = element.shape.bpmnName
+              // 重绘图形
+              if (type === 'SequenceFlow') {
+                eventBus.trigger('connection.render', { element })
+              } else {
+                eventBus.trigger('shape.render', { type, element })
+              }
+            }
+            // 重新选中
+            const ids = eventBus.trigger('shape.select.getIds')
+            eventBus.trigger('shape.select.remove')
+            eventBus.trigger('shape.select', { ids })
+            break
+          case 'remove':
+            console.log('remove')
+            eventBus.trigger('element.add', item.content)
+            for (let i = 0; i < item.content.length; i += 1) {
+              const element = item.content[i]
+              const type = element.shape.bpmnName
+              // 重绘图形
+              if (type === 'SequenceFlow') {
+                eventBus.trigger('connection.render', { element })
+              } else {
+                eventBus.trigger('shape.render', { type, element })
+              }
+            }
+            break
+          default:
+            break
+        }
+      })
+
+      this.end()
+    }
   }
 
   /**

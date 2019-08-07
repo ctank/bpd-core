@@ -26,11 +26,6 @@ class ArrayStack {
     this.stack = []
     return true
   }
-
-  toString() {
-    return this.stack.toString()
-  }
-
   // 修改状态
   setStatus(status) {
     this.status = status

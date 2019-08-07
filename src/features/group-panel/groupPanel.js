@@ -364,6 +364,8 @@ class groupPanel {
     element.plane.bounds.x = waypoint[waypoint.length - 1].x - point.x
     element.plane.bounds.y = waypoint[waypoint.length - 1].y - point.y
 
+    // 开始记录
+    eventBus.trigger('record.start')
     eventBus.trigger('shape.render', { type, element })
     eventBus.trigger('element.add', element)
 
@@ -384,6 +386,9 @@ class groupPanel {
     })
 
     eventBus.trigger('element.update', connection)
+
+    // 结束记录
+    eventBus.trigger('record.end')
     eventBus.trigger('shape.select.remove')
     eventBus.trigger('shape.select', { ids: element.data.id })
   }

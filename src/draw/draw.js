@@ -7,12 +7,9 @@ import DrawShape from './drawShape'
 import DrawConnection from './drawConnection'
 import DrawUtils from './drawUtils'
 
-import {
-  cloneDeep,
-  restoreScale,
-  getBpmnNameByType,
-  setExportData
-} from '../utils/utils'
+import { restoreScale, getBpmnNameByType, setExportData } from '../utils/utils'
+
+import { clone, cloneJSON, cloneLoop, cloneForce } from '../utils/clone'
 
 class Draw extends Operation {
   constructor(options, $container) {
@@ -101,7 +98,7 @@ class Draw extends Operation {
             if (planeElement && planeElement.length > 0) {
               planeElement.forEach((plane, planeIndex) => {
                 if (plane.id === element.id + '_di') {
-                  const data = cloneDeep(element)
+                  const data = clone(element)
                   if (element.extensionElements) {
                     data.extensionElements.values =
                       element.extensionElements.values || []
@@ -120,7 +117,7 @@ class Draw extends Operation {
                   }
                   elements[element.id] = {
                     data,
-                    plane: cloneDeep(plane)
+                    plane: clone(plane)
                   }
                 }
               })
@@ -272,9 +269,11 @@ class Draw extends Operation {
 
   /**
    * 删除图形
-   * @param {} shapes
+   * @param {} params
    */
-  removeShape(elements, isRemove) {
+  removeShape(params = {}) {
+    let { elements, isRemove } = params
+
     if (!elements) {
       elements = eventBus.trigger('shape.select.get')
     }
@@ -306,15 +305,16 @@ class Draw extends Operation {
     })
 
     elements.forEach(element => {
-      newShapes.push(cloneDeep(element))
+      newShapes.push(clone(element))
 
       const { data, shape } = element
 
       this.$container.find('.shape-box[data-id="' + data.id + '"]').remove()
 
-      oldShape = cloneDeep(element)
+      oldShape = clone(element)
 
       delete this.designer.elements[data.id]
+      delete this.designer.oriElements[data.id]
 
       if (shape.bpmnName === 'SequenceFlow') {
         if (data.sourceRef != null) {
@@ -349,6 +349,11 @@ class Draw extends Operation {
               ) {
                 connectionElement.data.targetRef = null
               }
+
+              if (changedIds.indexOf(connection) < 0) {
+                changedIds.push(connection)
+                parentShapes.push(connectionElement)
+              }
             }
           }
         }
@@ -360,13 +365,20 @@ class Draw extends Operation {
     this.designer.build()
 
     eventBus.trigger('shape.select.remove')
-
+    // 开始记录
+    eventBus.trigger('record.start')
     // 添加记录
-    eventBus.trigger('record.add', {
+    eventBus.trigger('record.push', {
       action: 'remove',
       content: newShapes
     })
-
+    // 更新其他图形
+    if (parentShapes.length > 0) {
+      this.designer.updateMulti(parentShapes)
+    }
+    // 结束记录
+    eventBus.trigger('record.end')
+    // 删除回调
     this.removed(oldShape)
 
     return true

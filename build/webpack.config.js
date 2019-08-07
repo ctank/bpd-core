@@ -38,7 +38,7 @@ var webpackConfig = {
                 plugins: loader => [
                   require('autoprefixer')({
                     //CSS浏览器兼容
-                    browsers: ['ie>=8', '>1% in CN']
+                    overrideBrowserslist: ['ie>=8', '>1% in CN']
                   })
                 ]
               }
