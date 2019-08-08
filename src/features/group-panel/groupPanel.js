@@ -2,12 +2,8 @@ import eventBus from '../../core/eventBus'
 import $ from '../../utils/slimJQ'
 
 import DrawUtils from '../../draw/drawUtils'
-import {
-  setScale,
-  restoreScale,
-  checkBpmnShape,
-  cloneDeep
-} from '../../utils/utils'
+import { setScale, restoreScale, checkBpmnShape } from '../../utils/utils'
+import { cloneJSON } from '../../utils/clone'
 
 const DEFAULT_CONFIG = {
   width: 30,
@@ -131,7 +127,7 @@ class groupPanel {
         const type = shapeGroup[i]
         const element = eventBus.trigger('shape.create', {
           type,
-          element: cloneDeep(ELEMENT_TEMP)
+          element: cloneJSON(ELEMENT_TEMP)
         })
 
         if (checkBpmnShape(bpmns, filter, type)) {
@@ -221,7 +217,7 @@ class groupPanel {
           const type = shapeGroup[key][0]
           const element = eventBus.trigger('shape.create', {
             type,
-            element: cloneDeep(ELEMENT_TEMP)
+            element: cloneJSON(ELEMENT_TEMP)
           })
 
           element.data.text = this.getShapeName(element.shape.bpmnName)
@@ -470,7 +466,7 @@ class groupPanel {
 
     plane.bounds = bounds
 
-    const paths = cloneDeep(shape.getPath())
+    const paths = cloneJSON(shape.getPath())
 
     const center = {
       x: bounds.x + bounds.width / 2,

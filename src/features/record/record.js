@@ -78,7 +78,9 @@ class Record {
    * 撤销
    */
   undo() {
-    console.log('Ctrl+Z')
+    // 锁定撤销栈
+    this.undoStack.setStatus(false)
+    // 获取撤销栈长度
     const undoSize = this.undoStack.size()
     if (undoSize > 0) {
       // 获取最新记录
@@ -87,8 +89,6 @@ class Record {
       this.undoStack.pop()
       // 移入重做栈中
       this.redoStack.push(record)
-      // 锁定撤销栈
-      this.undoStack.setStatus(false)
 
       this.start()
 
@@ -123,7 +123,6 @@ class Record {
             eventBus.trigger('shape.select', { ids })
             break
           case 'remove':
-            console.log('remove')
             eventBus.trigger('element.add', item.content)
             for (let i = 0; i < item.content.length; i += 1) {
               const element = item.content[i]
@@ -140,16 +139,81 @@ class Record {
             break
         }
       })
-
       this.end()
     }
+    // 解锁撤销栈
+    this.undoStack.setStatus(true)
   }
 
   /**
    * 重做
    */
   redo() {
-    console.log('Ctrl+Y')
+    // 锁定撤销栈
+    this.undoStack.setStatus(false)
+    // 获取重做栈长度
+    const redoSize = this.redoStack.size()
+    if (redoSize > 0) {
+      // 获取最新记录
+      const record = this.redoStack.top()
+      // 清除最新记录
+      this.redoStack.pop()
+      // 移入撤销栈中
+      this.undoStack.push(record)
+
+      this.start()
+
+      record.forEach(item => {
+        switch (item.action) {
+          case 'create':
+            eventBus.trigger('element.add', item.content)
+            for (let i = 0; i < item.content.length; i += 1) {
+              const element = item.content[i]
+              const type = element.shape.bpmnName
+              // 重绘图形
+              if (type === 'SequenceFlow') {
+                eventBus.trigger('connection.render', { element })
+              } else {
+                eventBus.trigger('shape.render', { type, element })
+              }
+            }
+            // Model.build()
+            break
+          case 'update':
+            const updates = item.content.updates
+            // 更新数据
+            eventBus.trigger('element.update', updates)
+            for (let i = 0; i < updates.length; i += 1) {
+              const element = updates[i]
+              const type = element.shape.bpmnName
+              // 重绘图形
+              if (type === 'SequenceFlow') {
+                eventBus.trigger('connection.render', { element })
+              } else {
+                eventBus.trigger('shape.render', { type, element })
+              }
+            }
+            // 重新选中
+            const ids = eventBus.trigger('shape.select.getIds')
+            eventBus.trigger('shape.select.remove')
+            eventBus.trigger('shape.select', { ids })
+            break
+          case 'remove':
+            // 清除选择
+            eventBus.trigger('shape.select.remove')
+            // 移除图形
+            eventBus.trigger('shape.remove', {
+              elements: item.content
+            })
+            break
+          default:
+            break
+        }
+      })
+      this.end()
+    }
+    // 解锁撤销栈
+    this.undoStack.setStatus(false)
   }
 }
 

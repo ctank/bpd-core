@@ -3,14 +3,14 @@ import DrawUtils from '../draw/drawUtils'
 
 import $ from '../utils/slimJQ'
 import {
-  cloneDeep,
+  cloneElement,
   convertFirstLetter,
   setScale,
   restoreScale,
   isArray
 } from '../utils/utils'
 
-import { clone, cloneJSON, cloneLoop, cloneForce } from '../utils/clone'
+import { cloneJSON } from '../utils/clone'
 
 const getShapeTarget = type => {
   const target = {}
@@ -191,8 +191,8 @@ class Designer {
     for (let i = 0; i < elements.length; i += 1) {
       const element = elements[i]
       addShapes.push(element)
-      this.elements[element.data.id] = element
-      this.oriElements[element.data.id] = cloneForce(element)
+      this.elements[element.data.id] = cloneElement(element)
+      this.oriElements[element.data.id] = cloneElement(element)
     }
     this.build()
     // 添加记录
@@ -292,13 +292,13 @@ class Designer {
       //   shape.textBlock = shape.getTextBlock()
       // }
       if (this.elements[data.id]) {
-        this.elements[data.id] = cloneForce(elements[i])
+        this.elements[data.id] = cloneElement(elements[i])
         // 添加更新前的数据
-        oriElements.push(cloneForce(this.oriElements[data.id]))
+        oriElements.push(cloneElement(this.oriElements[data.id]))
         // 添加更新后的数据
-        updateElements.push(cloneForce(elements[i]))
+        updateElements.push(cloneElement(elements[i]))
         // 更新原始数据
-        this.oriElements[data.id] = cloneForce(elements[i])
+        this.oriElements[data.id] = cloneElement(elements[i])
       }
     }
     this.build()
@@ -501,7 +501,7 @@ class Designer {
   ) {
     const id = prefix + '_' + this.options.ids.next()
     // 元素数据
-    const data = cloneDeep(
+    const data = cloneJSON(
       this.createModel({
         descriptor: 'bpmn:' + type,
         attrs: {
@@ -517,7 +517,7 @@ class Designer {
 
     if (type === 'SequenceFlow') {
       // 连线绘图数据
-      plane = cloneDeep(
+      plane = cloneJSON(
         this.createModel({
           descriptor: 'bpmndi:BPMNEdge',
           attrs: {
@@ -528,7 +528,7 @@ class Designer {
       )
     } else {
       // 图形绘图数据
-      plane = cloneDeep(
+      plane = cloneJSON(
         this.createModel({
           descriptor: 'bpmndi:BPMNShape',
           attrs: {
@@ -705,7 +705,7 @@ class Designer {
     const extensions = []
     values.forEach(extension => {
       const descriptor = extension.$type || extension.name
-      const attrs = Object.assign({}, cloneDeep(extension), extension.$attrs)
+      const attrs = Object.assign({}, cloneJSON(extension), extension.$attrs)
       delete attrs.$type
       delete attrs.name
       const extensionModel = this.createModel({
@@ -740,7 +740,7 @@ class Designer {
       } else {
         data.forEach(item => {
           const descriptor = item.$type || item.name
-          const attrs = Object.assign({}, cloneDeep(item), item.$attrs)
+          const attrs = Object.assign({}, cloneJSON(item), item.$attrs)
           delete attrs.$type
           delete attrs.name
           const definition = this.createModel({

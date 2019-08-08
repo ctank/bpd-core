@@ -7,9 +7,14 @@ import DrawShape from './drawShape'
 import DrawConnection from './drawConnection'
 import DrawUtils from './drawUtils'
 
-import { restoreScale, getBpmnNameByType, setExportData } from '../utils/utils'
+import {
+  cloneElement,
+  restoreScale,
+  getBpmnNameByType,
+  setExportData
+} from '../utils/utils'
 
-import { clone, cloneJSON, cloneLoop, cloneForce } from '../utils/clone'
+import { cloneJSON } from '../utils/clone'
 
 class Draw extends Operation {
   constructor(options, $container) {
@@ -98,7 +103,7 @@ class Draw extends Operation {
             if (planeElement && planeElement.length > 0) {
               planeElement.forEach((plane, planeIndex) => {
                 if (plane.id === element.id + '_di') {
-                  const data = cloneJSON(element)
+                  const data = cloneElement(element)
                   if (element.extensionElements) {
                     data.extensionElements.values =
                       element.extensionElements.values || []
@@ -251,7 +256,6 @@ class Draw extends Operation {
       if (element.shape.bpmnName === 'SequenceFlow') {
       } else {
         element.shape.lightStyle = { lineStyle: style }
-        console.log(element)
         this.drawShape.renderShape(element)
       }
     } else {
@@ -305,13 +309,13 @@ class Draw extends Operation {
     })
 
     elements.forEach(element => {
-      newShapes.push(clone(element))
+      newShapes.push(cloneElement(element))
 
       const { data, shape } = element
 
       this.$container.find('.shape-box[data-id="' + data.id + '"]').remove()
 
-      oldShape = clone(element)
+      oldShape = cloneElement(element)
 
       delete this.designer.elements[data.id]
       delete this.designer.oriElements[data.id]

@@ -2,7 +2,8 @@ import eventBus from '../../core/eventBus'
 import $ from '../../utils/slimJQ'
 
 import DrawUtils from '../../draw/drawUtils'
-import { setScale, cloneDeep, restoreScale } from '../../utils/utils'
+import { setScale, restoreScale } from '../../utils/utils'
+import { cloneJSON } from '../../utils/clone'
 
 class ShapeMove {
   constructor(options, $container) {
@@ -74,7 +75,7 @@ class ShapeMove {
         }
 
         if (drag) {
-          const newBounds = cloneDeep(bounds)
+          const newBounds = cloneJSON(bounds)
           newBounds.x += pos.x
           newBounds.y += pos.y
 
@@ -96,7 +97,7 @@ class ShapeMove {
         $(document)
           .off('mouseup.drop')
           .on('mouseup.drop', function() {
-            // Model.updateMulti(h)
+            eventBus.trigger('element.update', selects)
             $(document).off('mouseup.drop')
           })
       })

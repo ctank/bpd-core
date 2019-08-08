@@ -67,11 +67,11 @@ class DrawConnection {
       }
     }
 
-    if (sourcePoint.angle == null) {
+    if (sourceRef && sourcePoint.angle == null) {
       sourcePoint.angle = DrawUtils.getAngle(waypoint[1], waypoint[0])
     }
 
-    if (targetPoint.angle == null) {
+    if (targetRef && targetPoint.angle == null) {
       targetPoint.angle = DrawUtils.getAngle(
         waypoint[waypoint.length - 2],
         waypoint[waypoint.length - 1]
@@ -82,6 +82,7 @@ class DrawConnection {
     let y1 = targetPoint.y
     let x2 = sourcePoint.x
     let y2 = sourcePoint.y
+
     if (targetPoint.x >= sourcePoint.x) {
       x1 = sourcePoint.x
       x2 = targetPoint.x

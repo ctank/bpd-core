@@ -1,3 +1,6 @@
+import { clone, cloneJSON, cloneLoop, cloneForce } from './clone'
+import eventBus from '../core/eventBus'
+
 /**
  * 验证字体文件加载
  * @param font
@@ -86,12 +89,15 @@ export const mergeArray = (array1, array2) => {
 }
 
 /**
- * 深拷贝
- * @param  {Object|Array} obj 需要深拷贝的对象
- * @return {Object|Array}     深拷贝出来的对象
+ * 拷贝元素
+ * @param  {} element 旧元素
+ * @return {} 新元素
  */
-export const cloneDeep = obj => {
-  return JSON.parse(JSON.stringify(obj))
+export const cloneElement = element => {
+  return eventBus.trigger('shape.create', {
+    type: element.shape.bpmnName,
+    element: cloneJSON(element)
+  })
 }
 
 /**
@@ -281,7 +287,7 @@ export const setExportData = element => {
 export const setExportExtensions = values => {
   const extensions = []
   for (let i = 0; i < values.length; i += 1) {
-    const item = Object.assign({}, cloneDeep(values[i]), values[i].$attrs)
+    const item = Object.assign({}, cloneJSON(values[i]), values[i].$attrs)
     if (item.$type) {
       item.name = item.$type
       delete item.$type
