@@ -94,10 +94,61 @@ export const mergeArray = (array1, array2) => {
  * @return {} 新元素
  */
 export const cloneElement = element => {
-  return eventBus.trigger('shape.create', {
-    type: element.shape.bpmnName,
-    element: cloneJSON(element)
-  })
+  const { data, plane, shape } = element
+  // 判断格式
+  if (data && plane && shape) {
+    const type = shape.bpmnName
+    // 创建没有shape的element
+    const defaultElement = eventBus.trigger('element.create', {
+      name: data.name,
+      id: data.id,
+      type,
+      prefix: 'obj'
+    })
+    // 还原data和plane属性
+    if (type !== 'SequenceFlow') {
+      defaultElement.data.incoming = data.incoming ? data.incoming : ''
+      defaultElement.data.outgoing = data.outgoing ? data.outgoing : ''
+      if (data.extensionElements) {
+        defaultElement.data.extensionElements.values =
+          data.extensionElements.values || []
+      }
+      // 创建bound
+      eventBus.trigger(
+        'model.create',
+        {
+          descriptor: 'dc:Bounds',
+          attrs: {
+            height: plane.bounds.height,
+            width: plane.bounds.width,
+            x: plane.bounds.x,
+            y: plane.bounds.y
+          }
+        },
+        model => {
+          defaultElement.plane.bounds = model
+        }
+      )
+    } else {
+      defaultElement.plane.waypoint = cloneJSON(plane.waypoint)
+      defaultElement.data.sourceRef = data.sourceRef ? data.sourceRef : ''
+      defaultElement.data.targetRef = data.targetRef ? data.targetRef : ''
+    }
+    // 创建含shape的element
+    const newElement = eventBus.trigger('shape.create', {
+      type,
+      element: defaultElement
+    })
+    // 还原shape属性
+    if (type === 'SequenceFlow') {
+      newElement.shape.points = cloneJSON(shape.points)
+    }
+    return newElement
+  } else {
+    console.log('element error')
+  }
+
+  return null
 }
 
 /**

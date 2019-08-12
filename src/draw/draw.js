@@ -103,7 +103,7 @@ class Draw extends Operation {
             if (planeElement && planeElement.length > 0) {
               planeElement.forEach((plane, planeIndex) => {
                 if (plane.id === element.id + '_di') {
-                  const data = cloneElement(element)
+                  const data = cloneJSON(element)
                   if (element.extensionElements) {
                     data.extensionElements.values =
                       element.extensionElements.values || []

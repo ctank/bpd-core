@@ -124,33 +124,37 @@ const createContainer = options => {
  */
 const initFeatures = ($container, options) => {
   // 快捷键
-  new HotKey()
+  const hotKey = new HotKey()
   // 国际化
-  new I18n(options.local)
+  const i18n = new I18n(options.local)
   // xml
-  new BpmnXML(options.extensions)
+  const bpmnXML = new BpmnXML(options.extensions)
   // 背景
-  new Background($container, options, options.config.background)
+  const background = new Background(
+    $container,
+    options,
+    options.config.background
+  )
   // 手
-  new Hand($container, options.pageStyle)
+  const hand = new Hand($container, options.pageStyle)
   // 非只读状态时
   if (!options.readonly) {
     // 锚点
-    new ShapeAnchor($container, options.config.anchor)
+    const shapeAnchor = new ShapeAnchor($container, options.config.anchor)
     // 对齐
-    new Snapline($container, options.config.snapline)
+    const snapline = new Snapline($container, options.config.snapline)
     // 流向
-    new Direction($container, options.config.direction)
+    const direction = new Direction($container, options.config.direction)
     // 选择
-    new ShapeSelect($container, options.config.select)
+    const shapeSelect = new ShapeSelect($container, options.config.select)
     // 记录
-    new Record()
+    const record = new Record()
     // 提示
-    new Tooltip($container, options.config.tooltip)
+    const tooltip = new Tooltip($container, options.config.tooltip)
     // 拖动
-    new ShapeDrag(options, $container)
+    const shapeDrag = new ShapeDrag(options, $container)
     // 组面板
-    new GroupPanel($container, options)
+    const groupPanel = new GroupPanel($container, options)
   }
 }
 

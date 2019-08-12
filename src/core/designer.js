@@ -496,17 +496,17 @@ class Designer {
    * @param {*} callback
    */
   createElement(
-    { type, eventDefinitionType, prefix, name, pos },
+    { type, eventDefinitionType, prefix, name, pos, id },
     callback = () => {}
   ) {
-    const id = prefix + '_' + this.options.ids.next()
+    const elementId = id || prefix + '_' + this.options.ids.next()
     // 元素数据
     const data = cloneJSON(
       this.createModel({
         descriptor: 'bpmn:' + type,
         attrs: {
           name,
-          id,
+          id: elementId,
           eventDefinitions: this.createEventModel(eventDefinitionType),
           extensionElements: this.createExtensionModel()
         }
