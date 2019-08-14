@@ -72,15 +72,15 @@ class Hand {
         let top = layoutPos.top + newY
         if (top > 0) {
           top = 0
-        } else if (top < -pageStyle.height + window.innerHeight) {
-          top = -pageStyle.height + window.innerHeight
+        } else if (top < -pageStyle.height + $container.height()) {
+          top = -pageStyle.height + $container.height()
         }
 
         let left = layoutPos.left + newX
         if (left > 0) {
           left = 0
-        } else if (left < -pageStyle.width + window.innerWidth) {
-          left = -pageStyle.width + window.innerWidth
+        } else if (left < -pageStyle.width + $container.width()) {
+          left = -pageStyle.width + $container.width()
         }
 
         $layout.css({ top, left })

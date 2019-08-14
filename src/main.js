@@ -10,6 +10,7 @@ import draw from './draw/draw'
 import $ from './utils/slimJQ'
 import Ids from './utils/ids'
 import { loadFont, setExportData } from './utils/utils'
+import DomSize from './utils/domSize'
 
 import BpmnXML from './features/xml'
 import Background from './features/background'
@@ -151,7 +152,7 @@ const initFeatures = ($container, options) => {
     // 记录
     const record = new Record()
     // 编辑名称
-    const editName = new EditName($container, options.config.editName)
+    // const editName = new EditName($container, options.config.editName)
     // 提示
     const tooltip = new Tooltip($container, options.config.tooltip)
     // 拖动
@@ -182,6 +183,13 @@ class BPDCore {
 
   init(callback = () => {}) {
     this.importBpmn(this.options.definition, callback)
+
+    DomSize.bind(this.$container[0], () => {
+      console.log(123)
+    })
+
+    // remove
+    // DomSize.remove(el);
   }
 
   /**
