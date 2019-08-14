@@ -125,7 +125,11 @@
         bpmnStyle: {
           StartEvent: {
             name: 'xxx',
-            fillStyle: { color: '158,202,243' }
+            fillStyle: { color: '158,202,243' },
+            textStyle: { width: 60, height: 12 }
+          },
+          EndEvent: {
+            textStyle: { width: 60, height: 12 }
           },
           UserTask: {
             content: [
@@ -146,7 +150,8 @@
                 ]
               }
             ],
-            fillStyle: { color: '158,202,243' }
+            fillStyle: { color: '158,202,243' },
+            textStyle: { width: 60, height: 12 }
           }
         },
         // 图形样式

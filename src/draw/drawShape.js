@@ -248,15 +248,19 @@ class DrawShape {
     const scrollTop = $textBox.scrollTop()
 
     let top = 0
-    if (fontStyle.vAlign === 'middle') {
-      top = textBlock.y + textBlock.height / 2 - scrollTop / 2
-    } else {
-      if (shape.fontStyle.vAlign === 'bottom') {
+    let margin = 10
+    switch (fontStyle.vAlign) {
+      case 'middle':
+        top = textBlock.y + textBlock.height / 2 - scrollTop / 2
+        break
+      case 'bottom':
         top = textBlock.y + textBlock.height - scrollTop
-      } else {
-        top = textBlock.y
-      }
+        break
+      default:
+        top = textBlock.y += margin
+        break
     }
+
     let position = {
       x: textBlock.x + textBlock.width / 2,
       y: top + scrollTop / 2

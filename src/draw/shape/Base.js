@@ -15,13 +15,13 @@ class Base {
     // 字体样式
     this.fontStyle = {
       fontFamily: 'Arial',
-      size: 13,
+      size: 12,
       color: '50,50,50',
       bold: false,
       italic: false,
       underline: false,
       textAlign: 'center',
-      vAlign: 'middle',
+      vAlign: 'top',
       orientation: 'vertical'
     }
   }

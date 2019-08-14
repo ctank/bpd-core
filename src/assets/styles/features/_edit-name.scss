@@ -1,0 +1,19 @@
+.shape-name-edit {
+  position: absolute;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #000000;
+  border-radius: 2px;
+  padding: 0px;
+  cursor: text;
+  z-index: 10;
+}
+
+.shape-name-temp {
+  padding: 0px;
+  border: none;
+  background: transparent;
+  opacity: 0;
+  height: 0px;
+  overflow: hidden;
+}

@@ -5,7 +5,6 @@ import {
   setScale,
   restoreScale,
   mergeArray,
-  cloneDeep,
   setExportData
 } from '../../utils/utils'
 import DrawUtils from '../../draw/drawUtils'

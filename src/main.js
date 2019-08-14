@@ -14,6 +14,7 @@ import { loadFont, setExportData } from './utils/utils'
 import BpmnXML from './features/xml'
 import Background from './features/background'
 import Direction from './features/direction'
+import EditName from './features/edit-name'
 import Record from './features/record'
 import ShapeAnchor from './features/anchor'
 import ShapeSelect from './features/select'
@@ -149,6 +150,8 @@ const initFeatures = ($container, options) => {
     const shapeSelect = new ShapeSelect($container, options.config.select)
     // 记录
     const record = new Record()
+    // 编辑名称
+    const editName = new EditName($container, options.config.editName)
     // 提示
     const tooltip = new Tooltip($container, options.config.tooltip)
     // 拖动

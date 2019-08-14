@@ -24,6 +24,9 @@ class UserTask extends Shape {
 
     this.groupName = 'Task'
 
+    // 字体样式
+    this.fontStyle.vAlign = 'middle'
+
     this.actions = this.getPath()
   }
   /**
@@ -85,8 +88,21 @@ class UserTask extends Shape {
    * 获取文本范围
    */
   getTextBlock() {
+    const { textStyle } = this.style
     const { height, width } = this.plane.bounds
-    return { x: 10, y: 0, width: width - 20, height: height }
+
+    let textWidth = width - 20
+    let textHeight = height
+    if (textStyle) {
+      textWidth = textStyle.width || textWidth
+      textHeight = textStyle.height || textHeight
+    }
+    return {
+      x: width / 2 - textWidth / 2,
+      y: height / 2 - textHeight / 2,
+      width: textWidth,
+      height: textHeight
+    }
   }
 }
 

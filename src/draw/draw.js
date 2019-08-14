@@ -36,9 +36,15 @@ class Draw extends Operation {
     this.init()
   }
   init() {
+    // 移动
     this.$container
       .off('mousemove.operate touchstart.operate')
       .on('mousemove.operate touchstart.operate', this.move.bind(this))
+
+    // 双击
+    this.$container.off('dblclick.element').on('dblclick.element', () => {
+      eventBus.trigger('edit.shape.name')
+    })
 
     // 创建图形
     eventBus.on('shape.create', this.createShapeData.bind(this))

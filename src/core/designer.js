@@ -395,6 +395,7 @@ class Designer {
       for (let key in data) {
         switch (key) {
           // 不处理
+          case '$instanceOf':
           case '$type':
           case 'flowElements':
           case 'sourceRef':
@@ -422,6 +423,7 @@ class Designer {
       for (let key in plane) {
         switch (key) {
           // 不处理
+          case '$instanceOf':
           case '$type':
             break
           // id与数据id对应

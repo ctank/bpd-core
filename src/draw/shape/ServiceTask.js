@@ -24,6 +24,9 @@ class ServiceTask extends Shape {
 
     this.groupName = 'Task'
 
+    // 字体样式
+    this.fontStyle.vAlign = 'middle'
+
     this.actions = this.getPath()
   }
   /**
