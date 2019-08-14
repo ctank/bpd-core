@@ -9,7 +9,7 @@ import draw from './draw/draw'
 
 import $ from './utils/slimJQ'
 import Ids from './utils/ids'
-import { loadFont, setExportData } from './utils/utils'
+import { loadFont, setExportData, restoreScale } from './utils/utils'
 import DomSize from './utils/domSize'
 
 import BpmnXML from './features/xml'
@@ -185,11 +185,32 @@ class BPDCore {
     this.importBpmn(this.options.definition, callback)
 
     DomSize.bind(this.$container[0], () => {
-      console.log(123)
+      this.resizeContainer()
     })
+  }
 
-    // remove
-    // DomSize.remove(el);
+  resizeContainer() {
+    const { $container, options } = this
+    const { width, height } = options.pageStyle
+
+    const $layout = $container.find('.bpd-layout')
+    const layoutPos = $layout.position()
+    const containerWidth = $container.width()
+    const containerHeight = $container.height()
+    const layoutheight = Math.abs(layoutPos.top) + containerHeight
+    const layoutWidth = Math.abs(layoutPos.left) + containerWidth
+
+    let top = layoutPos.top
+    if (layoutheight > height) {
+      top = containerHeight - height
+    }
+
+    let left = layoutPos.left
+    if (layoutWidth > width) {
+      left = containerWidth - width
+    }
+
+    $layout.css({ top, left })
   }
 
   /**
@@ -428,6 +449,7 @@ class BPDCore {
   }
 
   destroy() {
+    DomSize.remove(this.$container[0])
     this.$container.remove()
     this.draw.cancel()
     eventBus.trigger('key.clear')
