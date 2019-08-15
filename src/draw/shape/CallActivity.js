@@ -24,6 +24,9 @@ class CallActivity extends Shape {
 
     this.groupName = 'CallActivity'
 
+    // 字体样式
+    this.fontStyle.vAlign = 'middle'
+
     this.actions = this.getPath()
   }
   /**

@@ -105,6 +105,13 @@ export const cloneElement = element => {
       type,
       prefix: 'obj'
     })
+
+    // 扩展属性
+    if (data.extensionElements) {
+      defaultElement.data.extensionElements.values =
+        data.extensionElements.values || []
+    }
+
     // 还原data和plane属性
     if (type !== 'SequenceFlow') {
       defaultElement.data.incoming = data.incoming ? data.incoming : ''
@@ -113,11 +120,7 @@ export const cloneElement = element => {
       if (data.calledElement) {
         defaultElement.data.calledElement = data.calledElement || ''
       }
-      // 扩展属性
-      if (data.extensionElements) {
-        defaultElement.data.extensionElements.values =
-          data.extensionElements.values || []
-      }
+
       // 创建bound
       eventBus.trigger(
         'model.create',
