@@ -109,6 +109,11 @@ export const cloneElement = element => {
     if (type !== 'SequenceFlow') {
       defaultElement.data.incoming = data.incoming ? data.incoming : ''
       defaultElement.data.outgoing = data.outgoing ? data.outgoing : ''
+      // 子流程id
+      if (data.calledElement) {
+        defaultElement.data.calledElement = data.calledElement || ''
+      }
+      // 扩展属性
       if (data.extensionElements) {
         defaultElement.data.extensionElements.values =
           data.extensionElements.values || []
