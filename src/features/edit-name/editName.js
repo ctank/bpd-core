@@ -1,10 +1,10 @@
 import eventBus from '../../core/eventBus'
 import $ from '../../utils/slimJQ'
-import { setScale, restoreScale } from '../../utils/utils'
+import { setScale, setExportData } from '../../utils/utils'
 
 const DEFAULT_CONFIG = {
   // 边框颜色
-  borderColor: '#FF884D',
+  borderColor: '#999999',
   // 修改名称回调
   onEdited: () => {}
 }
@@ -29,10 +29,7 @@ class EditName {
     const selectIds = eventBus.trigger('shape.select.getIds') || []
     if (selectIds.length === 1) {
       const element = eventBus.trigger('element.get', selectIds[0])
-      console.log(element)
-
       const { data, plane, shape } = element
-
       if (shape.bpmnName === 'SequenceFlow') {
         this.editConnectionName(element)
         return true
@@ -137,14 +134,16 @@ class EditName {
           e.stopPropagation()
         })
         .on('mouseenter', e => {
-          console.log('mouseenter')
+          // TODO:
         })
 
       $edit.trigger('keyup')
     }
   }
 
-  editConnectionName(element) {}
+  editConnectionName(element) {
+    // TODO:
+  }
 
   updateShapeName(element) {
     const { data } = element
@@ -153,7 +152,8 @@ class EditName {
     if ($edit.length && $edit.is(':visible')) {
       if (shapeName !== data.name) {
         data.name = shapeName
-        // Model.update(d)
+        eventBus.trigger('element.update', element)
+        this.config.onEdited(setExportData(element))
       }
       // 渲染图形
       eventBus.trigger('shape.render', {

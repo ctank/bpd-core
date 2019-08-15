@@ -170,6 +170,12 @@
             { id: 'obj_0g2a3p8', fillStyle: { color: '167,232,210' } }
           ],
           config: {
+            editName: {
+              borderColor: '#ff0000',
+              onEdited: function(element) {
+                console.log('onEdited---->', element)
+              }
+            },
             select: {
               onSelected: function(element) {
                 selectElement = element

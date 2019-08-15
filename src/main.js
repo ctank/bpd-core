@@ -152,7 +152,7 @@ const initFeatures = ($container, options) => {
     // 记录
     const record = new Record()
     // 编辑名称
-    // const editName = new EditName($container, options.config.editName)
+    const editName = new EditName($container, options.config.editName)
     // 提示
     const tooltip = new Tooltip($container, options.config.tooltip)
     // 拖动
