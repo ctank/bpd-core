@@ -182,7 +182,10 @@ class BPDCore {
   }
 
   init(callback = () => {}) {
-    this.importBpmn(this.options.definition, callback)
+    this.importBpmn(this.options.definition, () => {
+      callback()
+      eventBus.trigger('record.init', true)
+    })
 
     DomSize.bind(this.$container[0], () => {
       this.resizeContainer()
@@ -489,10 +492,9 @@ class BPDCore {
           if (err) {
             console.log(err)
           } else {
+            eventBus.trigger('record.start')
             self.draw.render(definitions)
-            // self.exportBpmn(function(xmlStrUpdated) {
-            //   console.log('导出回调', xmlStrUpdated)
-            // })
+            eventBus.trigger('record.end')
             // 执行回调
             callback()
           }
@@ -504,7 +506,6 @@ class BPDCore {
    * 导出Bpmn
    */
   exportBpmn(callback = () => {}) {
-    const self = this
     const definitions = this.draw.designer.createDefinition()
     eventBus.trigger('model.export', definitions, (err, xmlStrUpdated) => {
       if (err) {

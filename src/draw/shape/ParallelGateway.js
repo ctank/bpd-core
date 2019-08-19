@@ -123,8 +123,20 @@ class ParallelGateway extends Shape {
    * 获取文本范围
    */
   getTextBlock() {
+    const { textStyle } = this.style
     const { height, width } = this.plane.bounds
-    return { x: width / 2 - 60, y: height, width: 120, height: 30 }
+    let textWidth = 120
+    let textHeight = 30
+    if (textStyle) {
+      textWidth = textStyle.width || textWidth
+      textHeight = textStyle.height || textHeight
+    }
+    return {
+      x: width / 2 - textWidth / 2,
+      y: height,
+      width: textWidth,
+      height: textHeight
+    }
   }
 }
 

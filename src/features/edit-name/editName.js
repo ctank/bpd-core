@@ -138,6 +138,7 @@ class EditName {
         })
 
       $edit.trigger('keyup')
+      $edit.select()
     }
   }
 

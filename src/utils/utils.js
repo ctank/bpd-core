@@ -323,6 +323,7 @@ export const setExportData = element => {
     for (let key in data) {
       switch (key) {
         case '$type':
+        case '$instanceOf':
           break
         case 'extensionElements':
           exportData.extensions = setExportExtensions(data[key].values || [])

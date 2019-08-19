@@ -1,5 +1,6 @@
 import eventBus from '../../core/eventBus'
 import ArrayStack from './arrayStack'
+import { cloneJSON } from '../../utils/clone'
 
 class Record {
   constructor() {
@@ -11,6 +12,8 @@ class Record {
     this.undoStack = new ArrayStack()
     // 重做堆栈
     this.redoStack = new ArrayStack()
+    //
+    this.initStatus = false
     //
     this.init()
   }
@@ -26,6 +29,8 @@ class Record {
       key: 'Ctrl+Y',
       fun: this.redo.bind(this)
     })
+    // 设定初始化状态
+    eventBus.on('record.init', this.setInitStatus.bind(this))
     // 开始处理
     eventBus.on('record.start', this.start.bind(this))
     // 结束处理
@@ -40,15 +45,19 @@ class Record {
    * 开始处理,修改数量
    */
   start() {
-    this.batSize++
+    if (this.initStatus) {
+      this.batSize++
+    }
   }
 
   /**
    * 结束处理,执行堆栈操作
    */
   end() {
-    this.batSize--
-    this.execute()
+    if (this.initStatus) {
+      this.batSize--
+      this.execute()
+    }
   }
 
   /**
@@ -56,22 +65,31 @@ class Record {
    * @param {*} data
    */
   push(data) {
-    this.records.push(data)
-    // 如果不是多任务则立即执行
-    this.execute()
+    if (this.initStatus) {
+      this.records.push(data)
+      // 如果不是多任务则立即执行
+      this.execute()
+    }
   }
 
   /**
    * 执行
    */
   execute() {
-    if (this.batSize === 0 && this.records.length !== 0) {
+    if (this.initStatus && this.batSize === 0 && this.records.length !== 0) {
       if (this.undoStack.status) {
         // 将事件压入撤销堆栈
         this.undoStack.push(this.records)
       }
       this.records = []
     }
+  }
+
+  /**
+   * 设定状态
+   */
+  setInitStatus(status) {
+    this.initStatus = status
   }
 
   /**
@@ -82,7 +100,7 @@ class Record {
     this.undoStack.setStatus(false)
     // 获取撤销栈长度
     const undoSize = this.undoStack.size()
-    if (undoSize > 0) {
+    if (this.initStatus && undoSize > 0) {
       // 获取最新记录
       const record = this.undoStack.top()
       // 清除最新记录
@@ -92,7 +110,8 @@ class Record {
 
       this.start()
 
-      record.forEach(item => {
+      for (let i = record.length - 1; i >= 0; i -= 1) {
+        const item = record[i]
         switch (item.action) {
           case 'create':
             // 清除选择
@@ -138,7 +157,8 @@ class Record {
           default:
             break
         }
-      })
+      }
+
       this.end()
     }
     // 解锁撤销栈
@@ -153,7 +173,7 @@ class Record {
     this.undoStack.setStatus(false)
     // 获取重做栈长度
     const redoSize = this.redoStack.size()
-    if (redoSize > 0) {
+    if (this.initStatus && redoSize > 0) {
       // 获取最新记录
       const record = this.redoStack.top()
       // 清除最新记录
