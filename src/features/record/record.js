@@ -1,6 +1,5 @@
 import eventBus from '../../core/eventBus'
 import ArrayStack from './arrayStack'
-import { cloneJSON } from '../../utils/clone'
 
 class Record {
   constructor() {
@@ -30,7 +29,7 @@ class Record {
       fun: this.redo.bind(this)
     })
     // 设定初始化状态
-    eventBus.on('record.init', this.setInitStatus.bind(this))
+    eventBus.on('record.initStatus', this.setInitStatus.bind(this))
     // 开始处理
     eventBus.on('record.start', this.start.bind(this))
     // 结束处理

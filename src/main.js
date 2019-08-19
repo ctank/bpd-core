@@ -163,7 +163,7 @@ const initFeatures = ($container, options) => {
 }
 
 class BPDCore {
-  constructor(options = {}) {
+  constructor(options = {}, callback = () => {}) {
     this.version = '1.1.0-beta.4'
     // 配置
     this.options = Object.assign({}, DEFAULT_OPTIONS, options)
@@ -178,13 +178,12 @@ class BPDCore {
       IS_FONTLOAD = true
     })
 
-    this.init()
+    this.init(callback)
   }
 
-  init(callback = () => {}) {
+  init(callback) {
     this.importBpmn(this.options.definition, () => {
       callback()
-      eventBus.trigger('record.init', true)
     })
 
     DomSize.bind(this.$container[0], () => {
@@ -488,6 +487,7 @@ class BPDCore {
     let fontLoadCheck = setInterval(() => {
       if (IS_FONTLOAD) {
         clearInterval(fontLoadCheck)
+        eventBus.trigger('record.initStatus', false)
         eventBus.trigger('model.import', xmlStr, (err, definitions) => {
           if (err) {
             console.log(err)
@@ -495,6 +495,7 @@ class BPDCore {
             eventBus.trigger('record.start')
             self.draw.render(definitions)
             eventBus.trigger('record.end')
+            eventBus.trigger('record.initStatus', true)
             // 执行回调
             callback()
           }
