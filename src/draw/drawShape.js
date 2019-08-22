@@ -89,7 +89,7 @@ class DrawShape {
     if (xx && canvasActions.drawIcon) {
       paths = canvasActions.drawIcon(width, height)
     } else {
-      paths = element.shape.actions
+      paths = element.shape.getPath()
     }
     // TODO:
     this.renderPath(shape2D, element, paths, xx)

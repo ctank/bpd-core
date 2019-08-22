@@ -523,7 +523,7 @@ class Designer {
         this.createModel({
           descriptor: 'bpmndi:BPMNEdge',
           attrs: {
-            id: id + '_di',
+            id: elementId + '_di',
             waypoint: []
           }
         })
@@ -541,8 +541,8 @@ class Designer {
                 y: 0
               }
             }),
-            bpmnElement: id,
-            id: id + '_di'
+            bpmnElement: elementId,
+            id: elementId + '_di'
           }
         })
       )
