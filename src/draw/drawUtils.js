@@ -1240,7 +1240,7 @@ const getConnectionPoints = (connection, elements) => {
 
 /**
  * 获取连线中间点
- * @param {*} c
+ * @param {*} shape
  */
 const getConnectionMidpoint = shape => {
   const midpoint = {}

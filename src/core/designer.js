@@ -325,7 +325,7 @@ class Designer {
       prefix: 'obj'
     })
 
-    target.data.$type = element.data.$type
+    target.data.set('$type', element.data.$type)
     target.data.extensionElements.values = element.data.extensionElements.values
     target.data.name = element.data.name
     target.plane.id = element.plane.id

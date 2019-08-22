@@ -39,6 +39,11 @@ class groupPanel {
     // 选中
     eventBus.on('group.connection.show', this.showConnectionGroup.bind(this))
   }
+
+  /**
+   * 显示面板
+   * @param {*} elements
+   */
   showGroup(elements) {
     if (elements.length === 1) {
       const { $container, bpmns, filter } = this
@@ -89,7 +94,6 @@ class groupPanel {
           self.groupPanel(groupName, width, height, type => {
             if (elements[0].shape.bpmnName !== type) {
               eventBus.trigger('element.change', { target: elements[0], type })
-              // eventBus.trigger('element.update', elements[0])
             }
           })
         })
@@ -183,7 +187,7 @@ class groupPanel {
   }
 
   /**
-   *
+   * 显示连线的图形面板
    * @param {*} connection
    */
   showConnectionGroup(connection) {
@@ -247,7 +251,6 @@ class groupPanel {
       .off()
       .on('mousedown', function(e) {
         e.stopPropagation()
-
         const groupName = $(this).data('group')
         const itemPos = $(this)
           .parent()
@@ -373,15 +376,18 @@ class groupPanel {
       7
     )
 
-    connection.data.targetRef = element.data.id
-    waypoint[waypoint.length - 1].angle = targetAngle
+    // 判断连线是否被撤销删掉
+    const originConnection = eventBus.trigger('element.get', connection.data.id)
+    if (originConnection) {
+      connection.data.targetRef = element.data.id
+      waypoint[waypoint.length - 1].angle = targetAngle
 
-    eventBus.trigger('connection.render', {
-      element: connection,
-      rendered: true
-    })
-
-    eventBus.trigger('element.update', connection)
+      eventBus.trigger('connection.render', {
+        element: connection,
+        rendered: true
+      })
+      eventBus.trigger('element.update', connection)
+    }
 
     // 结束记录
     eventBus.trigger('record.end')

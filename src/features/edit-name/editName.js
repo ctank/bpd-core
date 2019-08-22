@@ -1,5 +1,6 @@
 import eventBus from '../../core/eventBus'
 import $ from '../../utils/slimJQ'
+import DrawUtils from '../../draw/drawUtils'
 import { setScale, setExportData } from '../../utils/utils'
 
 const DEFAULT_CONFIG = {
@@ -23,6 +24,9 @@ class EditName {
     eventBus.on('edit.shape.name', this.editShapeName.bind(this))
   }
 
+  /**
+   * 编辑图形名称
+   */
   editShapeName() {
     const { $container, config } = this
 
@@ -51,6 +55,8 @@ class EditName {
 
       $('.text-box[data-shape=' + data.id + ']').hide()
 
+      const orders = eventBus.trigger('orders.get')
+
       const fontStyle = shape.fontStyle
       const textBlock = shape.getTextBlock()
       const editStyle = {
@@ -63,7 +69,8 @@ class EditName {
         'font-style': fontStyle.italic ? 'italic' : 'normal',
         'text-align': fontStyle.textAlign,
         color: 'rgb(' + fontStyle.color + ')',
-        'text-decoration': fontStyle.underline ? 'underline' : 'none'
+        'text-decoration': fontStyle.underline ? 'underline' : 'none',
+        'z-index': orders.length + 10
       }
 
       $edit.css(editStyle).show()
@@ -133,19 +140,15 @@ class EditName {
         .on('mousedown', e => {
           e.stopPropagation()
         })
-        .on('mouseenter', e => {
-          // TODO:
-        })
 
       $edit.trigger('keyup')
       $edit.select()
     }
   }
 
-  editConnectionName(element) {
-    // TODO:
-  }
-
+  /**
+   * 更新图形名称
+   */
   updateShapeName(element) {
     const { data } = element
     const $edit = this.$container.find('.shape-name-edit')
@@ -159,6 +162,113 @@ class EditName {
       // 渲染图形
       eventBus.trigger('shape.render', {
         type: element.shape.bpmnName,
+        element
+      })
+      $edit.remove()
+    }
+  }
+
+  /**
+   * 更新连线名称
+   */
+  editConnectionName(element) {
+    console.log(123, element)
+
+    const { $container, config } = this
+    const { data, plane, shape } = element
+
+    const $shape = $container.find('.shape-box[data-id=' + data.id + ']')
+    const $text = $shape.find('.text-box[data-shape=' + data.id + ']')
+    let $edit = $container.find('.connection-name-edit')
+    if ($edit.length === 0) {
+      $edit = $("<textarea class='connection-name-edit'></textarea>").appendTo(
+        $container.find('.bpd-designer')
+      )
+    }
+
+    $text.hide()
+
+    const orders = eventBus.trigger('orders.get')
+
+    const fontStyle = shape.fontStyle
+    const lineHeight = Math.round(fontStyle.size * 1.25)
+    const editStyle = {
+      'border-color': config.borderColor,
+      'line-height': lineHeight + 'px',
+      'font-size': fontStyle.size + 'px',
+      'font-family': fontStyle.fontFamily,
+      'font-weight': fontStyle.bold ? 'bold' : 'normal',
+      'font-style': fontStyle.italic ? 'italic' : 'normal',
+      'text-align': fontStyle.textAlign,
+      color: 'rgb(' + fontStyle.color + ')',
+      'text-decoration': fontStyle.underline ? 'underline' : 'none',
+      padding: 5,
+      'z-index': orders.length + 10
+    }
+
+    $edit.css(editStyle)
+    $edit
+      .val(data.name)
+      .show()
+      .select()
+
+    const midPoint = DrawUtils.getConnectionMidpoint(shape)
+
+    $edit
+      .off()
+      .on('keyup', () => {
+        const name = $edit.val()
+        const replaceName = name
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/\n/g, '<br/>')
+
+        $text.html(replaceName + '<br />')
+
+        let width = $text.width()
+        if (width < 50) {
+          width = 50
+        }
+        let height = $text.height()
+        if (height < lineHeight) {
+          height = lineHeight
+        }
+        $edit.css({
+          left: midPoint.x - width / 2 - 1 - 5,
+          top: midPoint.y - height / 2 - 1 - 5,
+          width,
+          height
+        })
+      })
+      .on('blur', () => {
+        this.updateConnectionName(element)
+      })
+      .on('mousemove', e => {
+        e.stopPropagation()
+      })
+      .on('mousedown', e => {
+        e.stopPropagation()
+      })
+
+    $edit.trigger('keyup')
+  }
+
+  /**
+   * 更新连线名称
+   * @param {*} element
+   */
+  updateConnectionName(element) {
+    const { data } = element
+    const $edit = this.$container.find('.connection-name-edit')
+    const connectionName = $edit.val()
+    if ($edit.length && $edit.is(':visible')) {
+      if (connectionName !== data.name) {
+        data.name = connectionName
+        eventBus.trigger('element.update', element)
+        this.config.onEdited(setExportData(element))
+      }
+      // 渲染连线
+      eventBus.trigger('connection.render', {
         element
       })
       $edit.remove()

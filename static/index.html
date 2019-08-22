@@ -1,288 +1,288 @@
 <html>
-  <head>
-    <title>Demo</title>
-    <meta name="renderer" content="webkit" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta http-equiv="pragma" content="no-cache" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    />
-    <link rel="stylesheet" href="css/bpd-core.css" />
-    <style>
-      html,
-      body {
-        padding: 0px;
-        margin: 0px;
-        position: relative;
-      }
 
-      #canvas {
-        position: absolute;
-        top: 50px;
-        left: 50px;
-        width: 800px;
-        height: 600px;
-        border: 1px solid #000000;
-      }
+<head>
+  <title>Demo</title>
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="pragma" content="no-cache" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" href="css/bpd-core.css" />
+  <style>
+    html,
+    body {
+      padding: 0px;
+      margin: 0px;
+      position: relative;
+    }
 
-      .createNode-box1 {
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-      }
+    #canvas {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 800px;
+      height: 600px;
+      border: 1px solid #000000;
+    }
 
-      .createNode-box2 {
-        position: fixed;
-        bottom: 50px;
-        left: 20px;
-      }
+    .createNode-box1 {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+    }
 
-      .createNode-box3 {
-        position: fixed;
-        bottom: 80px;
-        left: 20px;
-      }
+    .createNode-box2 {
+      position: fixed;
+      bottom: 50px;
+      left: 20px;
+    }
 
-      .createNode-box4 {
-        position: fixed;
-        bottom: 110px;
-        left: 20px;
-      }
+    .createNode-box3 {
+      position: fixed;
+      bottom: 80px;
+      left: 20px;
+    }
 
-      .other1 {
-        position: fixed;
-        bottom: 140px;
-        left: 20px;
-      }
+    .createNode-box4 {
+      position: fixed;
+      bottom: 110px;
+      left: 20px;
+    }
 
-      .other2 {
-        position: fixed;
-        bottom: 170px;
-        left: 20px;
-      }
-    </style>
-  </head>
+    .other1 {
+      position: fixed;
+      bottom: 140px;
+      left: 20px;
+    }
 
-  <body>
-    <div id="canvas"></div>
+    .other2 {
+      position: fixed;
+      bottom: 170px;
+      left: 20px;
+    }
+  </style>
+</head>
 
-    <span class="createNode-box1">
-      <button class="createNode" draggable="true" shapeName="startEvent">
-        StartEvent
-      </button>
-    </span>
-    <span class="createNode-box2">
-      <button class="createNode" draggable="true" shapeName="userTask">
-        UserTask
-      </button>
-      <button class="createNode" draggable="true" shapeName="serviceTask">
-        ServiceTask
-      </button>
-      <button class="createNode" draggable="true" shapeName="CallActivity">
-        CallActivity
-      </button>
-    </span>
-    <span class="createNode-box3">
-      <button class="createNode" draggable="true" shapeName="exclusiveGateway">
-        ExclusiveGateway
-      </button>
-      <button class="createNode" draggable="true" shapeName="inclusiveGateway">
-        InclusiveGateway
-      </button>
-      <button class="createNode" draggable="true" shapeName="complexGateway">
-        ComplexGateway
-      </button>
-      <button class="createNode" draggable="true" shapeName="parallelGateway">
-        ParallelGateway
-      </button>
-    </span>
-    <span class="createNode-box4">
-      <button class="createNode" draggable="true" shapeName="endEvent">
-        EndEvent
-      </button>
-      <button class="createNode" draggable="true" shapeName="terminateEndEvent">
-        TerminateEndEvent
-      </button>
-    </span>
-    <span class="other1">
-      <button class="new">new</button> <button class="init">init</button>
-      <button class="update">update</button>
-      <button class="toXML">toXML</button>
-      <button class="getFronts">fronts</button>
-      <button class="getFront">front</button>
-      <button class="destroy">destroy</button>
-      <button class="multiselect">multiselect</button>
-    </span>
-    <span class="other2"> <input class="importXML" type="file" /> </span>
+<body>
+  <div id="canvas"></div>
 
-    <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
-    <script src="extensions.js"></script>
-    <script src="js/bpd-core.js"></script>
-    <script>
-      var testBPD = null
-      var selectElement = null
-      var removeElement = null
-      window.onload = function() {
+  <span class="createNode-box1">
+    <button class="createNode" draggable="true" shapeName="startEvent">
+      StartEvent
+    </button>
+  </span>
+  <span class="createNode-box2">
+    <button class="createNode" draggable="true" shapeName="userTask">
+      UserTask
+    </button>
+    <button class="createNode" draggable="true" shapeName="serviceTask">
+      ServiceTask
+    </button>
+    <button class="createNode" draggable="true" shapeName="CallActivity">
+      CallActivity
+    </button>
+  </span>
+  <span class="createNode-box3">
+    <button class="createNode" draggable="true" shapeName="exclusiveGateway">
+      ExclusiveGateway
+    </button>
+    <button class="createNode" draggable="true" shapeName="inclusiveGateway">
+      InclusiveGateway
+    </button>
+    <button class="createNode" draggable="true" shapeName="complexGateway">
+      ComplexGateway
+    </button>
+    <button class="createNode" draggable="true" shapeName="parallelGateway">
+      ParallelGateway
+    </button>
+  </span>
+  <span class="createNode-box4">
+    <button class="createNode" draggable="true" shapeName="endEvent">
+      EndEvent
+    </button>
+    <button class="createNode" draggable="true" shapeName="terminateEndEvent">
+      TerminateEndEvent
+    </button>
+  </span>
+  <span class="other1">
+    <button class="new">new</button> <button class="init">init</button>
+    <button class="update">update</button>
+    <button class="toXML">toXML</button>
+    <button class="getFronts">fronts</button>
+    <button class="getFront">front</button>
+    <button class="destroy">destroy</button>
+    <button class="multiselect">multiselect</button>
+  </span>
+  <span class="other2"> <input class="importXML" type="file" /> </span>
+
+  <script type="text/javascript" src="jquery-1.8.3.min.js"></script>
+  <script src="extensions.js"></script>
+  <script src="js/bpd-core.js"></script>
+  <script>
+    var testBPD = null
+    var selectElement = null
+    var removeElement = null
+    window.onload = function () {
+      testBPD = new BPDCore({
+        container: '#canvas',
+        // readonly: true,
+        extensions: {
+          t: Extension
+        },
+        filter: ['ReceiveTask', 'TerminateEndEvent'],
+        // bpmn样式
+        bpmnStyle: {
+          StartEvent: {
+            name: 'xxx',
+            fillStyle: { color: '158,202,243' },
+            textStyle: { width: 60, height: 12 }
+          },
+          EndEvent: {
+            textStyle: { width: 60, height: 12 }
+          },
+          UserTask: {
+            content: [
+              {
+                actions: [
+                  {
+                    action: 'font',
+                    fontStyle: 'normal',
+                    fontVariant: 'normal',
+                    fontWeight: 'normal',
+                    fontSize: '18px',
+                    fontFamily: 'bpmn',
+                    fontColor: '0,0,0',
+                    content: '\uE844',
+                    x: 4,
+                    y: 16
+                  }
+                ]
+              }
+            ],
+            fillStyle: { color: '158,202,243' },
+            textStyle: { width: 60, height: 12 }
+          }
+        },
+        // 图形样式
+        shapeStyle: [
+          { id: 'obj_0g2a3p8', fillStyle: { color: '167,232,210' } }
+        ],
+        config: {
+          editName: {
+            borderColor: '#ff0000',
+            onEdited: function (element) {
+              console.log('onEdited---->', element)
+            }
+          },
+          select: {
+            onSelected: function (element) {
+              selectElement = element
+              console.log('onSelected---->', selectElement)
+            }
+          },
+          remove: {
+            onRemoved: function (element) {
+              removeElement = element
+              console.log('onRemoved---->', removeElement)
+            }
+          }
+        }
+      })
+
+      $('.createNode').on('click dragstart', function (e) {
+        testBPD.createShape(e, function (element) {
+          console.log(element)
+        })
+        e.preventDefault()
+      })
+
+      $('.new').on('click', function (e) {
         testBPD = new BPDCore({
           container: '#canvas',
-          // readonly: true,
-          extensions: {
+          // editable: false,
+          moddleExtensions: {
             t: Extension
           },
-          filter: ['ServiceTask', 'ReceiveTask', 'TerminateEndEvent'],
-          // bpmn样式
-          bpmnStyle: {
-            StartEvent: {
-              name: 'xxx',
-              fillStyle: { color: '158,202,243' },
-              textStyle: { width: 60, height: 12 }
-            },
-            EndEvent: {
-              textStyle: { width: 60, height: 12 }
-            },
-            UserTask: {
-              content: [
-                {
-                  actions: [
-                    {
-                      action: 'font',
-                      fontStyle: 'normal',
-                      fontVariant: 'normal',
-                      fontWeight: 'normal',
-                      fontSize: '18px',
-                      fontFamily: 'bpmn',
-                      fontColor: '0,0,0',
-                      content: '\uE844',
-                      x: 4,
-                      y: 16
-                    }
-                  ]
-                }
-              ],
-              fillStyle: { color: '158,202,243' },
-              textStyle: { width: 60, height: 12 }
-            }
+          onShapeEdit: function (shape) {
+            console.log(shape)
           },
-          // 图形样式
-          shapeStyle: [
-            { id: 'obj_0g2a3p8', fillStyle: { color: '167,232,210' } }
-          ],
-          config: {
-            editName: {
-              borderColor: '#ff0000',
-              onEdited: function(element) {
-                console.log('onEdited---->', element)
-              }
-            },
-            select: {
-              onSelected: function(element) {
-                selectElement = element
-                console.log('onSelected---->', selectElement)
-              }
-            },
-            remove: {
-              onRemoved: function(element) {
-                removeElement = element
-                console.log('onRemoved---->', removeElement)
-              }
-            }
+          onLinkerEdit: function (linker) {
+            console.log(linker)
+          },
+          onSelected: function (element) {
+            selectElement = element
           }
         })
+      })
 
-        $('.createNode').on('click dragstart', function(e) {
-          testBPD.createShape(e, function(element) {
-            console.log(element)
-          })
-          e.preventDefault()
-        })
+      $('.init').on('click', function (e) {
+        testBPD.init()
+      })
 
-        $('.new').on('click', function(e) {
-          testBPD = new BPDCore({
-            container: '#canvas',
-            // editable: false,
-            moddleExtensions: {
-              t: Extension
+      $('.update').on('click', function (e) {
+        testBPD.updateProperties(selectElement.id, {
+          original: {
+            name: 'test'
+          },
+          extensions: [
+            {
+              name: 't:test1',
+              value: '测试1'
             },
-            onShapeEdit: function(shape) {
-              console.log(shape)
-            },
-            onLinkerEdit: function(linker) {
-              console.log(linker)
-            },
-            onSelected: function(element) {
-              selectElement = element
+            {
+              name: 't:test2',
+              value: '测试2',
+              type: 'attr2'
             }
-          })
+          ]
         })
+      })
 
-        $('.init').on('click', function(e) {
-          testBPD.init()
+      $('.toXML').on('click', function (e) {
+        testBPD.exportBpmn(function (xml) {
+          console.log(xml)
         })
+      })
 
-        $('.update').on('click', function(e) {
-          testBPD.updateProperties(selectElement.id, {
-            original: {
-              name: 'test'
-            },
-            extensions: [
-              {
-                name: 't:test1',
-                value: '测试1'
-              },
-              {
-                name: 't:test2',
-                value: '测试2',
-                type: 'attr2'
-              }
-            ]
-          })
-        })
-
-        $('.toXML').on('click', function(e) {
-          testBPD.exportBpmn(function(xml) {
-            console.log(xml)
-          })
-        })
-
-        $('.importXML').on('change', function(e) {
-          if (this.files.length) {
-            var file = this.files[0]
-            if (file) {
-              var reader = new FileReader()
-              reader.onload = function(e) {
-                var result = e.target.result
-                testBPD.importBpmn(result, function(e) {
-                  console.log(e)
-                })
-              }
-              reader.readAsText(file)
+      $('.importXML').on('change', function (e) {
+        if (this.files.length) {
+          var file = this.files[0]
+          if (file) {
+            var reader = new FileReader()
+            reader.onload = function (e) {
+              var result = e.target.result
+              testBPD.importBpmn(result, function (e) {
+                console.log(e)
+              })
             }
+            reader.readAsText(file)
           }
-        })
+        }
+      })
 
-        $('.getFronts').on('click', function() {
-          var frontElements = testBPD.getFrontElementsByBpmn(
-            selectElement,
-            'UserTask'
-          )
-          console.log(frontElements)
-        })
+      $('.getFronts').on('click', function () {
+        var frontElements = testBPD.getFrontElementsByBpmn(
+          selectElement,
+          'UserTask'
+        )
+        console.log(frontElements)
+      })
 
-        $('.getFront').on('click', function() {
-          var frontElement = testBPD.getFrontElement(selectElement)
-          console.log(frontElement)
-        })
+      $('.getFront').on('click', function () {
+        var frontElement = testBPD.getFrontElement(selectElement)
+        console.log(frontElement)
+      })
 
-        $('.destroy').on('click', function() {
-          testBPD.destroy()
-        })
+      $('.destroy').on('click', function () {
+        testBPD.destroy()
+      })
 
-        $('.multiselect').on('click touchstart', function() {
-          testBPD.activateSelect()
-        })
-      }
-    </script>
-  </body>
+      $('.multiselect').on('click touchstart', function () {
+        testBPD.activateSelect()
+      })
+    }
+  </script>
+</body>
+
 </html>

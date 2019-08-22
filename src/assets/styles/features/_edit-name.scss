@@ -1,3 +1,4 @@
+.connection-name-edit,
 .shape-name-edit {
   position: absolute;
   overflow: hidden;
@@ -6,7 +7,6 @@
   border-radius: 2px;
   padding: 0px;
   cursor: text;
-  z-index: 10;
 }
 
 .shape-name-temp {
