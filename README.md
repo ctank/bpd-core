@@ -1,4 +1,4 @@
-# BPDCore v1.1.0-beta 说明文档
+# BPDCore v1.1.0-beta 使用文档
 
 BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染， 不提供相应页面
 
@@ -24,9 +24,12 @@ BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染，
     - `[background]`背景
     - `[direction]`流向
     - `[drag]`拖拽
+    - `[edit-name]`修改名称
     - `[group-panel]`分组面板
+    - `[hand]`画布拖拽
     - `[hotkey]`快捷键
     - `[i18n]`国际化
+    - `[record]`操作记录
     - `[select]`选择
     - `[snapline]`参考线
     - `[tooltip]`提示
@@ -51,16 +54,12 @@ BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染，
 npm install bpd-core --save
 ```
 
-
-
 ## 引入
 
 ```javascript
 import BPDCore from 'bpd-core'
 import 'bpd-core/dist/css/bpd-core.css';
 ```
-
-
 
 ## 初始化
 
@@ -75,6 +74,13 @@ new BPDCore({
   ...
 })
 ```
+
+## 键盘操作
+
+| 操作   | 说明 |
+| ------ | ---- |
+| Ctrl+Z | 撤销 |
+| Ctrl+Y | 重做 |
 
 ## 配置
 
@@ -105,6 +111,13 @@ new BPDCore({
 | ---- | -------- | ------- | ------ |
 | show | 显示     | boolean | true   |
 | size | 网关间距 | number  | 15     |
+
+#### 修改名称(edit-name)
+
+| 参数        | 说明             | 类型                | 默认值  |
+| ----------- | ---------------- | ------------------- | ------- |
+| borderColor | 文本框边框颜色   | string              | #999999 |
+| onEdited    | 编辑完成回调事件 | function(shapeData) | -       |
 
 #### 分组面板(group-panel)
 
@@ -184,5 +197,5 @@ new BPDCore({
 
 ## 未来
 
-- 操作记录
+- ~~操作记录~~
 - 其他快捷键
