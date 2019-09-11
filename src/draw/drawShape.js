@@ -84,14 +84,18 @@ class DrawShape {
    * @param {*} element
    */
   renderShapePath(shape2D, element, xx) {
-    const { width, height } = element.plane.bounds
-    let paths
-    if (xx && canvasActions.drawIcon) {
-      paths = canvasActions.drawIcon(width, height)
-    } else {
-      paths = element.shape.getPath()
-    }
     // TODO:
+    // const { width, height } = element.plane.bounds
+    let paths
+    if (element.shape.actions) {
+      paths = element.shape.actions
+    } else {
+      // if (xx && canvasActions.drawIcon) {
+      //   paths = canvasActions.drawIcon(width, height)
+      // } else {
+      paths = element.shape.getPath()
+      // }
+    }
     this.renderPath(shape2D, element, paths, xx)
   }
 
