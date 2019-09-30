@@ -112,6 +112,15 @@ export const cloneElement = element => {
         data.extensionElements.values || []
     }
 
+    // 事件定义
+    if (data.eventDefinitions) {
+      defaultElement.data.eventDefinitions = data.eventDefinitions.map(
+        definition => {
+          return { ...definition }
+        }
+      )
+    }
+
     // 还原data和plane属性
     if (type !== 'SequenceFlow') {
       defaultElement.data.incoming = data.incoming ? data.incoming : ''
