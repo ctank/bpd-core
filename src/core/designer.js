@@ -15,9 +15,21 @@ import { cloneJSON } from '../utils/clone'
 const getShapeTarget = type => {
   const target = {}
   switch (type) {
+    case 'ConditionalStartEvent':
+      target.type = 'StartEvent'
+      target.eventDefinitionType = 'ConditionalEventDefinition'
+      break
     case 'MessageStartEvent':
       target.type = 'StartEvent'
       target.eventDefinitionType = 'MessageEventDefinition'
+      break
+    case 'SignalStartEvent':
+      target.type = 'StartEvent'
+      target.eventDefinitionType = 'SignalEventDefinition'
+      break
+    case 'TimerStartEvent':
+      target.type = 'StartEvent'
+      target.eventDefinitionType = 'TimerEventDefinition'
       break
     default:
       target.type = type
