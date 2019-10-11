@@ -318,21 +318,22 @@ class Designer {
    * @param {} shapeName
    */
   change({ target, type }) {
+    const id = target.data.id
     const name = eventBus.trigger('i18n', 'bpmn.' + type)
     const element = eventBus.trigger('element.create', {
       name,
       type,
-      prefix: 'obj'
+      prefix: 'obj',
+      id
     })
 
-    target.data.set('$type', element.data.$type)
-    target.data.extensionElements.values = element.data.extensionElements.values
+    target.data = element.data
     target.data.name = element.data.name
-    target.plane.id = element.plane.id
     target.shape = element.shape
     target.shape.data = target.data
     target.shape.plane = target.plane
 
+    this.elements[id] = target
     eventBus.trigger('shape.render', { type, element: target })
   }
 
