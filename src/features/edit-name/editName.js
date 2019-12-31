@@ -172,11 +172,8 @@ class EditName {
    * 更新连线名称
    */
   editConnectionName(element) {
-    console.log(123, element)
-
     const { $container, config } = this
     const { data, plane, shape } = element
-
     const $shape = $container.find('.shape-box[data-id=' + data.id + ']')
     const $text = $shape.find('.text-box[data-shape=' + data.id + ']')
     let $edit = $container.find('.connection-name-edit')

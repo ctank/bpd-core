@@ -35,13 +35,13 @@ class ShapeSelect {
     eventBus.on('shape.select.getIds', this.getSelectedIds.bind(this))
     // 获取选中图形集合
     eventBus.on('shape.select.get', this.getSelected.bind(this))
-    // 获取选中图形集合
+    // 选中图形
     eventBus.on('shape.select', this.selectShape.bind(this))
     //
     eventBus.on('shape.move', this.moveSelect.bind(this))
     // 删除图形
     eventBus.on('shape.select.remove', this.unselect.bind(this))
-    // 删除图形
+    //
     eventBus.on('shape.select.check', this.isSelected.bind(this))
     //
     eventBus.on('destroy', this.destroy.bind(this))
