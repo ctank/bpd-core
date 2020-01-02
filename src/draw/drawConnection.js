@@ -67,11 +67,11 @@ class DrawConnection {
       }
     }
 
-    if (sourceRef && sourcePoint.angle == null) {
+    if (sourcePoint.angle == null) {
       sourcePoint.angle = DrawUtils.getAngle(waypoint[1], waypoint[0])
     }
 
-    if (targetRef && targetPoint.angle == null) {
+    if (targetPoint.angle == null) {
       targetPoint.angle = DrawUtils.getAngle(
         waypoint[waypoint.length - 2],
         waypoint[waypoint.length - 1]

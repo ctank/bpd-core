@@ -209,7 +209,9 @@ const getElementIdsByRange = range => {
 const getPointsWithS1T1 = (point1, point2, shape1) => {
   const r = 30
   const points = []
-  const { x, width } = shape1.plane.bounds
+  const { x, width } = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
   const point = {}
   if (point2.x >= x - r && point2.x <= x + width + r) {
     if (point2.x < x + width / 2) {
@@ -240,7 +242,9 @@ const getPointsWithS1T1 = (point1, point2, shape1) => {
 const getPointsWithS2T2 = (point1, point2, shape1) => {
   const r = 30
   const points = []
-  const { y, height } = shape1.plane.bounds
+  const { y, height } = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
   const point = {}
   if (point2.y >= y - r && point2.y <= y + height + r) {
     point.x = point1.x + r
@@ -272,7 +276,9 @@ const getPointsWithS2T2 = (point1, point2, shape1) => {
 const getPointsWithS3T3 = (point1, point2, shape1) => {
   const r = 30
   const points = []
-  const { x, width } = shape1.plane.bounds
+  const { x, width } = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
   const point = {}
   if (point2.x >= x - r && point2.x <= x + width + r) {
     if (point2.x < x + width / 2) {
@@ -304,7 +310,9 @@ const getPointsWithS3T3 = (point1, point2, shape1) => {
 const getPointsWithS4T4 = (point1, point2, shape1) => {
   const r = 30
   const points = []
-  const { y, height } = shape1.plane.bounds
+  const { y, height } = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
   const point = {}
   if (point2.y >= y - r && point2.y <= y + height + r) {
     point.x = point1.x + r
@@ -335,8 +343,12 @@ const getPointsWithS4T4 = (point1, point2, shape1) => {
 const getPointsWithS1T3 = (point1, point2, shape1, shape2, distanceY) => {
   const r = 30
   const points = []
-  const bounds1 = shape1.plane.bounds
-  const bounds2 = shape2.plane.bounds
+  const bounds1 = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
+  const bounds2 = shape2
+    ? shape2.plane.bounds
+    : { ...point2, width: 0, height: 0 }
   const point = {}
   if (point2.y <= point1.y) {
     point.y = point1.y - distanceY / 2
@@ -382,8 +394,12 @@ const getPointsWithS1T3 = (point1, point2, shape1, shape2, distanceY) => {
 const getPointsWithS2T4 = (point1, point2, shape1, shape2, distanceX) => {
   const r = 30
   const points = []
-  const bounds1 = shape1.plane.bounds
-  const bounds2 = shape2.plane.bounds
+  const bounds1 = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
+  const bounds2 = shape2
+    ? shape2.plane.bounds
+    : { ...point2, width: 0, height: 0 }
   const point = {}
 
   if (point2.x > point1.x) {
@@ -429,8 +445,12 @@ const getPointsWithS2T4 = (point1, point2, shape1, shape2, distanceX) => {
 const getPointsWithS1T2 = (point1, point2, shape1, shape2) => {
   const r = 30
   const points = []
-  const bounds1 = shape1.plane.bounds
-  const bounds2 = shape2.plane.bounds
+  const bounds1 = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
+  const bounds2 = shape2
+    ? shape2.plane.bounds
+    : { ...point2, width: 0, height: 0 }
   const point = {}
 
   if (point2.x > point1.x && point2.y > point1.y) {
@@ -491,8 +511,12 @@ const getPointsWithS1T2 = (point1, point2, shape1, shape2) => {
 const getPointsWithS1T4 = (point1, point2, shape1, shape2) => {
   const r = 30
   const points = []
-  const bounds1 = shape1.plane.bounds
-  const bounds2 = shape2.plane.bounds
+  const bounds1 = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
+  const bounds2 = shape2
+    ? shape2.plane.bounds
+    : { ...point2, width: 0, height: 0 }
   const point = {}
 
   let shape2R = bounds2.x + bounds2.width
@@ -551,8 +575,12 @@ const getPointsWithS1T4 = (point1, point2, shape1, shape2) => {
 const getPointsWithS2T3 = (point1, point2, shape1, shape2) => {
   const r = 30
   const points = []
-  const bounds1 = shape1.plane.bounds
-  const bounds2 = shape2.plane.bounds
+  const bounds1 = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
+  const bounds2 = shape2
+    ? shape2.plane.bounds
+    : { ...point2, width: 0, height: 0 }
   const point = {}
 
   if (point2.x > point1.x && point2.y < point1.y) {
@@ -611,8 +639,12 @@ const getPointsWithS2T3 = (point1, point2, shape1, shape2) => {
 const getPointsWithS3T4 = (point1, point2, shape1, shape2) => {
   const r = 30
   const points = []
-  const bounds1 = shape1.plane.bounds
-  const bounds2 = shape2.plane.bounds
+  const bounds1 = shape1
+    ? shape1.plane.bounds
+    : { ...point1, width: 0, height: 0 }
+  const bounds2 = shape2
+    ? shape2.plane.bounds
+    : { ...point2, width: 0, height: 0 }
   const point = {}
 
   let shape2R = bounds2.x + bounds2.width
@@ -714,8 +746,8 @@ const getConnectionPoints = (connection, elements) => {
     let angle
 
     if (sourceRef != null && targetRef != null) {
-      const sourceQuadrant = getAngleDir(sourcePoint.angle) // c
-      const targetQuadrant = getAngleDir(targetPoint.angle) // b
+      const sourceQuadrant = getAngleDir(sourcePoint.angle)
+      const targetQuadrant = getAngleDir(targetPoint.angle)
 
       if (sourceQuadrant === 1 && targetQuadrant === 1) {
         if (sourcePoint.y < targetPoint.y) {
