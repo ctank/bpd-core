@@ -39,7 +39,7 @@ class ShapeSelect {
     eventBus.on('shape.select', this.selectShape.bind(this))
     //
     eventBus.on('shape.move', this.moveSelect.bind(this))
-    // 删除图形
+    // 删除选中图形
     eventBus.on('shape.select.remove', this.unselect.bind(this))
     //
     eventBus.on('shape.select.check', this.isSelected.bind(this))

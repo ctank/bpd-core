@@ -1875,6 +1875,14 @@ const getShapeByPosition = (mouseX, mouseY, $container, xx) => {
     }
   }
 
+  // 根据zindex调整items顺序
+  items.sort((item1, item2) => {
+    return (
+      item1.element.shape.shapeStyle.zindex <
+      item2.element.shape.shapeStyle.zindex
+    )
+  })
+
   let item = null
   if (items.length === 1) {
     item = items[0]

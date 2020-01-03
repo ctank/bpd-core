@@ -159,6 +159,8 @@ export const cloneElement = element => {
     // 还原shape属性
     if (type === 'SequenceFlow') {
       newElement.shape.points = cloneJSON(shape.points)
+    } else {
+      newElement.shape.shapeStyle = cloneJSON(shape.shapeStyle)
     }
     return newElement
   } else {

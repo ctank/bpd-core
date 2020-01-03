@@ -14,10 +14,9 @@ import DomSize from './utils/domSize'
 
 import BpmnXML from './features/xml'
 import Background from './features/background'
-import Copy from './features/copy'
+import Clipboard from './features/clipboard'
 import Direction from './features/direction'
 import EditName from './features/edit-name'
-import Paste from './features/paste'
 import Record from './features/record'
 import ShapeAnchor from './features/anchor'
 import ShapeSelect from './features/select'
@@ -153,10 +152,8 @@ const initFeatures = ($container, options) => {
     const shapeSelect = new ShapeSelect($container, options.config.select)
     // 记录
     const record = new Record()
-    // 复制
-    const copy = new Copy()
-    // 粘贴
-    const paste = new Paste(options)
+    // 剪贴板
+    const clipboard = new Clipboard(options, options.config.clipboard)
     // 编辑名称
     const editName = new EditName($container, options.config.editName)
     // 提示

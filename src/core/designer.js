@@ -75,6 +75,8 @@ class Designer {
     //
     eventBus.on('element.change', this.change.bind(this))
     //
+    eventBus.on('element.build', this.build.bind(this))
+    //
     eventBus.on('process.get', this.getProcess.bind(this))
     //
     eventBus.on('connections.get', this.getShapeConnections.bind(this))
@@ -203,7 +205,9 @@ class Designer {
     for (let i = 0; i < elements.length; i += 1) {
       const element = elements[i]
       addShapes.push(element)
+      // 新数据
       this.elements[element.data.id] = cloneElement(element)
+      // 原始数据
       this.oriElements[element.data.id] = cloneElement(element)
     }
     this.build()
