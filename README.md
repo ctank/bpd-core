@@ -1,4 +1,4 @@
-# BPDCore v1.1.0-beta 使用文档
+# BPDCore v1.1.0-beta.5 使用文档
 
 BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染， 不提供相应页面
 
@@ -24,6 +24,7 @@ BPD-Core 是 web 形式的 bpmn 设计器，BPD-Core 仅提供建模和渲染，
   - `[features]`功能
     - `[anchor]`锚点
     - `[background]`背景
+    - `[clipboard]`剪贴板(仅支持复制粘贴)
     - `[direction]`流向
     - `[drag]`拖拽
     - `[edit-name]`修改名称
@@ -83,6 +84,8 @@ new BPDCore({
 | ------ | ---- |
 | Ctrl+Z | 撤销 |
 | Ctrl+Y | 重做 |
+| Ctrl+C | 复制 |
+| Ctrl+V | 粘贴 |
 
 ## 配置
 
@@ -114,6 +117,13 @@ new BPDCore({
 | show | 显示     | boolean | true   |
 | size | 网关间距 | number  | 15     |
 
+#### 剪贴板(clipboard)
+
+| 参数   | 说明           | 类型            | 默认值 |
+| ------ | -------------- | --------------- | ------ |
+| filter | 节点类型黑名单 | array[bpmnName] | []     |
+| suffix | 粘贴名称后缀   | string          | ''     |
+
 #### 修改名称(edit-name)
 
 | 参数        | 说明             | 类型                | 默认值  |
@@ -137,23 +147,24 @@ new BPDCore({
 
 ## API
 
-| 名称                    | 说明                           | 参数             | 备注                          |
-| ----------------------- | ------------------------------ | ---------------- | ----------------------------- |
-| init                    | 初始化设计器                   | callback         | 回调函数                      |
-| destroy                 | 销毁设计器                     |                  |                               |
-| createShape             | 创建图形                       | event,callback   | {bpmnName: 节点名称},回调函数 |
-| getAllElement           | 获取全部元素                   | -                | return [shapeData]            |
-| getRootElement          | 获取根元素                     | -                | return processData            |
-| getFrontElement         | 获取选中元素之前的元素         | element          | return shapeData              |
-| getFrontElements        | 获取选中元素之前的全部元素     | element          | return [shapeData]            |
-| getFrontElementsByBpmn  | 根据类型获取选中元素之前的元素 | element,bpmnName | return [shapeData]            |
-| updateProperties        | 更新元素属性                   | shapeId,data     | 目前仅支持标题和扩展属性      |
-| updateProcessProperties | 更新流程属性                   | data             | 目前仅支持标题和扩展属性      |
-| updataLineStyle         | 更新图形边框颜色               | id, style        |                               |
-| activateSelect          | 激活选择模式                   | -                |                               |
-| destroy                 | 销毁设计器                     | -                | -                             |
-| importBpmn              | 导入解析 xml 文件              | xml,callback     | 回调函数                      |
-| exportBpmn              | 导出 xml                       | callback         | 回调函数                      |
+| 名称                    | 说明                           | 参数                | 备注                          |
+| ----------------------- | ------------------------------ | ------------------- | ----------------------------- |
+| init                    | 初始化设计器                   | callback            | 回调函数                      |
+| destroy                 | 销毁设计器                     | -                   | -                             |
+| createShape             | 创建图形                       | event,callback      | {bpmnName: 节点名称},回调函数 |
+| getAllElement           | 获取全部元素                   | -                   | return [shapeData]            |
+| getRootElement          | 获取根元素                     | -                   | return processData            |
+| getFrontElement         | 获取选中元素之前的元素         | element             | return shapeData              |
+| getFrontElements        | 获取选中元素之前的全部元素     | element             | return [shapeData]            |
+| getFrontElementsByBpmn  | 根据类型获取选中元素之前的元素 | element,bpmnName    | return [shapeData]            |
+| handleClipboardEvent    | 触发剪贴板事件                 | 'copy' \|\| 'paste' | -                             |
+| updateProperties        | 更新元素属性                   | shapeId,data        | 目前仅支持标题和扩展属性      |
+| updateProcessProperties | 更新流程属性                   | data                | 目前仅支持标题和扩展属性      |
+| updataLineStyle         | 更新图形边框颜色               | id, style           | -                             |
+| activateSelect          | 激活选择模式                   | -                   | -                             |
+| destroy                 | 销毁设计器                     | -                   | -                             |
+| importBpmn              | 导入解析 xml 文件              | xml,callback        | 回调函数                      |
+| exportBpmn              | 导出 xml                       | callback            | 回调函数                      |
 
 ## 数据结构(shapeData)
 

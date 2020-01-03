@@ -167,7 +167,7 @@ const initFeatures = ($container, options) => {
 
 class BPDCore {
   constructor(options = {}, callback = () => {}) {
-    this.version = '1.1.0-beta.4'
+    this.version = '1.1.0-beta.5'
     // 配置
     this.options = Object.assign({}, DEFAULT_OPTIONS, options)
     // 容器
@@ -353,6 +353,18 @@ class BPDCore {
       frontElements[i] = setExportData(frontElements[i])
     }
     return frontElements
+  }
+
+  /**
+   * 触发剪贴板事件
+   * @param {*} type 事件类型
+   */
+  handleClipboardEvent(type) {
+    if (type !== 'copy' && type !== 'paste') {
+      console.log('剪贴板事件类型错误')
+    } else {
+      eventBus.trigger(`clipboard.${type}`)
+    }
   }
 
   /**
