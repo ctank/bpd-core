@@ -154,6 +154,7 @@ new BPDCore({
 | createShape             | 创建图形                       | event,callback      | {bpmnName: 节点名称},回调函数 |
 | getAllElement           | 获取全部元素                   | -                   | return [shapeData]            |
 | getRootElement          | 获取根元素                     | -                   | return processData            |
+| getCurrentElements      | 获取当前选中元素               | -                   | return [shapeData]            |
 | getFrontElement         | 获取选中元素之前的元素         | element             | return shapeData              |
 | getFrontElements        | 获取选中元素之前的全部元素     | element             | return [shapeData]            |
 | getFrontElementsByBpmn  | 根据类型获取选中元素之前的元素 | element,bpmnName    | return [shapeData]            |
@@ -188,11 +189,31 @@ new BPDCore({
 }
 ```
 
-## 支持节点
+## 节点类型
+
+#### 开始事件
+
+| 名称     | bpmnName   | groupName  |
+| -------- | ---------- | ---------- |
+| 开始事件 | StartEvent | StartEvent |
+
+| 名称         | shapeName              | 支持 |
+| ------------ | ---------------------- | ---- |
+| 开始事件     | startEvent             | true |
+| 消息开始事件 | messageStartEvent      |      |
+| 定时开始事件 | timerStartEvent        |      |
+| 升级开始事件 | escalationStartEvent   |      |
+| 错误开始事件 | errorStartEvent        |      |
+| 条件开始事件 | conditionalStartEvent  |      |
+| 补偿开始事件 | compensationStartEvent |      |
+| 信号开始事件 | signalStartEvent       |      |
+| 多重开始事件 | multipleStartEvent     |      |
+| 并行开始事件 | parallelStartEvent     |      |
+
+#### 其他
 
 | 名称       | bpmnName          | groupName    |
 | ---------- | ----------------- | ------------ |
-| 开始事件   | StartEvent        | StartEvent   |
 | 用户任务   | UserTask          | Task         |
 | 系统任务   | ServiceTask       | Task         |
 | 排他网关   | ExclusiveGateway  | Gateway      |
@@ -212,6 +233,8 @@ new BPDCore({
 
 - ~~操作记录~~
 - 其他快捷键
+- 字体图标
+- 
 
 
 

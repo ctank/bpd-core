@@ -166,7 +166,7 @@ const initFeatures = ($container, options) => {
 }
 
 class BPDCore {
-  constructor(options = {}, callback = () => {}) {
+  constructor(options = {}, callback = () => { }) {
     this.version = '1.1.0-beta.5'
     // 配置
     this.options = Object.assign({}, DEFAULT_OPTIONS, options)
@@ -222,7 +222,7 @@ class BPDCore {
    * 创建图形
    * @param {Event} event
    */
-  createShape(event, callback = () => {}) {
+  createShape(event, callback = () => { }) {
     const target = $(event.target)
     if (target.hasClass('readonly') || this.options.readonly) {
       return
@@ -256,6 +256,17 @@ class BPDCore {
       return setExportData(root)
     }
     return null
+  }
+
+  /**
+   * 获取当前选中元素
+   */
+  getCurrentElements() {
+    const currentElements = eventBus.trigger('shape.select.get')
+    for (let i = 0; i < currentElements.length; i += 1) {
+      currentElements[i] = setExportData(currentElements[i])
+    }
+    return currentElements
   }
 
   /**
@@ -372,7 +383,7 @@ class BPDCore {
    * @param {String} id
    * @param {Object} data
    */
-  updateProperties(id, data, callback = () => {}) {
+  updateProperties(id, data, callback = () => { }) {
     data.extensions.forEach(dataExtension => {
       dataExtension.$type = dataExtension.name
       delete dataExtension.name
@@ -423,7 +434,7 @@ class BPDCore {
    * 更新流程属性,目前仅支持标题和扩展属性
    * @param {Object} data
    */
-  updateProcessProperties(data, callback = () => {}) {
+  updateProcessProperties(data, callback = () => { }) {
     data.extensions.forEach(dataExtension => {
       dataExtension.$type = dataExtension.name
       delete dataExtension.name
@@ -497,7 +508,7 @@ class BPDCore {
   /**
    * 导入Bpmn
    */
-  importBpmn(xmlStr, callback = () => {}) {
+  importBpmn(xmlStr, callback = () => { }) {
     const self = this
     let fontLoadCheck = setInterval(() => {
       if (IS_FONTLOAD) {
@@ -521,7 +532,7 @@ class BPDCore {
   /**
    * 导出Bpmn
    */
-  exportBpmn(callback = () => {}) {
+  exportBpmn(callback = () => { }) {
     const definitions = this.draw.designer.createDefinition()
     eventBus.trigger('model.export', definitions, (err, xmlStrUpdated) => {
       if (err) {
