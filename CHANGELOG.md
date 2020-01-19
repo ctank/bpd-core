@@ -1,0 +1,55 @@
+# 1.1.0-beta.5 (2020-01-19)
+
+### 🌟 新功能
+
+* undo & redo ([c7564f6](https://github.com/ctank/bpd-core/commit/c7564f6))
+* 添加拖拽 ([61b8231](https://github.com/ctank/bpd-core/commit/61b8231))
+* add 'getCurrentElements' ([fc44e07](https://github.com/ctank/bpd-core/commit/fc44e07))
+* clipboard ([c984722](https://github.com/ctank/bpd-core/commit/c984722))
+* copy & paste ([161865e](https://github.com/ctank/bpd-core/commit/161865e))
+* dblclick set title ([37c0b24](https://github.com/ctank/bpd-core/commit/37c0b24))
+* event definition ([8a4f26d](https://github.com/ctank/bpd-core/commit/8a4f26d))
+* record ([fd134ea](https://github.com/ctank/bpd-core/commit/fd134ea))
+* record ([73573c5](https://github.com/ctank/bpd-core/commit/73573c5))
+* removed ([7538456](https://github.com/ctank/bpd-core/commit/7538456))
+* set shape name ([df4c197](https://github.com/ctank/bpd-core/commit/df4c197))
+* set title ([ee49b7a](https://github.com/ctank/bpd-core/commit/ee49b7a))
+* start event ([ded0b72](https://github.com/ctank/bpd-core/commit/ded0b72))
+
+
+### 🐛 Bug 修复
+
+* 修复缺陷 ([2e422c5](https://github.com/ctank/bpd-core/commit/2e422c5))
+* 修复缺陷 ([0f404d5](https://github.com/ctank/bpd-core/commit/0f404d5))
+* 修复缺陷 ([8d2671b](https://github.com/ctank/bpd-core/commit/8d2671b))
+* bugs ([c0bc55e](https://github.com/ctank/bpd-core/commit/c0bc55e))
+* 扩展属性支持设置属性 ([01b3315](https://github.com/ctank/bpd-core/commit/01b3315))
+* bugs ([94abef4](https://github.com/ctank/bpd-core/commit/94abef4))
+* bugs ([684320e](https://github.com/ctank/bpd-core/commit/684320e))
+* bugs ([01bfe98](https://github.com/ctank/bpd-core/commit/01bfe98))
+* bugs ([d088977](https://github.com/ctank/bpd-core/commit/d088977))
+* bugs ([4c59441](https://github.com/ctank/bpd-core/commit/4c59441))
+* bugs ([a7264be](https://github.com/ctank/bpd-core/commit/a7264be))
+* bugs ([6d6caaa](https://github.com/ctank/bpd-core/commit/6d6caaa))
+* bugs ([43395fc](https://github.com/ctank/bpd-core/commit/43395fc))
+* bugs ([2778988](https://github.com/ctank/bpd-core/commit/2778988))
+* bugs ([e73352d](https://github.com/ctank/bpd-core/commit/e73352d))
+* bugs ([f744bbf](https://github.com/ctank/bpd-core/commit/f744bbf))
+* bugs ([077fb72](https://github.com/ctank/bpd-core/commit/077fb72))
+* bugs ([36d176a](https://github.com/ctank/bpd-core/commit/36d176a))
+* bugs ([0e752d9](https://github.com/ctank/bpd-core/commit/0e752d9))
+* bugs ([d298317](https://github.com/ctank/bpd-core/commit/d298317))
+* bugs ([7f35fab](https://github.com/ctank/bpd-core/commit/7f35fab))
+* bugs ([7eb9b38](https://github.com/ctank/bpd-core/commit/7eb9b38))
+* bugs ([5df238a](https://github.com/ctank/bpd-core/commit/5df238a))
+* bugs ([44111e8](https://github.com/ctank/bpd-core/commit/44111e8))
+* bugs ([bfd16bc](https://github.com/ctank/bpd-core/commit/bfd16bc))
+* bugs ([0dfd0d2](https://github.com/ctank/bpd-core/commit/0dfd0d2))
+* bugs ([b8cb1a1](https://github.com/ctank/bpd-core/commit/b8cb1a1))
+* bugs ([fc63ac3](https://github.com/ctank/bpd-core/commit/fc63ac3))
+* bugs ([25a93cf](https://github.com/ctank/bpd-core/commit/25a93cf))
+* bugs ([9bffd77](https://github.com/ctank/bpd-core/commit/9bffd77))
+* type cannot be replaced ([15f29b9](https://github.com/ctank/bpd-core/commit/15f29b9))
+
+
+
