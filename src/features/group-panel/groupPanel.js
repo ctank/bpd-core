@@ -2,12 +2,13 @@ import eventBus from '../../core/eventBus'
 import $ from '../../utils/slimJQ'
 
 import DrawUtils from '../../draw/drawUtils'
-import { setScale, restoreScale, checkBpmnShape } from '../../utils/utils'
+import { setScale, setExportData, restoreScale, checkBpmnShape } from '../../utils/utils'
 import { cloneJSON } from '../../utils/clone'
 
 const DEFAULT_CONFIG = {
   width: 30,
-  height: 30
+  height: 30,
+  onChanged: () => { }
 }
 
 const ELEMENT_TEMP = {
@@ -27,7 +28,7 @@ class groupPanel {
 
     this.filter = options.filter
 
-    this.config = Object.assign({}, DEFAULT_CONFIG, options.config.grouppanel)
+    this.config = Object.assign({}, DEFAULT_CONFIG, options.config.groupPanel)
 
     this.init()
   }
@@ -58,8 +59,8 @@ class groupPanel {
         if ($group.length <= 0) {
           $group = $(
             "<div class='group-icon' data-group='" +
-              shape.groupName +
-              "'></div>"
+            shape.groupName +
+            "'></div>"
           ).appendTo($selectBox)
         }
 
@@ -82,7 +83,7 @@ class groupPanel {
         }
 
         $group.attr('data-group', shape.groupName)
-        $group.off('mousedown').on('mousedown', function(e) {
+        $group.off('mousedown').on('mousedown', function (e) {
           e.stopPropagation()
 
           const groupName = $(this).attr('data-group')
@@ -94,6 +95,10 @@ class groupPanel {
           self.groupPanel(groupName, width, height, type => {
             if (elements[0].shape.bpmnName !== type) {
               eventBus.trigger('element.change', { target: elements[0], type })
+              // 执行回调
+              if (self.config.onChanged) {
+                self.config.onChanged(setExportData(elements[0]))
+              }
             }
           })
         })
@@ -142,16 +147,16 @@ class groupPanel {
 
         const $groupItem = $(
           '<div class="group-item" data-type="' +
-            type +
-            '" data-shape="' +
-            element.shape.bpmnName +
-            '"><canvas title="' +
-            element.data.text +
-            '" width="' +
-            config.width +
-            '" height="' +
-            config.height +
-            '"></canvas></div>'
+          type +
+          '" data-shape="' +
+          element.shape.bpmnName +
+          '"><canvas title="' +
+          element.data.text +
+          '" width="' +
+          config.width +
+          '" height="' +
+          config.height +
+          '"></canvas></div>'
         ).appendTo($groupPanel)
 
         this.renderItem($groupItem.children('canvas')[0], element)
@@ -168,7 +173,7 @@ class groupPanel {
     $groupPanel
       .children('.group-item')
       .off()
-      .on('click', function() {
+      .on('click', function () {
         const bpmn = $(this).attr('data-shape')
         callback(bpmn)
         $groupPanel.hide()
@@ -231,10 +236,10 @@ class groupPanel {
       }
 
       $groupPanel
-        .on('mousemove', function(e) {
+        .on('mousemove', function (e) {
           e.stopPropagation()
         })
-        .on('mousedown', function(e) {
+        .on('mousedown', function (e) {
           e.stopPropagation()
         })
     }
@@ -249,7 +254,7 @@ class groupPanel {
     $groupPanel
       .find('.group-icon')
       .off()
-      .on('mousedown', function(e) {
+      .on('mousedown', function (e) {
         e.stopPropagation()
         const groupName = $(this).data('group')
         const itemPos = $(this)
@@ -276,18 +281,18 @@ class groupPanel {
           $(document).off('mousedown.dashboard')
         })
       })
-      .on('click', function(e) {
+      .on('click', function (e) {
         e.stopPropagation()
       })
     $groupPanel
       .children('.group-item')
       .off()
-      .on('click', function() {
+      .on('click', function () {
         $groupPanel.hide()
         $(document).off('mousedown.dashboard')
         self.renderShape(connection, $(this).data('shape'))
       })
-    $(document).on('mousedown.dashboard', function() {
+    $(document).on('mousedown.dashboard', function () {
       $groupPanel.hide()
       $(document).off('mousedown.dashboard')
     })
@@ -406,16 +411,16 @@ class groupPanel {
     const title = this.getShapeName(element.shape.bpmnName)
     const $item = $(
       "<div class='group-item' data-group='" +
-        element.shape.groupName +
-        "'  data-shape='" +
-        element.shape.bpmnName +
-        "'><canvas title='" +
-        title +
-        "' width='" +
-        config.width +
-        "' height='" +
-        config.height +
-        "'></canvas></div>"
+      element.shape.groupName +
+      "'  data-shape='" +
+      element.shape.bpmnName +
+      "'><canvas title='" +
+      title +
+      "' width='" +
+      config.width +
+      "' height='" +
+      config.height +
+      "'></canvas></div>"
     ).appendTo($groupPanel)
 
     this.renderItem($item.children('canvas')[0], element)
@@ -423,8 +428,8 @@ class groupPanel {
     if (group.length > 1) {
       $item.append(
         "<div class='group-icon' data-group='" +
-          element.shape.groupName +
-          "'></div>"
+        element.shape.groupName +
+        "'></div>"
       )
     }
   }

@@ -124,14 +124,14 @@ new BPDCore({
 | filter | 节点类型黑名单 | array[bpmnName] | []     |
 | suffix | 粘贴名称后缀   | string          | ''     |
 
-#### 修改名称(edit-name)
+#### 修改名称(editName)
 
 | 参数        | 说明             | 类型                | 默认值  |
 | ----------- | ---------------- | ------------------- | ------- |
 | borderColor | 文本框边框颜色   | string              | #999999 |
 | onEdited    | 编辑完成回调事件 | function(shapeData) | -       |
 
-#### 分组面板(group-panel)
+#### 分组面板(groupPanel)
 
 | 参数   | 说明         | 类型   | 默认值 |
 | ------ | ------------ | ------ | ------ |
