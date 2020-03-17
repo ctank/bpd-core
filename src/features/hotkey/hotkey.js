@@ -39,14 +39,11 @@ class HotKey {
         for (let i = 0; i < funs.length; i += 1) {
           funs[i](e)
         }
-        if (funs.length > 0) {
-          e.preventDefault()
-        }
       })
 
     $(document)
       .off('keydown.hotkey', 'input,textarea,select')
-      .on('keydown.hotkey', 'input,textarea,select', function(e) {
+      .on('keydown.hotkey', 'input,textarea,select', (e) => {
         // 阻止冒泡
         e.stopPropagation()
       })
