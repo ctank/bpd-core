@@ -1362,26 +1362,26 @@ const getEndpointAngle = (shape, type) => {
       point1 = {
         x:
           (1 - proportion) *
-            (1 - proportion) *
-            (1 - proportion) *
-            sourcePoint.x +
+          (1 - proportion) *
+          (1 - proportion) *
+          sourcePoint.x +
           3 *
-            (1 - proportion) *
-            (1 - proportion) *
-            proportion *
-            shape.points[0].x +
+          (1 - proportion) *
+          (1 - proportion) *
+          proportion *
+          shape.points[0].x +
           3 * (1 - proportion) * proportion * proportion * shape.points[1].x +
           proportion * proportion * proportion * targetPoint.x,
         y:
           (1 - proportion) *
-            (1 - proportion) *
-            (1 - proportion) *
-            sourcePoint.y +
+          (1 - proportion) *
+          (1 - proportion) *
+          sourcePoint.y +
           3 *
-            (1 - proportion) *
-            (1 - proportion) *
-            proportion *
-            shape.points[0].y +
+          (1 - proportion) *
+          (1 - proportion) *
+          proportion *
+          shape.points[0].y +
           3 * (1 - proportion) * proportion * proportion * shape.points[1].y +
           proportion * proportion * proportion * targetPoint.y
       }
@@ -1877,10 +1877,7 @@ const getShapeByPosition = (mouseX, mouseY, $container, xx) => {
 
   // 根据zindex调整items顺序
   items.sort((item1, item2) => {
-    return (
-      item1.element.shape.shapeStyle.zindex <
-      item2.element.shape.shapeStyle.zindex
-    )
+    return item2.element.shape.shapeStyle.zindex - item1.element.shape.shapeStyle.zindex
   })
 
   let item = null
@@ -1993,7 +1990,7 @@ const measureDistance = (point1, point2) => {
  */
 const setLineDash = (shape2D, segments) => {
   if (!shape2D.setLineDash) {
-    shape2D.setLineDash = function() {}
+    shape2D.setLineDash = function () { }
   }
   shape2D.setLineDash(segments)
   shape2D.mozDash = segments
