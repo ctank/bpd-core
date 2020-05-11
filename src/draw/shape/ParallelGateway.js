@@ -11,7 +11,7 @@ class ParallelGateway extends Shape {
       element.plane.bounds.height = element.plane.bounds.height || 50
     }
     //
-    if (!element.data.name) {
+    if (!element.data.name && element.data.name !== '') {
       element.data.name = style.name || ''
     }
     // bpmn数据
