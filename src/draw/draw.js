@@ -140,28 +140,25 @@ class Draw extends Operation {
 
     // 渲染页面
     this.renderPage()
-
+    // 图形数量
     let shapeCount = 0
+    // 序号用作zindex
+    let index = 0
 
-    // 渲染图形
     for (let id in elements) {
       const element = elements[id]
       const type = getBpmnNameByType(element.data.$type)
       if (type !== 'SequenceFlow') {
+        // 图形
         this.renderShape({ type, element })
-        this.designer.addData(element, false)
-      }
-      shapeCount++
-    }
-
-    // 渲染连线
-    for (let id in elements) {
-      const element = elements[id]
-      const type = getBpmnNameByType(element.data.$type)
-      if (type === 'SequenceFlow') {
+        shapeCount++
+      } else {
+        // 连线
         this.renderConnection({ element })
-        this.designer.addData(element, false)
       }
+      element.shape.shapeStyle.zindex = index
+      this.designer.addData(element, false)
+      index++
     }
 
     if (shapeCount === 0) {
@@ -397,7 +394,7 @@ class Draw extends Operation {
   /**
    * 创建图形数据
    */
-  createShape(type, callback = () => {}) {
+  createShape(type, callback = () => { }) {
     let element = null
     eventBus.trigger('data.create', type, data => {
       element = data

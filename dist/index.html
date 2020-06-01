@@ -222,6 +222,11 @@ left: 20px;
               removeElement = element
               console.log('onRemoved---->', removeElement)
             }
+          },
+          groupPanel: {
+            onChanged: function (e) {
+              console.log(e)
+            }
           }
         }
       })
