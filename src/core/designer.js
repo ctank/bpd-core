@@ -86,7 +86,7 @@ class Designer {
     })
   }
 
-  createData(type, callback = () => {}) {
+  createData(type, callback = () => { }) {
     const self = this
 
     let shapeAnchors = []
@@ -388,8 +388,8 @@ class Designer {
       return item1.zindex - item2.zindex
     })
     for (let i = 0; i < this.orders.length; i += 1) {
-      const id = this.orders[i].id
-      this.$container.find('.shape-box[data-id="' + id + '"]').css('z-index', i)
+      const { id, zindex } = this.orders[i]
+      this.$container.find('.shape-box[data-id="' + id + '"]').css('z-index', zindex)
     }
     let index = 0
     if (this.orders.length > 0) {
@@ -516,7 +516,7 @@ class Designer {
    */
   createElement(
     { type, eventDefinitionType, prefix, name, pos, id },
-    callback = () => {}
+    callback = () => { }
   ) {
     const elementId = id || prefix + '_' + this.options.ids.next()
     // 元素数据
@@ -597,12 +597,14 @@ class Designer {
       const shapes = {}
       const flowElements = []
       const planeElement = []
-      // 先生成图形
+
       for (let id in this.elements) {
         const { data, plane, shape } = this.elements[id]
         const type = shape.bpmnName
+        const attrObj = this.createAttrs(data, plane, shape)
+
         if (type !== 'SequenceFlow') {
-          const attrObj = this.createAttrs(data, plane, shape)
+          // 图形
           attrObj.data.incoming = []
           attrObj.data.outgoing = []
 
@@ -621,14 +623,8 @@ class Designer {
 
           flowElements.push(modelData)
           planeElement.push(modelPlane)
-        }
-      }
-      // 后生成连线
-      for (let id in this.elements) {
-        const { data, plane, shape } = this.elements[id]
-        const type = shape.bpmnName
-        if (type === 'SequenceFlow') {
-          const attrObj = this.createAttrs(data, plane, shape)
+        } else {
+          // 连线
           attrObj.data.sourceRef = shapes[data.sourceRef]
           attrObj.data.targetRef = shapes[data.targetRef]
 
