@@ -7,6 +7,7 @@ import {
   convertFirstLetter,
   setScale,
   restoreScale,
+  getBpmnNameByType,
   isArray
 } from '../utils/utils'
 
@@ -594,17 +595,13 @@ class Designer {
    */
   createDefinition() {
     this.definitions.rootElements.forEach((root, index) => {
-      const shapes = {}
-      const flowElements = []
-      const planeElement = []
-
+      const modelMap = {}
+      // 先生成图形
       for (let id in this.elements) {
         const { data, plane, shape } = this.elements[id]
         const type = shape.bpmnName
-        const attrObj = this.createAttrs(data, plane, shape)
-
         if (type !== 'SequenceFlow') {
-          // 图形
+          const attrObj = this.createAttrs(data, plane, shape)
           attrObj.data.incoming = []
           attrObj.data.outgoing = []
 
@@ -619,14 +616,20 @@ class Designer {
             attrs: attrObj.plane
           })
 
-          shapes[modelData.id] = modelData
-
-          flowElements.push(modelData)
-          planeElement.push(modelPlane)
-        } else {
-          // 连线
-          attrObj.data.sourceRef = shapes[data.sourceRef]
-          attrObj.data.targetRef = shapes[data.targetRef]
+          modelMap[modelData.id] = {
+            modelData,
+            modelPlane
+          }
+        }
+      }
+      // 后生成连线
+      for (let id in this.elements) {
+        const { data, plane, shape } = this.elements[id]
+        const type = shape.bpmnName
+        if (type === 'SequenceFlow') {
+          const attrObj = this.createAttrs(data, plane, shape)
+          attrObj.data.sourceRef = modelMap[data.sourceRef].modelData
+          attrObj.data.targetRef = modelMap[data.targetRef].modelData
 
           const modelData = this.createModel({
             descriptor: data.$type,
@@ -634,10 +637,10 @@ class Designer {
           })
 
           if (data.sourceRef) {
-            shapes[data.sourceRef].outgoing.push(modelData)
+            modelMap[data.sourceRef].modelData.outgoing.push(modelData)
           }
           if (data.targetRef) {
-            shapes[data.targetRef].incoming.push(modelData)
+            modelMap[data.targetRef].modelData.incoming.push(modelData)
           }
 
           attrObj.plane.bpmnElement = modelData
@@ -646,9 +649,20 @@ class Designer {
             attrs: attrObj.plane
           })
 
-          flowElements.push(modelData)
-          planeElement.push(modelPlane)
+          modelMap[modelData.id] = {
+            modelData,
+            modelPlane
+          }
         }
+      }
+
+      const flowElements = []
+      const planeElement = []
+
+      for (let id in this.elements) {
+        const { modelData, modelPlane } = modelMap[id]
+        flowElements.push(modelData)
+        planeElement.push(modelPlane)
       }
 
       this.definitions.diagrams[index].plane.planeElement = planeElement
