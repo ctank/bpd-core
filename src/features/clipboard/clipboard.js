@@ -29,19 +29,11 @@ class Clipboard {
     eventBus.trigger('key.bind', {
       key: 'Ctrl+C',
       fun: () => {
-        // this.copy.bind(this)
-        this.copyElementId = null
-        let copyElements = []
-        const elements = eventBus.trigger('shape.select.get')
-        elements.forEach(element => {
-          const type = getBpmnNameByType(element.data.$type)
-          if (!this.config.filter.includes(type)) {
-            const newElement = cloneElement(element)
-            copyElements.push(newElement)
-          }
-        })
-        if (copyElements.length === 1) {
-          this.copyElementId = copyElements[0].data.id
+        // (this.copy.bind(this))()
+        if (this.config && this.config.copyHandler) {
+          this.config.copyHandler()
+        } else {
+          console.info('未配置复制事件！')
         }
       }
     })
@@ -50,11 +42,7 @@ class Clipboard {
       key: 'Ctrl+V',
       fun: () => {
         if (this.config && this.config.pasteHandler) {
-          if (this.copyElementId) {
-            this.config.pasteHandler(this.copyElementId)
-          } else {
-            console.info('未选中人工任务事件！')
-          }
+          this.config.pasteHandler()
         } else {
           console.info('未配置粘贴事件！')
         }
@@ -153,6 +141,7 @@ class Clipboard {
     eventBus.trigger('shape.select.remove')
     eventBus.trigger('shape.select', { ids: selectElements })
     this.plus = true
+    return selectElements
   }
 }
 
