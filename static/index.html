@@ -227,6 +227,23 @@ left: 20px;
             onChanged: function (e) {
               console.log(e)
             }
+          },
+          clipboard: {
+            filter: [
+                'StartEvent',
+                'ServiceTask',
+                'ExclusiveGateway',
+                'InclusiveGateway',
+                'ComplexGateway',
+                'ParallelGateway',
+                'CallActivity',
+                'EndEvent',
+                'TerminateEndEvent',
+                'SequenceFlow'
+            ],
+            pasteHandler: function (e){
+              console.log(e)
+            }
           }
         }
       })

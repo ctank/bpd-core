@@ -19,6 +19,8 @@ class Clipboard {
     //
     this.plus = true
     //
+    this.copyElementId = null
+    //
     this.init()
   }
 
@@ -26,12 +28,37 @@ class Clipboard {
     // 绑定Ctrl+C
     eventBus.trigger('key.bind', {
       key: 'Ctrl+C',
-      fun: this.copy.bind(this)
+      fun: () => {
+        // this.copy.bind(this)
+        this.copyElementId = null
+        let copyElements = []
+        const elements = eventBus.trigger('shape.select.get')
+        elements.forEach(element => {
+          const type = getBpmnNameByType(element.data.$type)
+          if (!this.config.filter.includes(type)) {
+            const newElement = cloneElement(element)
+            copyElements.push(newElement)
+          }
+        })
+        if (copyElements.length === 1) {
+          this.copyElementId = copyElements[0].data.id
+        }
+      }
     })
     // 绑定Ctrl+V
     eventBus.trigger('key.bind', {
       key: 'Ctrl+V',
-      fun: this.paste.bind(this)
+      fun: () => {
+        if (this.config && this.config.pasteHandler) {
+          if (this.copyElementId) {
+            this.config.pasteHandler(this.copyElementId)
+          } else {
+            console.info('未选中人工任务事件！')
+          }
+        } else {
+          console.info('未配置粘贴事件！')
+        }
+      }
     })
     // 粘贴事件
     eventBus.on('clipboard.copy', this.copy.bind(this))
