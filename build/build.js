@@ -11,10 +11,9 @@ var type = process.env.type === 'UMD' ? 'UMD' : ''
 var spinner = ora(' 正在打包...')
 spinner.start()
 
-webpack(webpackConfig, function(err, stats) {
+webpack(webpackConfig, function (err, stats) {
   spinner.stop()
   if (err) throw err
-
   process.stdout.write(
     stats.toString({
       colors: true,

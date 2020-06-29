@@ -8,14 +8,13 @@ var opn = require('opn')
 var path = require('path')
 var chalk = require('chalk')
 var webpack = require('webpack')
-var webpackDevServer = require('webpack-dev-server')
 var webpackConfig = require('./webpack.config')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 webpackConfig.plugins.push(
   new HtmlWebpackPlugin({
     filename: 'dist/index.html',
-    template: '../static/index.html'
+    template: 'static/index.html'
   })
 )
 
@@ -28,7 +27,7 @@ if (env == 'watch') {
       poll: true,
       ignored: /node_modules/
     },
-    function(err, stats) {
+    function (err, stats) {
       console.log('> ' + chalk.red('启动监听...') + '\n')
       console.log(
         stats.toString({
@@ -65,7 +64,7 @@ if (env == 'watch') {
   })
 
   var hotMiddleware = webpackHotMiddleware(compiler, {
-    log: () => {}
+    log: () => { }
   })
 
   // app.use(
@@ -86,12 +85,12 @@ if (env == 'watch') {
 
   var uri = 'http://localhost:' + port
 
-  devMiddleware.waitUntilValid(function() {
+  devMiddleware.waitUntilValid(function () {
     console.log('> ' + chalk.red('监听地址: ') + uri + '\n')
     console.log('> PS: ' + chalk.cyan('快捷键Ctrl+C可终止监听'))
   })
 
-  module.exports = app.listen(port, function(err) {
+  module.exports = app.listen(port, function (err) {
     if (err) {
       console.log(err)
       return

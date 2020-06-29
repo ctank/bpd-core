@@ -1,15 +1,22 @@
-var path = require('path')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var CopyWebpackPlugin = require('copy-webpack-plugin')
-var env = process.env.NODE_ENV === 'production' ? 'production' : 'development'
+const path = require('path')
+const webpack = require('webpack')
+// const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+const OptimizeCssnanoPlugin = require('optimize-css-assets-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+
+const NODE_ENV = process.env.NODE_ENV || 'development';
+const isDev = NODE_ENV === 'development';
+
 var entry =
   process.env.NODE_ENV === 'production'
     ? './src/main.js'
-    : ['babel-polyfill', './src/main.js']
+    : ['core-js/stable', 'regenerator-runtime/runtime', './src/main.js']
 var type = process.env.type === 'UMD' ? 'umd' : ''
 
 var webpackConfig = {
+  mode: NODE_ENV,
   entry: {
     'bpd-core': entry
   },
@@ -21,34 +28,67 @@ var webpackConfig = {
   module: {
     rules: [
       {
-        test: /\.(css|scss)$/,
-        use: ExtractTextPlugin.extract({
-          use: 'css-loader!postcss-loader!sass-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                importLoaders: 1,
-                minimize: env === 'production' ? true : false
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                plugins: loader => [
-                  require('autoprefixer')({
-                    //CSS浏览器兼容
-                    overrideBrowserslist: ['ie>=8', '>1% in CN']
-                  })
-                ]
-              }
-            },
-            {
-              loader: 'sass-loader'
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
             }
-          ],
-          publicPath: '../'
-        })
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: isDev,
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: isDev,
+              plugins: loader => [
+                require('autoprefixer')({
+                  //CSS浏览器兼容
+                  overrideBrowserslist: ['ie>=8', '>1% in CN']
+                })
+              ]
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(scss)$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
+            }
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: isDev,
+              importLoaders: 1
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: isDev,
+              plugins: () => [
+                require('autoprefixer')({
+                  //CSS浏览器兼容
+                  overrideBrowserslist: ['ie>=8', '>1% in CN']
+                })
+              ]
+            }
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
       },
       {
         test: /\.(jsx?|es6)$/,
@@ -82,14 +122,19 @@ var webpackConfig = {
       }
     ]
   },
+  optimization: {},
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: "'" + env + "'"
+        NODE_ENV: JSON.stringify(NODE_ENV)
       }
     }),
-    new webpack.ProvidePlugin({}),
-    new ExtractTextPlugin({ filename: 'css/[name].css?v=[chunkhash:8]' }),
+    new MiniCssExtractPlugin(
+      {
+        filename: 'css/[name].css?v=[chunkhash:8]',
+        ignoreOrder: true
+      }
+    ),
     new webpack.optimize.OccurrenceOrderPlugin()
   ],
   resolve: {
@@ -97,17 +142,45 @@ var webpackConfig = {
   }
 }
 
-if (env == 'production') {
-  process.env.BABEL_ENV = 'production'
+if (isDev) {
+  // process.env.BABEL_ENV = 'development'
+  webpackConfig.devtool = 'cheap-module-eval-source-map'
+} else {
+  // process.env.BABEL_ENV = 'production'
+  webpackConfig.optimization.minimizer = [
+    /* config.optimization.minimizer('terser') */
+    new TerserPlugin(
+      {
+        extractComments: false,
+        terserOptions: {
+          ecma: undefined,
+          warnings: false,
+          condition: false,
+          parse: {},
+          compress: {
+            drop_console: true,
+            drop_debugger: false,
+            pure_funcs: ['console.log'] // 移除console
+          }
+        }
+      }
+    )
+  ]
   webpackConfig.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      },
-      mangle: true,
-      comments: false,
-      sourceMap: false
-    })
+    new OptimizeCssnanoPlugin(
+      {
+        sourceMap: false,
+        cssnanoOptions: {
+          preset: [
+            'default',
+            {
+              mergeLonghand: false,
+              cssDeclarationSorter: false
+            }
+          ]
+        }
+      }
+    )
   )
   webpackConfig.plugins.push(
     new CopyWebpackPlugin([
@@ -117,9 +190,6 @@ if (env == 'production') {
       }
     ])
   )
-} else {
-  process.env.BABEL_ENV = 'development'
-  webpackConfig.devtool = 'cheap-module-eval-source-map'
 }
 
 if (type == 'umd') {

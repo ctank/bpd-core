@@ -13,88 +13,59 @@
     html,
     body {
       position: relative;
-
-margin: 0px;
-
-padding: 0px;
-
-      }
+      margin: 0px;
+      padding: 0px;
+    }
 
     #canvas {
       position: absolute;
-
-top: 20px;
-
-left: 20px;
-
-width: 800px;
-
-height: 600px;
-
-border: 1px solid #000000;
-
-      }
+      top: 20px;
+      left: 20px;
+      width: 800px;
+      height: 600px;
+      border: 1px solid #000000;
+    }
 
     .createNode-box1 {
       position: fixed;
-
-bottom: 20px;
-
-left: 20px;
-
-      }
+      bottom: 20px;
+      left: 20px;
+    }
 
     .createNode-box2 {
       position: fixed;
-
-bottom: 50px;
-
-left: 20px;
-
-      }
+      bottom: 50px;
+      left: 20px;
+    }
 
     .createNode-box3 {
       position: fixed;
-
-bottom: 80px;
-
-left: 20px;
-
-      }
+      bottom: 80px;
+      left: 20px;
+    }
 
     .createNode-box4 {
       position: fixed;
-
-bottom: 110px;
-
-left: 20px;
-
-      }
+      bottom: 110px;
+      left: 20px;
+    }
 
     .other1 {
       position: fixed;
-
-bottom: 140px;
-
-left: 20px;
-
-      }
+      bottom: 140px;
+      left: 20px;
+    }
 
     .other2 {
       position: fixed;
-
-bottom: 170px;
-
-left: 20px;
-
-      }
-
+      bottom: 170px;
+      left: 20px;
+    }
   </style>
 </head>
 
 <body>
   <div id="canvas"></div>
-
   <span class="createNode-box1">
     <button class="createNode" draggable="true" shapeName="startEvent">
       StartEvent
@@ -205,6 +176,9 @@ left: 20px;
           { id: 'obj_0g2a3p8', fillStyle: { color: '167,232,210' } }
         ],
         config: {
+          // background: {
+          //   show: false
+          // },
           editName: {
             borderColor: '#ff0000',
             onEdited: function (element) {
