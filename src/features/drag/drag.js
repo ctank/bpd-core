@@ -30,7 +30,6 @@ class ShapeMove {
     $designer.on('mousedown.drag', e => {
       eventBus.trigger('direction.hide')
 
-      state.change('drag_shapes')
       let pos1 = DrawUtils.getRelativePos(e.pageX, e.pageY, $designer)
       let selects = eventBus.trigger('shape.select.get')
 
@@ -68,6 +67,8 @@ class ShapeMove {
       selects = selects.concat(connections)
 
       $layout.on('mousemove.drag', e2 => {
+        state.change('drag_shapes')
+
         let pos2 = DrawUtils.getRelativePos(e2.pageX, e2.pageY, $designer)
         let pos = {
           x: pos2.x - pos1.x,
@@ -96,12 +97,12 @@ class ShapeMove {
         pos1 = pos2
         $(document)
           .off('mouseup.drop')
-          .on('mouseup.drop', function() {
+          .on('mouseup.drop', function () {
             eventBus.trigger('element.update', selects)
             $(document).off('mouseup.drop')
           })
       })
-      $(document).on('mouseup.drag', function() {
+      $(document).on('mouseup.drag', function () {
         state.reset()
         $layout.off('mousemove.drag')
         $designer.off('mousedown.drag')
@@ -133,12 +134,12 @@ class ShapeMove {
         }
         $(document)
           .off('mouseup.dropconnection')
-          .on('mouseup.dropconnection', function() {
+          .on('mouseup.dropconnection', function () {
             $(document).off('mouseup.dropconnection')
             eventBus.trigger('element.update', element)
           })
       })
-      $(document).on('mouseup.dragconnection', function() {
+      $(document).on('mouseup.dragconnection', function () {
         eventBus.trigger('anchor.point.remove')
         state.reset()
         $designer.off('mousedown.dragconnection')

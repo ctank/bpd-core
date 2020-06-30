@@ -38,28 +38,26 @@ class Hand {
   }
 
   startHand(e) {
-    const $layout = this.$container.find('.bpd-layout')
-    const layoutPos = $layout.position()
+    const scrollPos = {
+      top: this.$container.scrollTop(),
+      left: this.$container.scrollLeft()
+    }
     const mousePos = {
       x: 0,
       y: 0
     }
-
     this.flag = true
     mousePos.x = e.clientX
     mousePos.y = e.clientY
-
     if (e.type.indexOf('touch') >= 0) {
       mousePos.x = e.originalEvent.targetTouches[0].clientX
       mousePos.y = e.originalEvent.targetTouches[0].clientY
     }
-
-    this.moveHand(layoutPos, mousePos)
+    this.moveHand(scrollPos, mousePos)
   }
 
-  moveHand(layoutPos, mousePos) {
+  moveHand(scrollPos, mousePos) {
     const { pageStyle, $container } = this
-    const $layout = $container.find('.bpd-layout')
     this.$container.on('touchmove.hand mousemove.hand', e => {
       if (this.flag) {
         let newX = e.clientX - mousePos.x
@@ -69,21 +67,22 @@ class Hand {
           newY = e.originalEvent.targetTouches[0].clientY - mousePos.y
         }
 
-        let top = layoutPos.top + newY
-        if (top > 0) {
+        let top = scrollPos.top - newY
+        if (top < 0) {
           top = 0
-        } else if (top < -pageStyle.height + $container.height()) {
-          top = -pageStyle.height + $container.height()
+        } else if (top > pageStyle.height - $container.height()) {
+          top = pageStyle.height - $container.height()
         }
 
-        let left = layoutPos.left + newX
-        if (left > 0) {
+        let left = scrollPos.left - newX
+        if (left < 0) {
           left = 0
-        } else if (left < -pageStyle.width + $container.width()) {
-          left = -pageStyle.width + $container.width()
+        } else if (left > pageStyle.width - $container.width()) {
+          left = pageStyle.width - $container.width()
         }
 
-        $layout.css({ top, left })
+        this.$container.scrollTop(top)
+        this.$container.scrollLeft(left)
       }
     })
   }

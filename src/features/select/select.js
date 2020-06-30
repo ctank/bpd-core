@@ -13,7 +13,7 @@ const DEFAULT_CONFIG = {
   // 颜色
   color: '#ec5343',
   // 选中事件
-  onSelected: () => {}
+  onSelected: () => { }
 }
 
 class ShapeSelect {
@@ -53,6 +53,8 @@ class ShapeSelect {
     const $layout = $container.find('.bpd-layout')
     const $designer = $container.find('.bpd-designer')
 
+    const self = this
+
     $designer.on('mousedown.select', e => {
       state.change('select_shapes')
       const id = element.data.id
@@ -77,7 +79,21 @@ class ShapeSelect {
       ) {
         eventBus.trigger('group.show', this.getSelected())
       }
-      $(document).on('mouseup.select', function() {
+      $(document).on('mouseup.select', function () {
+
+        if (state.state === 'select_shapes') {
+          // 选中回调
+          if (self.config.onSelected) {
+            if (self.selectIds.length === 1) {
+              self.config.onSelected(setExportData(self.getSelected()[0]))
+            } else {
+              self.config.onSelected(null)
+            }
+          }
+        } else if (state.state === 'drag_shapes') {
+          self.unselect()
+        }
+
         state.reset()
         $designer.off('mousedown.select')
         $(document).off('mouseup.select')
@@ -97,12 +113,7 @@ class ShapeSelect {
 
     $layout
       .off('mousedown.multiselect')
-      .on('mousedown.multiselect', function(e) {
-        // 选中回调
-        if (self.config.onSelected) {
-          self.config.onSelected(null)
-        }
-
+      .on('mousedown.multiselect', function (e) {
         let $multiSelect = null
         if (!e.ctrlKey) {
           self.unselect()
@@ -114,7 +125,7 @@ class ShapeSelect {
             e.pageY,
             $designer
           )
-          $layout.on('mousemove.multiselect', function(e) {
+          $layout.on('mousemove.multiselect', function (e) {
             if ($multiSelect == null) {
               $multiSelect = $("<div class='multiselect-box'></div>").appendTo(
                 $designer
@@ -142,7 +153,7 @@ class ShapeSelect {
           })
           $(document)
             .off('mouseup.multiselect')
-            .on('mouseup.multiselect', function(e) {
+            .on('mouseup.multiselect', function (e) {
               if ($multiSelect != null) {
                 const range = {
                   x: restoreScale($multiSelect.position().left),
@@ -243,15 +254,6 @@ class ShapeSelect {
     }
     if (selectIds.length > 0 && !n) {
       this.renderSelectBox(selectIds)
-    }
-
-    // 选中回调
-    if (this.config.onSelected) {
-      if (selectIds.length === 1) {
-        this.config.onSelected(setExportData(this.getSelected()[0]))
-      } else {
-        this.config.onSelected(null)
-      }
     }
 
     eventBus.trigger('direction.show')

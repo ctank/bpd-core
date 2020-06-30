@@ -164,45 +164,6 @@ class Draw extends Operation {
     if (shapeCount === 0) {
       this.designer.build()
     }
-
-    // 设置存在图形时的画布位置
-    const { $container, options } = this
-    const { width, height } = options.pageStyle
-
-    const $layout = $container.find('.bpd-layout')
-    const layoutPos = $layout.position()
-    const range = {
-      x: restoreScale(0),
-      y: restoreScale(0),
-      width: restoreScale(width),
-      height: restoreScale(height)
-    }
-    const ids = DrawUtils.getElementIdsByRange(range)
-    const shapeBox = DrawUtils.getElementsBox(ids)
-    const screenBox = {
-      x: Math.abs(layoutPos.left),
-      y: Math.abs(layoutPos.top),
-      width: $container.width(),
-      height: $container.height()
-    }
-
-    if (
-      shapeBox &&
-      !DrawUtils.checkRang(screenBox, {
-        x: -shapeBox.x + shapeBox.width / 2,
-        y: -shapeBox.y + shapeBox.height / 2
-      })
-    ) {
-      let top = -shapeBox.y + screenBox.height / 2 - shapeBox.height / 2
-      if (top > 0) {
-        top = 0
-      }
-      let left = -shapeBox.x + screenBox.width / 2 - shapeBox.width / 2
-      if (left > 0) {
-        left = 0
-      }
-      $layout.css({ top, left })
-    }
   }
   /**
    * 渲染页面

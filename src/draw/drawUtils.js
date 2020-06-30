@@ -2079,7 +2079,7 @@ const checkRang = (rang, point) => {
   } else {
     inRang = false
   }
-  if (point.y > rang.y && point.y < rang.y + rang.height) {
+  if (inRang && point.y > rang.y && point.y < rang.y + rang.height) {
     inRang = true
   } else {
     inRang = false

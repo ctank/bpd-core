@@ -6,6 +6,7 @@ import './assets/styles/bpd-core.scss'
 
 import eventBus from './core/eventBus'
 import draw from './draw/draw'
+import DrawUtils from './draw/drawUtils'
 
 import $ from './utils/slimJQ'
 import Ids from './utils/ids'
@@ -37,6 +38,10 @@ const DEFAULT_DEFINITION =
   'xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" ' +
   'targetNamespace="http://bpmn.io/schema/bpmn"' +
   '></bpmn:definitions>'
+
+const DEFAULT_DEFINITION1 =
+  '<?xml version="1.0" encoding="UTF-8"?><bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:do1="http://do1.com.cn/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" targetNamespace="http://bpmn.io/schema/bpmn"><bpmn:process id="process_01"><bpmn:extensionElements><do1:cancelTask>false</do1:cancelTask><do1:cancelProcess>false</do1:cancelProcess><do1:clearHistoryWhenCancelProcess>false</do1:clearHistoryWhenCancelProcess><do1:cancelProcessExclusiveNode></do1:cancelProcessExclusiveNode><do1:defaultTitle>false</do1:defaultTitle><do1:title></do1:title><do1:relatedFormId></do1:relatedFormId><do1:description></do1:description></bpmn:extensionElements><bpmn:startEvent id="obj_01" name="开始事件" identify="obj_01"><bpmn:extensionElements /><bpmn:outgoing>obj_05</bpmn:outgoing></bpmn:startEvent><bpmn:userTask id="obj_02" name="人工任务"><bpmn:extensionElements><do1:description /><do1:showHistoricalRecord>false</do1:showHistoricalRecord><do1:operation>{"executeOperation":{"enabled":true,"buttonLabel":"提交"},"rejectOperation":{"enabled":true,"buttonLabel":"驳回"},"circularizeOperation":{"enabled":true,"buttonLabel":"抄送"},"agentOperation":{"enabled":true,"buttonLabel":"委托"},"terminateOperation":{"enabled":true,"buttonLabel":"终止"},"printOperation":{"enabled":false,"buttonLabel":"打印"},"signatureOperation":{"enabled":true,"buttonLabel":"加签"}}</do1:operation><do1:multiInstanceControl>{"method":"or","enabled":false,"taskCompletionRate":"100"}</do1:multiInstanceControl><do1:defaultCarbonCopy receiverType="">{"enabled":false,"triggerTime": "ACTIVITY_ARRIVE","receiverConfig": {}}</do1:defaultCarbonCopy><do1:condition type="initiatorRelateUsers">{"initiatorRelate":"0","findUpperSuperiorWhenMissSuperior":false}</do1:condition><do1:notification>{"channelList":["wbg","portal"]}</do1:notification><do1:formEditPermissions>{"formId":"","web":[],"mobile":[]}</do1:formEditPermissions><do1:actionWithoutHandler>{"transferMode":"enterNextNode"}</do1:actionWithoutHandler><do1:timeoutReminder>{"schedulerDefinitionId":"","enable":false}</do1:timeoutReminder><do1:timeoutHandler>{"schedulerDefinitionId":"","enable":false}</do1:timeoutHandler></bpmn:extensionElements><bpmn:incoming>obj_05</bpmn:incoming><bpmn:outgoing>obj_06</bpmn:outgoing></bpmn:userTask><bpmn:userTask id="obj_03" name="人工任务"><bpmn:extensionElements><do1:description /><do1:showHistoricalRecord>false</do1:showHistoricalRecord><do1:operation>{"executeOperation":{"enabled":true,"buttonLabel":"办理"},"rejectOperation":{"enabled":true,"buttonLabel":"驳回"},"circularizeOperation":{"enabled":true,"buttonLabel":"抄送"},"agentOperation":{"enabled":true,"buttonLabel":"委托"},"terminateOperation":{"enabled":true,"buttonLabel":"终止"},"printOperation":{"enabled":false,"buttonLabel":"打印"},"signatureOperation":{"enabled":true,"buttonLabel":"加签"}}</do1:operation><do1:multiInstanceControl>{"method":"or","enabled":false,"taskCompletionRate":"100"}</do1:multiInstanceControl><do1:defaultCarbonCopy receiverType="">{"enabled":false,"triggerTime": "ACTIVITY_ARRIVE","receiverConfig": {}}</do1:defaultCarbonCopy><do1:condition type="designatedUser">{"designatedUser":"true"}</do1:condition><do1:notification>{"channelList":["wbg","portal"]}</do1:notification><do1:formEditPermissions>{"formId":"","web":[],"mobile":[]}</do1:formEditPermissions><do1:actionWithoutHandler>{"transferMode":"enterNextNode"}</do1:actionWithoutHandler><do1:timeoutReminder>{"schedulerDefinitionId":"","enable":false}</do1:timeoutReminder><do1:timeoutHandler>{"schedulerDefinitionId":"","enable":false}</do1:timeoutHandler></bpmn:extensionElements><bpmn:incoming>obj_06</bpmn:incoming><bpmn:outgoing>obj_07</bpmn:outgoing></bpmn:userTask><bpmn:endEvent id="obj_04" name="结束事件" identify="obj_04"><bpmn:extensionElements /><bpmn:incoming>obj_07</bpmn:incoming></bpmn:endEvent><bpmn:sequenceFlow id="obj_05" name="" sourceRef="obj_01" targetRef="obj_02"><bpmn:extensionElements /></bpmn:sequenceFlow><bpmn:sequenceFlow id="obj_06" name="" sourceRef="obj_02" targetRef="obj_03"><bpmn:extensionElements /></bpmn:sequenceFlow><bpmn:sequenceFlow id="obj_07" name="" sourceRef="obj_03" targetRef="obj_04"><bpmn:extensionElements /></bpmn:sequenceFlow></bpmn:process><bpmndi:BPMNDiagram id="process_01_di"><bpmndi:BPMNPlane id="process_01_pl"><bpmndi:BPMNShape id="obj_01_di" bpmnElement="obj_01"><dc:Bounds x="2500" y="300" width="40" height="40" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="obj_02_di" bpmnElement="obj_02"><dc:Bounds x="2465" y="408" width="110" height="55" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="obj_03_di" bpmnElement="obj_03"><dc:Bounds x="2465" y="534" width="110" height="55" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="obj_04_di" bpmnElement="obj_04"><dc:Bounds x="2500" y="666" width="40" height="40" /></bpmndi:BPMNShape><bpmndi:BPMNEdge id="obj_05_di" bpmnElement="obj_05"><di:waypoint x="2520" y="340" /><di:waypoint x="2520" y="374" /><di:waypoint x="2520" y="374" /><di:waypoint x="2520" y="408" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="obj_06_di" bpmnElement="obj_06"><di:waypoint x="2520" y="463" /><di:waypoint x="2520" y="498.5" /><di:waypoint x="2520" y="498.5" /><di:waypoint x="2520" y="534" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="obj_07_di" bpmnElement="obj_07"><di:waypoint x="2520" y="589" /><di:waypoint x="2520" y="627.5" /><di:waypoint x="2520" y="627.5" /><di:waypoint x="2520" y="666" /></bpmndi:BPMNEdge></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></bpmn:definitions>'
+
 
 // 默认属性
 const DEFAULT_OPTIONS = {
@@ -110,13 +115,6 @@ const createContainer = options => {
   })
 
   container.append(designerBox)
-
-  // 初始化画布位置
-  designerBox.find('.bpd-layout').css({
-    top: (-options.pageStyle.height + container.height()) / 2,
-    left: (-options.pageStyle.width + container.width()) / 2
-  })
-
   return designerBox
 }
 
@@ -186,6 +184,7 @@ class BPDCore {
 
   init(callback) {
     this.importBpmn(this.options.definition, () => {
+      this.resizeContainer()
       callback()
     })
 
@@ -198,24 +197,53 @@ class BPDCore {
     const { $container, options } = this
     const { width, height } = options.pageStyle
 
-    const $layout = $container.find('.bpd-layout')
-    const layoutPos = $layout.position()
     const containerWidth = $container.width()
     const containerHeight = $container.height()
-    const layoutheight = Math.abs(layoutPos.top) + containerHeight
-    const layoutWidth = Math.abs(layoutPos.left) + containerWidth
-
-    let top = layoutPos.top
-    if (layoutheight > height) {
-      top = containerHeight - height
+    const defaultPos = {
+      top: (options.pageStyle.height - containerHeight) / 2,
+      left: (options.pageStyle.width - containerWidth) / 2
     }
 
-    let left = layoutPos.left
-    if (layoutWidth > width) {
-      left = containerWidth - width
-    }
+    const elements = this.getAllElement()
+    // 设置存在图形时的画布位置
+    if (elements.length > 0) {
+      const scrollPos = {
+        top: this.$container.scrollTop(),
+        left: this.$container.scrollLeft()
+      }
 
-    $layout.css({ top, left })
+      const range = {
+        x: restoreScale(0),
+        y: restoreScale(0),
+        width: restoreScale(width),
+        height: restoreScale(height)
+      }
+      const ids = DrawUtils.getElementIdsByRange(range)
+      const shapeBox = DrawUtils.getElementsBox(ids)
+      const screenBox = {
+        x: Math.abs(scrollPos.left),
+        y: Math.abs(scrollPos.top),
+        width: $container.width(),
+        height: $container.height()
+      }
+
+      if (
+        shapeBox &&
+        !DrawUtils.checkRang(screenBox, {
+          x: shapeBox.x - shapeBox.width / 2,
+          y: shapeBox.y - shapeBox.height / 2
+        })
+      ) {
+        let top = shapeBox.y - screenBox.height / 2 + shapeBox.height / 2
+        let left = shapeBox.x - screenBox.width / 2 + shapeBox.width / 2
+
+        this.$container.scrollTop(top)
+        this.$container.scrollLeft(left)
+      }
+    } else {
+      this.$container.scrollTop(defaultPos.top)
+      this.$container.scrollLeft(defaultPos.left)
+    }
   }
 
   /**
