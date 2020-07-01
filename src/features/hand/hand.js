@@ -21,7 +21,7 @@ class Hand {
     eventBus.on('hand.destroy', this.destroyHand.bind(this))
   }
 
-  activateHand(e) {
+  activateHand({ e, state }) {
     if (e && e.type === 'touchstart') {
       this.startHand(e)
     } else {
@@ -29,11 +29,12 @@ class Hand {
         .off('touchstart.hand mousedown.hand')
         .on('touchstart.hand mousedown.hand', e => {
           this.startHand(e)
+          state.change('hand_move')
         })
     }
-
-    $(document).on('touchend.hand mouseup.hand', () => {
+    $(document).off('touchend.hand mouseup.hand').on('touchend.hand mouseup.hand', () => {
       this.flag = false
+      state.reset()
     })
   }
 
@@ -58,7 +59,7 @@ class Hand {
 
   moveHand(scrollPos, mousePos) {
     const { pageStyle, $container } = this
-    this.$container.on('touchmove.hand mousemove.hand', e => {
+    this.$container.off('touchmove.hand mousemove.hand').on('touchmove.hand mousemove.hand', e => {
       if (this.flag) {
         let newX = e.clientX - mousePos.x
         let newY = e.clientY - mousePos.y
@@ -80,7 +81,6 @@ class Hand {
         } else if (left > pageStyle.width - $container.width()) {
           left = pageStyle.width - $container.width()
         }
-
         this.$container.scrollTop(top)
         this.$container.scrollLeft(left)
       }

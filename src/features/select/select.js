@@ -102,13 +102,9 @@ class ShapeSelect {
   }
 
   multiSelectable({ state }) {
-    const { $container, config } = this
-
-    const $layout = $container.find('.bpd-layout')
-    const $designer = $container.find('.bpd-designer')
-
+    const $layout = this.$container.find('.bpd-layout')
+    const $designer = this.$container.find('.bpd-designer')
     const orders = eventBus.trigger('orders.get')
-
     const self = this
 
     $layout

@@ -52,6 +52,7 @@ class Operation {
         return
       }
 
+
       this.destroy()
 
       const mousePos = DrawUtils.getRelativePos(e.pageX, e.pageY, $container)
@@ -128,9 +129,8 @@ class Operation {
         }
       } else {
         $designer.css('cursor', 'default')
-        eventBus.trigger('canvas.hover', data)
         eventBus.trigger('shape.multiSelect', data)
-        eventBus.trigger('hand.activate', e)
+        eventBus.trigger('hand.activate', { e, state: data.state })
       }
     }
   }
