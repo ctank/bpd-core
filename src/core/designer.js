@@ -628,9 +628,13 @@ class Designer {
         const type = shape.bpmnName
         if (type === 'SequenceFlow') {
           const attrObj = this.createAttrs(data, plane, shape)
-          attrObj.data.sourceRef = modelMap[data.sourceRef].modelData
-          attrObj.data.targetRef = modelMap[data.targetRef].modelData
 
+          if (data.sourceRef) {
+            attrObj.data.sourceRef = modelMap[data.sourceRef].modelData
+          }
+          if (data.targetRef) {
+            attrObj.data.targetRef = modelMap[data.targetRef].modelData
+          }
           const modelData = this.createModel({
             descriptor: data.$type,
             attrs: attrObj.data

@@ -49,12 +49,8 @@ class ShapeSelect {
 
   selectable({ state, element }) {
     const { $container } = this
-
-    const $layout = $container.find('.bpd-layout')
     const $designer = $container.find('.bpd-designer')
-
     const self = this
-
     $designer.on('mousedown.select', e => {
       state.change('select_shapes')
       const id = element.data.id
@@ -69,7 +65,7 @@ class ShapeSelect {
       } else {
         if (!this.isSelected(id)) {
           this.unselect()
-          this.selectShape({ ids: id })
+          this.selectShape({ ids: id, select: false })
         }
       }
 
@@ -80,20 +76,11 @@ class ShapeSelect {
         eventBus.trigger('group.show', this.getSelected())
       }
       $(document).on('mouseup.select', function () {
-
         if (state.state === 'select_shapes') {
-          // 选中回调
-          if (self.config.onSelected) {
-            if (self.selectIds.length === 1) {
-              self.config.onSelected(setExportData(self.getSelected()[0]))
-            } else {
-              self.config.onSelected(null)
-            }
-          }
+          self.handleSelectCallback()
         } else if (state.state === 'drag_shapes') {
           self.unselect()
         }
-
         state.reset()
         $designer.off('mousedown.select')
         $(document).off('mouseup.select')
@@ -201,7 +188,7 @@ class ShapeSelect {
    *
    * @param {*} ids
    */
-  selectShape({ ids }) {
+  selectShape({ ids, select = true }) {
     if (typeof ids === 'string') {
       ids = [ids]
     }
@@ -253,6 +240,10 @@ class ShapeSelect {
     }
 
     eventBus.trigger('direction.show')
+
+    if (select) {
+      this.handleSelectCallback()
+    }
   }
 
   /**
@@ -393,6 +384,20 @@ class ShapeSelect {
       return true
     }
     return false
+  }
+
+  /**
+   * 触发选中回调事件
+   */
+  handleSelectCallback() {
+    // 选中回调
+    if (this.config.onSelected) {
+      if (this.selectIds.length === 1) {
+        this.config.onSelected(setExportData(this.getSelected()[0]))
+      } else {
+        this.config.onSelected(null)
+      }
+    }
   }
 
   /**

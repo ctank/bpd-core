@@ -359,6 +359,7 @@ class Draw extends Operation {
     let element = null
     eventBus.trigger('data.create', type, data => {
       element = data
+      eventBus.trigger('shape.select', { ids: element.data.id })
       callback(element)
     })
   }

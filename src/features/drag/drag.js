@@ -34,6 +34,7 @@ class ShapeMove {
       let selects = eventBus.trigger('shape.select.get')
 
       let drag = true
+
       if (
         selects.length === 1 &&
         selects[0].shape.bpmnName === 'SequenceFlow'
@@ -72,10 +73,6 @@ class ShapeMove {
           x: pos2.x - pos1.x,
           y: pos2.y - pos1.y
         }
-        // 根据位移判断是否处于拖拽
-        if ((pos.x > 0 || pageXOffset.y > 0) && drag) {
-          state.change('drag_shapes')
-        }
         if (drag) {
           const newBounds = cloneJSON(bounds)
           newBounds.x += pos.x
@@ -91,8 +88,12 @@ class ShapeMove {
           bounds.x += pos.x
           bounds.y += pos.y
         }
+
+        // 根据位移判断是否处于拖拽
         if (pos.x === 0 && pos.y === 0) {
           return
+        } else {
+          state.change('drag_shapes')
         }
         this.moveShape(selects, pos)
         pos1 = pos2
