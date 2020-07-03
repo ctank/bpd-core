@@ -67,14 +67,15 @@ class ShapeMove {
       selects = selects.concat(connections)
 
       $layout.on('mousemove.drag', e2 => {
-        state.change('drag_shapes')
-
         let pos2 = DrawUtils.getRelativePos(e2.pageX, e2.pageY, $designer)
         let pos = {
           x: pos2.x - pos1.x,
           y: pos2.y - pos1.y
         }
-
+        // 根据位移判断是否处于拖拽
+        if ((pos.x > 0 || pageXOffset.y > 0) && drag) {
+          state.change('drag_shapes')
+        }
         if (drag) {
           const newBounds = cloneJSON(bounds)
           newBounds.x += pos.x

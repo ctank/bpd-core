@@ -180,7 +180,6 @@ class BPDCore {
 
   init(callback) {
     this.importBpmn(this.options.definition, () => {
-      this.resizeContainer()
       callback()
     })
 
@@ -207,7 +206,6 @@ class BPDCore {
         top: this.$container.scrollTop(),
         left: this.$container.scrollLeft()
       }
-
       const range = {
         x: restoreScale(0),
         y: restoreScale(0),
@@ -547,6 +545,7 @@ class BPDCore {
             eventBus.trigger('record.end')
             eventBus.trigger('record.initStatus', true)
             // 执行回调
+            self.resizeContainer()
             callback()
           }
         })
