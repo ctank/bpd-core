@@ -43,17 +43,13 @@ class ShapeAnchor {
 
   /**
    *
-   * @param {*} i
+   * @param {*} element
    */
   showAnchors(element) {
     const { config, $container } = this
-
     const { data, plane, shape } = element
-
     const orders = eventBus.trigger('orders.get')
     const selectIds = eventBus.trigger('shape.select.getIds')
-
-    const $layout = $container.find('.bpd-layout')
     const $designer = $container.find('.bpd-designer')
 
     let $contour = $container.find('.shape-contour[data-id="' + data.id + '"]')
@@ -124,7 +120,7 @@ class ShapeAnchor {
 
     const self = this
 
-    $layout.off('mousedown.connection').on('mousedown.connection', function(e) {
+    $layout.off('mousedown.connection').on('mousedown.connection', function (e) {
       state.change('link_shape')
       var f = null
       let connection = null
@@ -141,7 +137,7 @@ class ShapeAnchor {
         anchorData = anchor
         anchorData.id = data.id
       }
-      $layout.on('mousemove.connection', function(e) {
+      $layout.on('mousemove.connection', function (e) {
         $layout.css('cursor', 'default')
         const mousePos = DrawUtils.getRelativePos(e.pageX, e.pageY, $designer)
         if (connection == null) {
@@ -156,7 +152,7 @@ class ShapeAnchor {
 
         $(document)
           .off('mouseup.dropConnection')
-          .on('mouseup.dropConnection', function() {
+          .on('mouseup.dropConnection', function () {
             if (
               Math.abs(mousePos.x - anchorData.x) > 20 ||
               Math.abs(mousePos.y - anchorData.y) > 20
@@ -176,7 +172,7 @@ class ShapeAnchor {
             $(document).off('mouseup.dropConnection')
           })
       })
-      $(document).on('mouseup.connection', function() {
+      $(document).on('mouseup.connection', function () {
         eventBus.trigger('anchor.point.remove')
         state.reset()
         $layout.off('mousedown.connection')

@@ -356,11 +356,8 @@ class Draw extends Operation {
    * 创建图形数据
    */
   createShape(type, callback = () => { }) {
-    let element = null
     eventBus.trigger('data.create', type, data => {
-      element = data
-      eventBus.trigger('shape.select', { ids: element.data.id })
-      callback(element)
+      callback(setExportData(data))
     })
   }
 
