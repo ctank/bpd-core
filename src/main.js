@@ -244,8 +244,9 @@ class BPDCore {
    * 创建图形
    * @param {Event} event
    */
-  createShape(event, callback = () => { }) {
-    const target = $(event.target)
+  createShape(config = {}, callback = () => { }) {
+    const event = window.event || arguments.callee.caller.arguments[0]
+    const target = $(event.srcElement) || $(event.target)
     if (target.hasClass('readonly') || this.options.readonly) {
       return
     }
@@ -253,7 +254,7 @@ class BPDCore {
     if (!shapeName || shapeName === '') {
       throw new Error('shapeName error')
     }
-    this.draw.createShape(shapeName, callback)
+    this.draw.createShape(shapeName, config, callback)
   }
 
   /**

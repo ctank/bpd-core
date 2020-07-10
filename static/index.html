@@ -206,7 +206,19 @@
       })
 
       $('.createNode').on('click dragstart', function (e) {
-        testBPD.createShape(e, function (element) {
+        testBPD.createShape({
+          extension: [
+            {
+              name: 't:test1',
+              value: '测试1'
+            },
+            {
+              name: 't:test2',
+              value: '测试2',
+              type: 'attr2'
+            }
+          ]
+        }, function (element) {
           console.log(element)
         })
         e.preventDefault()
