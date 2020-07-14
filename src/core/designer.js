@@ -87,7 +87,7 @@ class Designer {
     })
   }
 
-  createData(type, config, callback = () => { }) {
+  createData({ type, config }, callback = () => { }) {
     // const self = this
 
     let shapeAnchors = []
@@ -116,7 +116,7 @@ class Designer {
           name: null,
           prefix: 'obj',
           pos: canvasPos,
-          extension: config.extension || [],
+          extensions: config.extensions || [],
           ...shapeTarget
         })
 
@@ -517,7 +517,7 @@ class Designer {
    * @param {*} callback
    */
   createElement(
-    { type, eventDefinitionType, prefix, name, pos, id, extension },
+    { type, eventDefinitionType, prefix, name, pos, id, extensions },
     callback = () => { }
   ) {
     const elementId = id || prefix + '_' + this.options.ids.next()
@@ -529,7 +529,7 @@ class Designer {
           name,
           id: elementId,
           eventDefinitions: this.createEventModel(eventDefinitionType),
-          extensionElements: this.createExtensionModel(extension)
+          extensionElements: this.createExtensionModel(extensions)
         }
       })
     )

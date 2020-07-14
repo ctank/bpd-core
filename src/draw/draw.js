@@ -356,7 +356,7 @@ class Draw extends Operation {
    * 创建图形数据
    */
   createShape(type, config, callback = () => { }) {
-    eventBus.trigger('data.create', type, config, data => {
+    eventBus.trigger('data.create', { type, config }, data => {
       callback(setExportData(data))
     })
   }
