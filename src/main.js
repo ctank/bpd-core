@@ -180,6 +180,7 @@ class BPDCore {
 
   init(callback) {
     this.importBpmn(this.options.definition, () => {
+      this.resizeContainer()
       callback()
     })
 
@@ -546,7 +547,6 @@ class BPDCore {
             eventBus.trigger('record.end')
             eventBus.trigger('record.initStatus', true)
             // 执行回调
-            self.resizeContainer()
             callback()
           }
         })
