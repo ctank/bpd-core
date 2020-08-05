@@ -189,6 +189,9 @@ class BPDCore {
     })
   }
 
+  /**
+   * 重置画布位置
+   */
   resizeContainer() {
     const { $container, options } = this
     const { width, height } = options.pageStyle
@@ -243,7 +246,8 @@ class BPDCore {
 
   /**
    * 创建图形
-   * @param {Event} event
+   * @param {Object} config 图形配置
+   * @param {Function} callback
    */
   createShape(config = {}, callback = () => { }) {
     const event = window.event || arguments.callee.caller.arguments[0]
@@ -406,6 +410,7 @@ class BPDCore {
    * 更新元素属性
    * @param {String} id
    * @param {Object} data
+   * @param {Function} callback
    */
   updateProperties(id, data, callback = () => { }) {
     data.extensions.forEach(dataExtension => {
@@ -457,6 +462,7 @@ class BPDCore {
   /**
    * 更新流程属性,目前仅支持标题和扩展属性
    * @param {Object} data
+   * @param {Function} callback
    */
   updateProcessProperties(data, callback = () => { }) {
     data.extensions.forEach(dataExtension => {
@@ -496,10 +502,18 @@ class BPDCore {
     callback()
   }
 
+  /**
+   * 更新连线样式
+   * @param {String} id 连线id
+   * @param {Object} style 样式
+   */
   updataLineStyle(id, style) {
     this.draw.updataLineStyle(id, style)
   }
 
+  /**
+   * 销毁
+   */
   destroy() {
     DomSize.remove(this.$container[0])
     this.$container.remove()
@@ -531,6 +545,8 @@ class BPDCore {
 
   /**
    * 导入Bpmn
+   * @param {String} xmlStr
+   * @param {Function} callback
    */
   importBpmn(xmlStr, callback = () => { }) {
     const self = this

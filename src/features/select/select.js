@@ -65,7 +65,7 @@ class ShapeSelect {
       } else {
         if (!this.isSelected(id)) {
           this.unselect()
-          this.selectShape({ ids: id, select: false })
+          this.selectShape({ ids: id, runCb: false })
         }
       }
 
@@ -185,10 +185,11 @@ class ShapeSelect {
   }
 
   /**
-   *
-   * @param {*} ids
+   * 选中图形
+   * @param {Array|String} ids
+   * @param {Boolean} runCb
    */
-  selectShape({ ids, select = true }) {
+  selectShape({ ids, runCb = true }) {
     if (typeof ids === 'string') {
       ids = [ids]
     }
@@ -241,7 +242,7 @@ class ShapeSelect {
 
     eventBus.trigger('direction.show')
 
-    if (select) {
+    if (runCb) {
       this.handleSelectCallback()
     }
   }
