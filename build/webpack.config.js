@@ -7,16 +7,15 @@ const OptimizeCssnanoPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 
 const NODE_ENV = process.env.NODE_ENV || 'development';
-const isDev = NODE_ENV === 'development';
+const isProd = NODE_ENV === 'production';
 
-var entry =
-  process.env.NODE_ENV === 'production'
-    ? './src/main.js'
-    : ['core-js/stable', 'regenerator-runtime/runtime', './src/main.js']
+var entry = isProd
+  ? './src/main.js'
+  : ['core-js/stable', 'regenerator-runtime/runtime', './src/main.js']
 var type = process.env.type === 'UMD' ? 'umd' : ''
 
 var webpackConfig = {
-  mode: NODE_ENV,
+  mode: isProd ? 'production' : 'development',
   entry: {
     'bpd-core': entry
   },
@@ -39,14 +38,14 @@ var webpackConfig = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: isDev,
+              sourceMap: !isProd,
               importLoaders: 1
             }
           },
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: isDev,
+              sourceMap: !isProd,
               plugins: loader => [
                 require('autoprefixer')({
                   //CSS浏览器兼容
@@ -69,14 +68,14 @@ var webpackConfig = {
           {
             loader: 'css-loader',
             options: {
-              sourceMap: isDev,
+              sourceMap: !isProd,
               importLoaders: 1
             }
           },
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: isDev,
+              sourceMap: !isProd,
               plugins: () => [
                 require('autoprefixer')({
                   //CSS浏览器兼容
@@ -142,7 +141,7 @@ var webpackConfig = {
   }
 }
 
-if (isDev) {
+if (!isProd) {
   // process.env.BABEL_ENV = 'development'
   webpackConfig.devtool = 'cheap-module-eval-source-map'
 } else {
