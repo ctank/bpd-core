@@ -16,21 +16,27 @@ import { cloneJSON } from '../utils/clone'
 const getShapeTarget = type => {
   const target = {}
   switch (type) {
-    case 'ConditionalStartEvent':
-      target.type = 'StartEvent'
-      target.eventDefinitionType = 'ConditionalEventDefinition'
-      break
+    // case 'ConditionalStartEvent':
+    //   target.type = 'StartEvent'
+    //   target.eventDefinitionType = 'ConditionalEventDefinition'
+    //   break
     case 'MessageStartEvent':
       target.type = 'StartEvent'
+      target.shape = 'MessageStartEvent'
       target.eventDefinitionType = 'MessageEventDefinition'
       break
-    case 'SignalStartEvent':
-      target.type = 'StartEvent'
-      target.eventDefinitionType = 'SignalEventDefinition'
-      break
-    case 'TimerStartEvent':
-      target.type = 'StartEvent'
-      target.eventDefinitionType = 'TimerEventDefinition'
+    // case 'SignalStartEvent':
+    //   target.type = 'StartEvent'
+    //   target.eventDefinitionType = 'SignalEventDefinition'
+    //   break
+    // case 'TimerStartEvent':
+    //   target.type = 'StartEvent'
+    //   target.eventDefinitionType = 'TimerEventDefinition'
+    //   break
+    case 'TerminateEndEvent':
+      target.type = 'EndEvent'
+      target.shape = 'TerminateEndEvent'
+      target.eventDefinitionType = 'TerminateEventDefinition'
       break
     default:
       target.type = type
@@ -517,7 +523,7 @@ class Designer {
    * @param {*} callback
    */
   createElement(
-    { type, eventDefinitionType, prefix, name, pos, id, extensions },
+    { type, eventDefinitionType, shape, prefix, name, pos, id, extensions },
     callback = () => { }
   ) {
     const elementId = id || prefix + '_' + this.options.ids.next()
@@ -581,6 +587,7 @@ class Designer {
 
     element = eventBus.trigger('shape.create', {
       type,
+      shape,
       element
     })
 
@@ -645,6 +652,7 @@ class Designer {
             modelMap[data.sourceRef].modelData.outgoing.push(modelData)
           }
           if (data.targetRef) {
+            console.log(data.targetRef)
             modelMap[data.targetRef].modelData.incoming.push(modelData)
           }
 

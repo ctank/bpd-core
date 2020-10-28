@@ -43,8 +43,8 @@ class DrawShape {
     if ($shape.length === 0) {
       $shape = $(
         "<div class='shape-box' data-id='" +
-          data.id +
-          "'><canvas class='shape-canvas'></canvas></div>"
+        data.id +
+        "'><canvas class='shape-canvas'></canvas></div>"
       ).appendTo(this.$container.find('.bpd-designer'))
     }
 
@@ -203,11 +203,11 @@ class DrawShape {
     if ($textBox.length === 0) {
       $textBox = $(
         "<textarea class='text-box' data-shape='" +
-          shape.data.id +
-          "'></textarea>"
+        shape.data.id +
+        "'></textarea>"
       ).appendTo($shape)
       // 焦点事件
-      $textBox.on('focus', function() {
+      $textBox.on('focus', function () {
         $(this).blur()
       })
     }

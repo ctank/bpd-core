@@ -1,26 +1,18 @@
-import Shape from './Shape'
+import EndEvent from './EndEvent'
 import eventBus from '../../core/eventBus'
 
-class EndEvent extends Shape {
+class TerminateEndEvent extends EndEvent {
   constructor(element, style = {}) {
-    super(style)
+    super(element, style)
     //
     this.style = style
-    //
-    if (element.plane && element.plane.bounds) {
-      element.plane.bounds.width = element.plane.bounds.width || 40
-      element.plane.bounds.height = element.plane.bounds.height || 40
-    }
-    if (!element.data.name) {
+    // 不存在或为父图形名称时修改为当前图形名称
+    if (!element.data.name || element.data.name === eventBus.trigger('i18n', 'bpmn.EndEvent')) {
       element.data.name =
         style.name || eventBus.trigger('i18n', 'bpmn.TerminateEndEvent')
     }
-    // bpmn数据
-    this.data = element.data
-    //
-    this.plane = element.plane
 
-    this.bpmnName = 'TerminateEndEvent'
+    this.eventDefinitionType = 'TerminateEventDefinition'
 
     this.groupName = 'EndEvent'
 
@@ -139,4 +131,4 @@ class EndEvent extends Shape {
   }
 }
 
-export default EndEvent
+export default TerminateEndEvent

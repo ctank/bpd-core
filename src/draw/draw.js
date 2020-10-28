@@ -75,11 +75,11 @@ class Draw extends Operation {
   /**
    * 创建图形数据
    */
-  createShapeData({ type, element }) {
+  createShapeData({ type, shape, element }) {
     if (type === 'SequenceFlow') {
       element.shape = this.drawConnection.createConnection(element)
     } else {
-      element.shape = this.drawShape.createShape(type, element)
+      element.shape = this.drawShape.createShape(shape || type, element)
     }
     return element
   }
