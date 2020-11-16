@@ -223,7 +223,7 @@ class groupPanel {
         }
 
         if (group.length > 0) {
-          const type = shapeGroup[key][0]
+          const type = group[0]
           const element = eventBus.trigger('shape.create', {
             type,
             element: cloneJSON(ELEMENT_TEMP)
